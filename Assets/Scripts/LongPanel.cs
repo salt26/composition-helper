@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class MeasureSlider : MonoBehaviour {
+public class LongPanel : MonoBehaviour {
 
     public Slider slider;
     public Button decideButton;
@@ -24,4 +25,9 @@ public class MeasureSlider : MonoBehaviour {
             decideButton.interactable = true;
         }
 	}
+
+    public void ChangeSceneToScore()
+    {
+        SceneManager.LoadScene("Score");
+    }
 }
