@@ -1094,6 +1094,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   press: {fileID: 1080204053}
+  piano3: {fileID: 21300000, guid: 57f3ea611074ae147bd92b417242eefa, type: 3}
+  piano_1: {fileID: 21300000, guid: 427bcfd6312dec0429dfdf9b4b71b308, type: 3}
+  piano_1R: {fileID: 21300000, guid: 2744ee32be6aaea4689b186d78b95224, type: 3}
+  piano_2: {fileID: 21300000, guid: 6997e6512caa49d45b60c2e33c88925f, type: 3}
+  piano_2L: {fileID: 21300000, guid: f25183a8396dd7248a409832bb1338a5, type: 3}
+  piano_2R: {fileID: 21300000, guid: 7950a424939ea0c4c96d5d720d5d8ca1, type: 3}
+  piano_3: {fileID: 21300000, guid: cf6c7acc50bcd144990c48f62c0d3f9b, type: 3}
+  piano_3L: {fileID: 21300000, guid: 6218853c5f3f93d4c90384bd55c99487, type: 3}
 --- !u!1 &312007957
 GameObject:
   m_ObjectHideFlags: 0
