@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Piano : MonoBehaviour {
 
+    public GameObject press;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -43,10 +45,26 @@ public class Piano : MonoBehaviour {
         if (y > 0.5f)
         {
             x = x * 29 - key;
-            if (x < 0.4f) tone--;
-            if (x > 0.6f) tone++;
+            key %= 7;
+            if (x < 0.4f && key != 0 && key != 3) tone--;
+            if (x > 0.6f && key != 2 && key != 6) tone++;
         }
+        switch (tone % 17)
+        {
+            case 0:
+                press.transform.position = new Vector2(key / 7 * 308.9f, 0f);
+                break;
+            case 7:
+                press.transform.position = new Vector2(key / 7 * 308.9f + 131f, 0f);
+                break;
+        }
+        press.SetActive(true);
         Manager.manager.Play(Note.NoteToMidi(tone));
         Generator.GenerateNotes();
+    }
+
+    private void OnMouseUp()
+    {
+        press.SetActive(false);
     }
 }
