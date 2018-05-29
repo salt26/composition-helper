@@ -195,11 +195,11 @@ public class Manager : MonoBehaviour {
     {
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
-        GetStaff(0).GetMeasure(0).ClearMeasure();
+        manager.GetStaff(0).GetMeasure(0).ClearMeasure();
         int sum = 0;
         foreach (int rhythm in rhythms)
         {
-            Manager.manager.WriteNote(0, 0, 51,
+            manager.WriteNote(0, 0, 51,
                 rhythm == 1 ? "16분음표" :
                 rhythm == 2 ? "8분음표" :
                 rhythm == 3 ? "점8분음표" :
@@ -213,9 +213,9 @@ public class Manager : MonoBehaviour {
 
     public Chord GetTempChord(int i)
     {
-        if (i >= 0 && i < tempChords.Count)
+        if (i >= 0 && i < manager.tempChords.Count)
         {
-            return tempChords[i];
+            return manager.tempChords[i];
         }
         else return null;
     }
@@ -229,6 +229,8 @@ public class Manager : MonoBehaviour {
     /// <returns></returns>
     public Staff GetStaff(int kind)
     {
+        Debug.Log(kind);
+        Debug.Log(staffs.Count);
         if (kind >= 0 && kind < 3)
         {
             return staffs[kind];
