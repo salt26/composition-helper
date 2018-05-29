@@ -56,6 +56,19 @@ public class Piano : MonoBehaviour {
             if (x < 0.4f && key != 0 && key != 3) tone--;
             if (x > 0.6f && key != 2 && key != 6) tone++;
         }
+        if (tone > 28)
+        {
+            Measure m = Manager.manager.GetStaff(0).GetMeasure(0);
+            foreach (Note n in m.GetNotes())
+            {
+                if (n.GetIsRecommended())
+                {
+                    Manager.manager.WriteNote(0, 0, tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                    m.RemoveNote(n);
+                    break;
+                }
+            }
+        }
         switch (tone % 17)
         {
             case 0:

@@ -23,6 +23,11 @@ public class Measure : MonoBehaviour
     }
     */
 
+    public List<Note> GetNotes()
+    {
+        return new List<Note>(notes);
+    }
+
     public List<KeyValuePair<float, int> > ToMidi()
     {
         List<KeyValuePair<float, int> > res = new List<KeyValuePair<float, int>>();

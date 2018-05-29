@@ -281,8 +281,23 @@ public class Note : MonoBehaviour {
         noteObject.color = color;
         foreach (Transform child in transform)
         {
-            child.GetComponent<Renderer>().material.SetColor("_Color", c);
+            child.GetComponent<SpriteRenderer>().color = c;
         }
+    }
+
+    public void SetIsRecommended(bool r)
+    {
+        isRecommended = r;
+    }
+
+    public bool GetIsRecommended()
+    {
+        return isRecommended;
+    }
+
+    public bool GetIsTreble()
+    {
+        return isTreble;
     }
 
     public int GetRhythm()
@@ -398,7 +413,6 @@ public class Note : MonoBehaviour {
         }
         else if ((isTreble && note < 29) || (!isTreble && note > 40))
         {
-            Debug.Log(isTreble + " " + note);
             Debug.LogWarning("NoteToScore Warning!");
             return -200f;
         }
@@ -538,6 +552,31 @@ public class Note : MonoBehaviour {
                 return a + 14;
             default:
                 return a + 16;
+        }
+    }
+
+    public static string RhythmToName(int rhythm)
+    {
+        switch (rhythm)
+        {
+            case 1:
+                return "16분음표";
+            case 2:
+                return "8분음표";
+            case 3:
+                return "점8분음표";
+            case 4:
+                return "4분음표";
+            case 6:
+                return "점4분음표";
+            case 8:
+                return "2분음표";
+            case 12:
+                return "점2분음표";
+            case 16:
+                return "온음표";
+            default:
+                return "";
         }
     }
 }
