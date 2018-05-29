@@ -145,13 +145,12 @@ public class Manager : MonoBehaviour {
             tempChords.Clear();
             
             // This is only for demo!
-            // TODO this is midi encoding. PLEASE change integers to our encoding!
-            tempChords.Add(new Chord(49, 53, 56));
-            tempChords.Add(new Chord(54, 58, 61));
-            tempChords.Add(new Chord(47, 50, 54));
-            tempChords.Add(new Chord(51, 54, 57));
-            tempChords.Add(new Chord(47, 49, 54));
-            tempChords.Add(new Chord(51, 55, 58, 61));
+            tempChords.Add(new Chord(Note.MidiToNote(49), Note.MidiToNote(53), Note.MidiToNote(56)));
+            tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
+            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
+            tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
+            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49), Note.MidiToNote(54)));
+            tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(55), Note.MidiToNote(58), Note.MidiToNote(61)));
         }
         else
         {
@@ -184,8 +183,6 @@ public class Manager : MonoBehaviour {
             return staffs[kind];
         }
         else return null;
-    }
-    
     }
 
     /// <summary>

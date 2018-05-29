@@ -8,7 +8,10 @@ public class Note : MonoBehaviour {
     Transform noteTransform;
     int pitch = -1;  // 음높이(우리의 음표 인코딩, 0 <= pitch <= 68)
     int rhythm = 0; // 음표 박자(한 마디를 16개로 쪼갰을 때의 길이, 0 < rhythm <= 16)
+                    // 16: 온음표, 4: 4분음표, 1: 16분음표
+    int timing = 0; // 음표가 등장하는 x좌표 위치(0 <= timing < 16)
     bool isTreble = true;
+    Color color = Color.black;
 
     void Awake()
     {
@@ -45,12 +48,113 @@ public class Note : MonoBehaviour {
                 temp2 = Instantiate(Manager.manager.additionalLineObject, noteTransform);
                 temp2.GetComponent<Transform>().localPosition = new Vector3(0f, 1f, 0f);
                 break;
-
         }
+        
 	}
 
     /// <summary>
-    /// 우리의 음표 인코딩에서 미디 음표 번호로 바꿔줍니다.
+    /// 우리의 음표 인코딩에 따라 이 음표의 음높이를 설정합니다.
+    /// </summary>
+    /// <param name="p"></param>
+    public void SetPitch(int p)
+    {
+        if (p < 0 || p > 68) pitch = -1;
+        else pitch = p;
+
+        noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, NoteToScore(pitch, isTreble));
+    }
+
+    /// <summary>
+    /// "온음표", "점2분음표", "2분음표", "점4분음표", "4분음표", "점8분음표", "8분음표", "16분음표"
+    /// 중 하나를 입력받아 이 음표의 박자를 설정합니다.
+    /// </summary>
+    /// <param name="r"></param>
+    public void SetRhythm(string r)
+    {
+        bool isTailDown = true;
+        if (pitch != -1 && NoteToScore(pitch, isTreble) < 0f) isTailDown = false;
+        switch (r)
+        {
+            case "온음표":
+                rhythm = 16;
+                noteObject.sprite = Resources.Load("Note1", typeof(Sprite)) as Sprite;
+                break;
+            case "점2분음표":
+                rhythm = 12;
+                // TODO 점 찍기
+                if (!isTailDown)
+                    noteObject.sprite = Resources.Load("Note2", typeof(Sprite)) as Sprite;
+                else
+                    noteObject.sprite = Resources.Load("Note2_", typeof(Sprite)) as Sprite;
+                break;
+            case "2분음표":
+                rhythm = 8;
+                if (!isTailDown)
+                    noteObject.sprite = Resources.Load("Note2", typeof(Sprite)) as Sprite;
+                else
+                    noteObject.sprite = Resources.Load("Note2_", typeof(Sprite)) as Sprite;
+                break;
+            case "점4분음표":
+                rhythm = 6;
+                // TODO 점 찍기
+                if (!isTailDown)
+                    noteObject.sprite = Resources.Load("Note4", typeof(Sprite)) as Sprite;
+                else
+                    noteObject.sprite = Resources.Load("Note4_", typeof(Sprite)) as Sprite;
+                break;
+            case "4분음표":
+                rhythm = 4;
+                if (!isTailDown)
+                    noteObject.sprite = Resources.Load("Note4", typeof(Sprite)) as Sprite;
+                else
+                    noteObject.sprite = Resources.Load("Note4_", typeof(Sprite)) as Sprite;
+                break;
+            case "점8분음표":
+                rhythm = 3;
+                // TODO 점 찍기
+                if (!isTailDown)
+                    noteObject.sprite = Resources.Load("Note8", typeof(Sprite)) as Sprite;
+                else
+                    noteObject.sprite = Resources.Load("Note8_", typeof(Sprite)) as Sprite;
+                break;
+            case "8분음표":
+                rhythm = 2;
+                if (!isTailDown)
+                    noteObject.sprite = Resources.Load("Note8", typeof(Sprite)) as Sprite;
+                else
+                    noteObject.sprite = Resources.Load("Note8_", typeof(Sprite)) as Sprite;
+                break;
+            case "16분음표":
+                rhythm = 1;
+                if (!isTailDown)
+                    noteObject.sprite = Resources.Load("Note16", typeof(Sprite)) as Sprite;
+                else
+                    noteObject.sprite = Resources.Load("Note16_", typeof(Sprite)) as Sprite;
+                break;
+            default:
+                rhythm = 0;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 음표가 시간적으로(악보의 x좌표상으로) 언제 나오는지 설정하는 함수입니다.
+    /// </summary>
+    /// <param name="t"></param>
+    public void SetTiming(int t)
+    {
+        if (t < 0 || t >= 16)
+        {
+            t = -1;
+            return;
+        }
+        timing = t;
+        noteTransform.localPosition = new Vector3(-5.16f + (timing * 0.66f), noteTransform.localPosition.y);
+
+    }
+
+    /// <summary>
+    /// 우리의 음표 인코딩에서 미디 음 번호로 바꿔줍니다.
     /// </summary>
     /// <param name="note"></param>
     /// <returns></returns>
@@ -226,6 +330,44 @@ public class Note : MonoBehaviour {
             case 12:
             case 15: return 2;
             default: return 0;
+        }
+    }
+
+    /// <summary>
+    /// 미디 음 번호에서 우리의 음표 인코딩으로 변환합니다.
+    /// </summary>
+    /// <param name="midi"></param>
+    /// <returns></returns>
+    public static int MidiToNote(int midi)
+    {
+        int a = ((midi / 12) - 3) * 17;
+        int b = midi % 12;
+        switch (b)
+        {
+            case 0:
+                return a;
+            case 1:
+                return a + 1;
+            case 2:
+                return a + 3;
+            case 3:
+                return a + 4;
+            case 4:
+                return a + 6;
+            case 5:
+                return a + 7;
+            case 6:
+                return a + 8;
+            case 7:
+                return a + 10;
+            case 8:
+                return a + 11;
+            case 9:
+                return a + 13;
+            case 10:
+                return a + 14;
+            default:
+                return a + 16;
         }
     }
 }
