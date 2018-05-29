@@ -195,7 +195,7 @@ public class Manager : MonoBehaviour {
     {
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
-        Manager.manager.staffs[0].GetMeasure(0).ClearMeasure();
+        GetStaff(0).GetMeasure(0).ClearMeasure();
         int sum = 0;
         foreach (int rhythm in rhythms)
         {
@@ -258,14 +258,16 @@ public class Manager : MonoBehaviour {
     /// <param name="timing"></param>
     public void WriteNote(int staff, int measure, int pitch, string rhythm, int timing)
     {
-        if (staffs.Count <= staff || staff < 0 || staffs[staff] == null) return;
-        staffs[staff].WriteNote(measure, pitch, rhythm, timing);
+        Staff st = GetStaff(staff);
+        if (st == null) return;
+        st.WriteNote(measure, pitch, rhythm, timing);
     }
 
     public void WriteNote(int staff, int measure, int pitch, string rhythm, int timing, Color color)
     {
-        if (staffs.Count <= staff || staff < 0 || staffs[staff] == null) return;
-        staffs[staff].WriteNote(measure, pitch, rhythm, timing, color);
+        Staff st = GetStaff(staff);
+        if (st == null) return;
+        st.WriteNote(measure, pitch, rhythm, timing, color);
     }
 
     /// <summary>
