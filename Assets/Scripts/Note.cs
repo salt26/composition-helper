@@ -26,10 +26,12 @@ public class Note : MonoBehaviour {
         if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
         {
             GetComponent<SpriteRenderer>().color = selectedColor;
-        } else if (Manager.manager != null && isRecommended)
+        }
+        else if (Manager.manager != null && isRecommended)
         {
             GetComponent<SpriteRenderer>().color = Manager.manager.recommendColor;
-        } else
+        }
+        else
         {
             GetComponent<SpriteRenderer>().color = Color.black;
         }
@@ -281,6 +283,21 @@ public class Note : MonoBehaviour {
         {
             child.GetComponent<Renderer>().material.SetColor("_Color", c);
         }
+    }
+
+    public int GetRhythm()
+    {
+        return rhythm;
+    }
+
+    public int GetTiming()
+    {
+        return timing;
+    }
+
+    public int GetPitch()
+    {
+        return pitch;
     }
 
     /// <summary>

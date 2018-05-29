@@ -1,4 +1,4 @@
-﻿﻿﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -220,7 +220,7 @@ public class Manager : MonoBehaviour
 
     public Chord GetTempChord(int i)
     {
-        if (i >= 0 && i < tempChords.Count)
+        if (i >= 0 && i < manager.tempChords.Count)
         {
             return manager.tempChords[i];
         }
@@ -251,8 +251,58 @@ public class Manager : MonoBehaviour
     {
         if (tone >= 0 && tone < 128)
         {
-            outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
+            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
         }
+    }
+
+    /// <summary>
+    /// 음을 멈춥니다.
+    /// </summary>
+    /// <param name="tone"></param>
+    public void Stop(int tone)
+    {
+        if (tone >= 0 && tone < 128)
+        {
+            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOff, 0, tone, 127));
+        }
+    }
+
+    IEnumerator __PlayAll(List<KeyValuePair<float, int>> list)
+    {
+        float last = 0;
+        foreach (KeyValuePair<float, int> p in list)
+        {
+            if (last != p.Key)
+            {
+                yield return new WaitForSecondsRealtime((p.Key - last) / 2);
+                last = p.Key;
+            }
+            if (p.Value > 0) Play(p.Value);
+            else Stop(-p.Value);
+        }
+    }
+
+    public void PlayAll()
+    {
+        List<KeyValuePair<float, int>> list = new List<KeyValuePair<float, int>>();
+        foreach (Staff staff in manager.staffs)
+        {
+            foreach (KeyValuePair<float, int> p in staff.ToMidi())
+            {
+                list.Add(p);
+            }
+        }
+        list.Sort(delegate (KeyValuePair<float, int> p1, KeyValuePair<float, int> p2)
+        {
+            return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : p1.Value < p2.Value ? -1 : p1.Value > p2.Value ? 1 : 0;
+        });
+        string tmp = "";
+        foreach (KeyValuePair<float, int> p in list)
+        {
+            tmp += "(" + p.Key + ", " + p.Value + ") ";
+        }
+        Debug.Log(tmp);
+        manager.StartCoroutine(__PlayAll(list));
     }
 
     /// <summary>
