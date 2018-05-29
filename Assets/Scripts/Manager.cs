@@ -195,6 +195,7 @@ public class Manager : MonoBehaviour {
     {
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
+        Manager.manager.staffs[0].GetMeasure(0).ClearMeasure();
         int sum = 0;
         foreach (int rhythm in rhythms)
         {
