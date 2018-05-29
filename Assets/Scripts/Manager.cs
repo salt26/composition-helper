@@ -229,8 +229,6 @@ public class Manager : MonoBehaviour {
     /// <returns></returns>
     public Staff GetStaff(int kind)
     {
-        Debug.Log(kind);
-        Debug.Log(staffs.Count);
         if (kind >= 0 && kind < 3)
         {
             return staffs[kind];
@@ -248,6 +246,25 @@ public class Manager : MonoBehaviour {
         {
             outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
         }
+    }
+
+    public void PlayAll()
+    {
+        List<KeyValuePair<float, int>> list = new List<KeyValuePair<float, int>>();
+        foreach (Staff staff in manager.staffs)
+        {
+            foreach (KeyValuePair<float, int> p in staff.ToMidi())
+            {
+                list.Add(p);
+            }
+        }
+        list.Sort();
+        string tmp = "";
+        foreach (KeyValuePair<float, int> p in list)
+        {
+            tmp += "(" + p.Key + ", " + p.Value + ") ";
+        }
+        Debug.Log(tmp);
     }
 
     /// <summary>

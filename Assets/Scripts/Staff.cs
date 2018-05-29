@@ -68,6 +68,19 @@ public class Staff : MonoBehaviour {
         GetMeasure(measure).AddNote(g.GetComponent<Note>());
     }
 
+    public List<KeyValuePair<float, int> > ToMidi()
+    {
+        List<KeyValuePair<float, int> > res = new List<KeyValuePair<float, int>>();
+        foreach (Measure m in measures)
+        {
+            foreach (KeyValuePair<float, int> p in m.ToMidi())
+            {
+                res.Add(p);
+            }
+        }
+        return res;
+    }
+
     public void TogglePlay()
     {
         hasPlay = !hasPlay;

@@ -246,6 +246,21 @@ public class Note : MonoBehaviour {
         }
     }
 
+    public int GetRhythm()
+    {
+        return rhythm;
+    }
+
+    public int GetTiming()
+    {
+        return timing;
+    }
+
+    public int GetPitch()
+    {
+        return pitch;
+    }
+
     /// <summary>
     /// 음표에 점이 찍힐 좌표를 결정하는 함수입니다.
     /// </summary>

@@ -23,6 +23,17 @@ public class Measure : MonoBehaviour
     }
     */
 
+    public List<KeyValuePair<float, int> > ToMidi()
+    {
+        List<KeyValuePair<float, int> > res = new List<KeyValuePair<float, int>>();
+        foreach (Note n in notes)
+        {
+            res.Add(new KeyValuePair<float, int>(n.GetTiming() / 4f, Note.NoteToMidi(n.GetPitch())));
+            res.Add(new KeyValuePair<float, int>((n.GetTiming() + n.GetRhythm()) / 4f, -Note.NoteToMidi(n.GetPitch())));
+        }
+        return res;
+    }
+
     void OnMouseDown()
     {
         if (isInteractive)
