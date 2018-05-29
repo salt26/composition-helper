@@ -277,7 +277,7 @@ public class Manager : MonoBehaviour
                 last = p.Key;
             }
             if (p.Value > 0) Play(p.Value);
-            else Stop(p.Value);
+            else Stop(-p.Value);
         }
     }
 
@@ -293,7 +293,7 @@ public class Manager : MonoBehaviour
         }
         list.Sort(delegate (KeyValuePair<float, int> p1, KeyValuePair<float, int> p2)
         {
-            return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : 0;
+            return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : p1.Value < p2.Value ? -1 : p1.Value > p2.Value ? 1 : 0;
         });
         string tmp = "";
         foreach (KeyValuePair<float, int> p in list)
