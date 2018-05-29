@@ -12,8 +12,8 @@ public class Note : MonoBehaviour {
     int timing = 0; // 음표가 등장하는 x좌표 위치(0 <= timing < 16)
     bool isTreble = true;
     bool isRecommended = false;
-    Color color = Color.black;
-    Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
+    static Color color = Color.black;
+    static Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
 
     void Awake()
     {
@@ -25,15 +25,15 @@ public class Note : MonoBehaviour {
     {
         if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
         {
-            GetComponent<SpriteRenderer>().color = selectedColor;
+            SetColor(selectedColor);
         }
         else if (Manager.manager != null && isRecommended)
         {
-            GetComponent<SpriteRenderer>().color = Manager.manager.recommendColor;
+            SetColor(Manager.manager.recommendColor);
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = Color.black;
+            SetColor(color = Color.black);
         }
     }
 
