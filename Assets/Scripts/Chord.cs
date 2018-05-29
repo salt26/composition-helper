@@ -58,16 +58,14 @@ public class Chord {
 
     public List<int> GetNotes()
     {
-        List<int> ret = new List<int>();
-        foreach (int n in notes)
-        {
-            ret.Add(n);
-        }
-        return ret;
+        return new List<int>(notes);
     }
 
     public void PlayChord()
     {
-        // TODO
+        foreach (int note in notes)
+        {
+            Manager.manager.Play(Note.NoteToMidi(note));
+        }
     }
 }
