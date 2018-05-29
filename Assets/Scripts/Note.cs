@@ -18,14 +18,22 @@ public class Note : MonoBehaviour {
         noteObject = GetComponent<SpriteRenderer>();
         noteTransform = GetComponent<Transform>();
     }
-    
+
     public void Initialize(bool isTreble, int pitch, string rhythm, int timing)
     {
         SetIsTreble(isTreble);
         SetPitch(pitch);
         SetRhythm(rhythm);
         SetTiming(timing);
-        SetColor(Color.black);
+    }
+
+    public void Initialize(bool isTreble, int pitch, string rhythm, int timing, Color color)
+    {
+        SetIsTreble(isTreble);
+        SetPitch(pitch);
+        SetRhythm(rhythm);
+        SetTiming(timing);
+        SetColor(color);
     }
 
     /// <summary>
@@ -232,6 +240,10 @@ public class Note : MonoBehaviour {
     {
         color = c;
         noteObject.color = color;
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<Renderer>().material.SetColor("_Color", c);
+        }
     }
 
     /// <summary>
@@ -332,6 +344,7 @@ public class Note : MonoBehaviour {
         }
         else if ((isTreble && note < 29) || (!isTreble && note > 40))
         {
+            Debug.Log(isTreble + " " + note);
             Debug.LogWarning("NoteToScore Warning!");
             return -200f;
         }

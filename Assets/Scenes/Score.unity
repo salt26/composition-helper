@@ -4374,7 +4374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   measure: {fileID: 1229778017608958, guid: 1b938ae21ca1ab0469baa1c7448fdd20, type: 2}
-  staffName: 
+  staffName: Melody
 --- !u!1 &1328435599
 GameObject:
   m_ObjectHideFlags: 0
@@ -4711,7 +4711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   measure: {fileID: 1229778017608958, guid: 1b938ae21ca1ab0469baa1c7448fdd20, type: 2}
-  staffName: 
+  staffName: Accompaniment
 --- !u!1 &1396035571
 GameObject:
   m_ObjectHideFlags: 0
@@ -5077,7 +5077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   measure: {fileID: 1229778017608958, guid: 1b938ae21ca1ab0469baa1c7448fdd20, type: 2}
-  staffName: 
+  staffName: Chord
 --- !u!224 &1452503191 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224473545296896294, guid: 73806f8eb23254940a566a891092cb67,

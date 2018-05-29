@@ -20,13 +20,10 @@ public class ChordButton : MonoBehaviour {
     public void WriteChord()
     {
         // TODO 현재는 첫 마디에만 화음을 쓸 수 있습니다.
-        GameObject g;
-        Measure measure = Manager.manager.GetStaff(2).GetMeasure(0);
         foreach (int c in chord.GetNotes())
         {
             if (c < 0 || c > 40) continue;
-            g = Instantiate(Manager.manager.noteObject, measure.GetComponent<Transform>());
-            g.GetComponent<Note>().Initialize(false, c, "온음표", 0);
+            Manager.manager.WriteNote(2, 0, c, "온음표", 0);
         } 
     }
 
