@@ -125,7 +125,6 @@ public class Note : MonoBehaviour {
                 break;
             case "점2분음표":
                 rhythm = 12;
-                // TODO 점 찍기
                 if (!isTailDown)
                 {
                     noteObject.sprite = Resources.Load("Note2", typeof(Sprite)) as Sprite;
@@ -150,7 +149,6 @@ public class Note : MonoBehaviour {
                 break;
             case "점4분음표":
                 rhythm = 6;
-                // TODO 점 찍기
                 if (!isTailDown)
                 {
                     noteObject.sprite = Resources.Load("Note4", typeof(Sprite)) as Sprite;
@@ -175,7 +173,6 @@ public class Note : MonoBehaviour {
                 break;
             case "점8분음표":
                 rhythm = 3;
-                // TODO 점 찍기
                 if (!isTailDown)
                 {
                     noteObject.sprite = Resources.Load("Note8", typeof(Sprite)) as Sprite;
@@ -331,12 +328,12 @@ public class Note : MonoBehaviour {
         if (note < 0 || note > 68)
         {
             Debug.LogWarning("NoteToScore Warning!");
-            return -2f;
+            return -100f;
         }
         else if ((isTreble && note < 29) || (!isTreble && note > 40))
         {
             Debug.LogWarning("NoteToScore Warning!");
-            return 2f;
+            return -200f;
         }
         if (isTreble) y = -1.5f;
         switch (note)

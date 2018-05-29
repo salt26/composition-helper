@@ -153,7 +153,7 @@ public class Manager : MonoBehaviour {
             tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
             tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
             tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
-            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49), Note.MidiToNote(54)));
+            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49)+1, Note.MidiToNote(54)+1));
             tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
         }
         else
@@ -162,6 +162,12 @@ public class Manager : MonoBehaviour {
 
             // TODO
         }
+    }
+
+    public void RecommendRhythm()
+    {
+        List<int> rhythms = Generator.GenerateNotes();
+        // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
     }
 
     public Chord GetTempChord(int i)
@@ -199,6 +205,20 @@ public class Manager : MonoBehaviour {
         {
             outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
         }
+    }
+
+    /// <summary>
+    /// 특정 악보의 원하는 위치에 원하는 음표를 하나 그리는 메서드입니다.
+    /// </summary>
+    /// <param name="staff"></param>
+    /// <param name="measure"></param>
+    /// <param name="pitch"></param>
+    /// <param name="rhythm"></param>
+    /// <param name="timing"></param>
+    public void WriteNote(int staff, int measure, int pitch, string rhythm, int timing)
+    {
+        if (staffs.Count <= staff || staff < 0 || staffs[staff] == null) return;
+        staffs[staff].WriteNote(measure, pitch, rhythm, timing);
     }
     
     /// <summary>
