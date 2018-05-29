@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +19,7 @@ public class Manager : MonoBehaviour
     public GameObject additionalLineObject;
     public GameObject accidentalObject;
     public GameObject dotObject;
-    public Color recommendColor = new Color(1f, 0.6899f, 0.2405f, 1f);
+    public Color recommendColor = new Color(0f, 0f, 0f, 0.3f);
 
     /*
      * staffs[0] : MelodyStaff

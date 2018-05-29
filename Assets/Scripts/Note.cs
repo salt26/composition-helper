@@ -281,7 +281,7 @@ public class Note : MonoBehaviour {
         noteObject.color = color;
         foreach (Transform child in transform)
         {
-            child.GetComponent<Renderer>().material.SetColor("_Color", c);
+            child.GetComponent<SpriteRenderer>().color = c;
         }
     }
 
