@@ -19,12 +19,41 @@ public class Note : MonoBehaviour {
         noteTransform = GetComponent<Transform>();
     }
     
-    void FixedUpdate () {
-        if (pitch == -1 || rhythm == 0) return;
+    public void Initialize(bool isTreble, int pitch, string rhythm, int timing)
+    {
+        SetIsTreble(isTreble);
+        SetPitch(pitch);
+        SetRhythm(rhythm);
+        SetTiming(timing);
+        SetColor(Color.black);
+    }
+
+    /// <summary>
+    /// 높은음자리표의 음표인지 낮은음자리표의 음표인지 설정합니다.
+    /// 높은음자리표이면 true를 인자로 넣습니다.
+    /// </summary>
+    /// <param name="t"></param>
+    public void SetIsTreble(bool t)
+    {
+        isTreble = t;
+    }
+
+    /// <summary>
+    /// 우리의 음표 인코딩에 따라 이 음표의 음높이를 설정합니다.
+    /// 음높이가 너무 높거나 낮으면 추가 선을 그려줍니다.
+    /// 반드시 이 메서드보다 SetIsTreble을 먼저 호출해야 합니다.
+    /// </summary>
+    /// <param name="p"></param>
+    public void SetPitch(int p)
+    {
+        if (p < 0 || p > 68) pitch = -1;
+        else pitch = p;
+
+        noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, NoteToScore(pitch, isTreble));
 
         /* Additional Line */
         GameObject temp1, temp2;
-		switch ((int)(NoteToScore(pitch, isTreble) * 8f))
+        switch ((int)(NoteToScore(pitch, isTreble) * 8f))
         {
             case 8:
                 temp1 = Instantiate(Manager.manager.additionalLineObject, noteTransform);
@@ -49,30 +78,45 @@ public class Note : MonoBehaviour {
                 temp2.GetComponent<Transform>().localPosition = new Vector3(0f, 1f, 0f);
                 break;
         }
-        
-	}
 
-    /// <summary>
-    /// 우리의 음표 인코딩에 따라 이 음표의 음높이를 설정합니다.
-    /// </summary>
-    /// <param name="p"></param>
-    public void SetPitch(int p)
-    {
-        if (p < 0 || p > 68) pitch = -1;
-        else pitch = p;
-
-        noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, NoteToScore(pitch, isTreble));
+        /* Accidental */
+        switch (NoteToAccidental(pitch))
+        {
+            case 1:
+                temp1 = Instantiate(Manager.manager.accidentalObject, noteTransform);
+                temp1.GetComponent<SpriteRenderer>().sprite =
+                    Resources.Load("sharp", typeof(Sprite)) as Sprite;
+                break;
+            case 2:
+                temp1 = Instantiate(Manager.manager.accidentalObject, noteTransform);
+                temp1.GetComponent<SpriteRenderer>().sprite =
+                    Resources.Load("flat", typeof(Sprite)) as Sprite;
+                break;
+            default:
+                /*
+                temp1 = Instantiate(Manager.manager.accidentalObject, noteTransform);
+                temp1.GetComponent<SpriteRenderer>().sprite =
+                    Resources.Load("natural", typeof(Sprite)) as Sprite;
+                */
+                break;
+        }
     }
 
     /// <summary>
     /// "온음표", "점2분음표", "2분음표", "점4분음표", "4분음표", "점8분음표", "8분음표", "16분음표"
     /// 중 하나를 입력받아 이 음표의 박자를 설정합니다.
+    /// 이 메서드를 호출하기 전에 반드시 SetIsTreble과 SetPitch를 먼저 호출해야 합니다.
     /// </summary>
     /// <param name="r"></param>
     public void SetRhythm(string r)
     {
         bool isTailDown = true;
-        if (pitch != -1 && NoteToScore(pitch, isTreble) < 0f) isTailDown = false;
+        if (pitch == -1)
+        {
+            rhythm = 0;
+            return;
+        }
+        else if (pitch != -1 && NoteToScore(pitch, isTreble) < 0f) isTailDown = false;
         switch (r)
         {
             case "온음표":
@@ -83,9 +127,19 @@ public class Note : MonoBehaviour {
                 rhythm = 12;
                 // TODO 점 찍기
                 if (!isTailDown)
+                {
                     noteObject.sprite = Resources.Load("Note2", typeof(Sprite)) as Sprite;
+                    GameObject dot = Instantiate(Manager.manager.dotObject, noteTransform);
+                    dot.GetComponent<Transform>().localPosition =
+                        DotPosition((int)(NoteToScore(pitch, isTreble) * 8f) % 2 == 1);
+                }
                 else
+                {
                     noteObject.sprite = Resources.Load("Note2_", typeof(Sprite)) as Sprite;
+                    GameObject dot = Instantiate(Manager.manager.dotObject, noteTransform);
+                    dot.GetComponent<Transform>().localPosition =
+                        DotPosition((int)(NoteToScore(pitch, isTreble) * 8f) % 2 == 1);
+                }
                 break;
             case "2분음표":
                 rhythm = 8;
@@ -98,9 +152,19 @@ public class Note : MonoBehaviour {
                 rhythm = 6;
                 // TODO 점 찍기
                 if (!isTailDown)
+                {
                     noteObject.sprite = Resources.Load("Note4", typeof(Sprite)) as Sprite;
+                    GameObject dot = Instantiate(Manager.manager.dotObject, noteTransform);
+                    dot.GetComponent<Transform>().localPosition =
+                        DotPosition((int)(NoteToScore(pitch, isTreble) * 8f) % 2 == 1);
+                }
                 else
+                {
                     noteObject.sprite = Resources.Load("Note4_", typeof(Sprite)) as Sprite;
+                    GameObject dot = Instantiate(Manager.manager.dotObject, noteTransform);
+                    dot.GetComponent<Transform>().localPosition =
+                        DotPosition((int)(NoteToScore(pitch, isTreble) * 8f) % 2 == 1);
+                }
                 break;
             case "4분음표":
                 rhythm = 4;
@@ -113,9 +177,19 @@ public class Note : MonoBehaviour {
                 rhythm = 3;
                 // TODO 점 찍기
                 if (!isTailDown)
+                {
                     noteObject.sprite = Resources.Load("Note8", typeof(Sprite)) as Sprite;
+                    GameObject dot = Instantiate(Manager.manager.dotObject, noteTransform);
+                    dot.GetComponent<Transform>().localPosition =
+                        DotPosition((int)(NoteToScore(pitch, isTreble) * 8f) % 2 == 1, true);
+                }
                 else
+                {
                     noteObject.sprite = Resources.Load("Note8_", typeof(Sprite)) as Sprite;
+                    GameObject dot = Instantiate(Manager.manager.dotObject, noteTransform);
+                    dot.GetComponent<Transform>().localPosition =
+                        DotPosition((int)(NoteToScore(pitch, isTreble) * 8f) % 2 == 1);
+                }
                 break;
             case "8분음표":
                 rhythm = 2;
@@ -138,7 +212,7 @@ public class Note : MonoBehaviour {
     }
 
     /// <summary>
-    /// 음표가 시간적으로(악보의 x좌표상으로) 언제 나오는지 설정하는 함수입니다.
+    /// 음표가 시간적으로(악보의 x좌표상으로) 언제 나오는지 설정하는 메서드입니다.
     /// </summary>
     /// <param name="t"></param>
     public void SetTiming(int t)
@@ -151,6 +225,38 @@ public class Note : MonoBehaviour {
         timing = t;
         noteTransform.localPosition = new Vector3(-5.16f + (timing * 0.66f), noteTransform.localPosition.y);
 
+    }
+
+    /// <summary>
+    /// 음표의 색을 설정하는 함수입니다.
+    /// </summary>
+    /// <param name="c"></param>
+    public void SetColor(Color c)
+    {
+        color = c;
+        noteObject.color = color;
+    }
+
+    /// <summary>
+    /// 음표에 점이 찍힐 좌표를 결정하는 함수입니다.
+    /// </summary>
+    /// <param name="isKan"></param>
+    /// <param name="isTailUpEighth"></param>
+    /// <returns></returns>
+    Vector3 DotPosition(bool isKan, bool isTailUpEighth = false)
+    {
+        if (isTailUpEighth && !isKan)
+        {
+            return new Vector3(1.7f, 0.5f);
+        }
+        else if (isKan)
+        {
+            return new Vector3(1f, 0f);
+        }
+        else
+        {
+            return new Vector3(1f, 0.5f);
+        }
     }
 
     /// <summary>

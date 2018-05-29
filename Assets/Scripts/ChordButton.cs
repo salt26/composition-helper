@@ -9,10 +9,11 @@ public class ChordButton : MonoBehaviour {
     Chord chord;
     
 	void FixedUpdate () {
+        if (buttonNum < 0 || buttonNum >= 6) return;
         chord = Manager.manager.GetTempChord(buttonNum);
-        if (chord != null)
+        if (chord == null)
         {
-            // TODO
+            Debug.Log("Error in ChordButton "+this.name);
         }
 	}
 
@@ -25,6 +26,9 @@ public class ChordButton : MonoBehaviour {
         {
             //if (c < 36 || c > 64) continue;
             if (c < 0 || c > 40) continue;
+            g = Instantiate(Manager.manager.noteObject, measure.GetComponent<Transform>());
+            g.GetComponent<Note>().Initialize(false, c, "온음표", 0);
+            /*
             g = Instantiate(Manager.manager.noteObject, measure.GetComponent<Transform>());
             g.GetComponent<Transform>().localPosition = new Vector3(-5.16f, Note.NoteToScore(c, false), 0f);
             g.GetComponent<SpriteRenderer>().color = Color.black;

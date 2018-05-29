@@ -58,3 +58,4 @@ MonoBehaviour:
     type: 2}
   accidentalObject: {fileID: 1811807560070144, guid: bab3213ffe7dce34c933d86148b1da6b,
     type: 2}
+  dotObject: {fileID: 1448790954174228, guid: 38dfee3c9cc19564db1b648ab6a04656, type: 2}
