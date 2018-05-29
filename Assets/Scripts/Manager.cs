@@ -244,7 +244,34 @@ public class Manager : MonoBehaviour {
     {
         if (tone >= 0 && tone < 128)
         {
-            outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
+            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
+        }
+    }
+
+    /// <summary>
+    /// 음을 멈춥니다.
+    /// </summary>
+    /// <param name="tone"></param>
+    public void Stop(int tone)
+    {
+        if (tone >= 0 && tone < 128)
+        {
+            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOff, 0, tone, 127));
+        }
+    }
+
+    IEnumerator __PlayAll(List<KeyValuePair<float, int>> list)
+    {
+        float last = 0;
+        foreach (KeyValuePair<float, int> p in list)
+        {
+            if (last != p.Key)
+            {
+                yield return new WaitForSecondsRealtime((p.Key - last) / 2);
+                last = p.Key;
+            }
+            if (p.Value > 0) Play(p.Value);
+            else Stop(p.Value);
         }
     }
 
@@ -258,13 +285,17 @@ public class Manager : MonoBehaviour {
                 list.Add(p);
             }
         }
-        list.Sort();
+        list.Sort(delegate (KeyValuePair<float, int> p1, KeyValuePair<float, int> p2)
+        {
+            return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : 0;
+        });
         string tmp = "";
         foreach (KeyValuePair<float, int> p in list)
         {
             tmp += "(" + p.Key + ", " + p.Value + ") ";
         }
         Debug.Log(tmp);
+        manager.StartCoroutine(__PlayAll(list));
     }
 
     /// <summary>
