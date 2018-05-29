@@ -9,6 +9,30 @@ public class Measure : MonoBehaviour
     bool isInteractive = true;
     bool isHighlighting = false;
 
+    /*
+    void FixedUpdate()
+    {
+        Ray ray = Manager.manager.GetMainCamera().ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (isInteractive && Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 8))) {
+            Debug.Log("Hello");
+            HighlightOff();
+            Manager.manager.GetChordRecommendButton().interactable = true;
+            Selected();
+        }
+    }
+    */
+
+    void OnMouseDown()
+    {
+        if (isInteractive)
+        {
+            HighlightOff();
+            Manager.manager.GetChordRecommendButton().interactable = true;
+            Selected();
+        }
+    }
+
     public void AddNote(Note note)
     {
         notes.Add(note);
@@ -34,7 +58,7 @@ public class Measure : MonoBehaviour
 
     public void InteractionOff()
     {
-        GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.51f, 0.85f, 0.7f);
+        GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
         isInteractive = false;
     }
 
@@ -42,6 +66,12 @@ public class Measure : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().color = Color.black;
         isInteractive = true;
+    }
+
+    public void Selected()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(1f, 0.6899f, 0.2405f, 1f);
+        Manager.manager.SetCursor(this);
     }
 
     public void HighlightOn()

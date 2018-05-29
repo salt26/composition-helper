@@ -29,6 +29,8 @@ public class Manager : MonoBehaviour {
     GameObject melodyPanel;
     GameObject mainCamera;
     Scrollbar scrollbar;
+    Button chordRecommendButton;
+    object cursor;
     bool isScoreScene;
 
     bool isChordDriven;
@@ -47,6 +49,7 @@ public class Manager : MonoBehaviour {
         {
             staffs.Add(null);
         }
+        cursor = null;
     }
 
     void FixedUpdate()
@@ -73,6 +76,10 @@ public class Manager : MonoBehaviour {
         if (scrollbar == null && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             scrollbar = GameObject.Find("Scrollbar").GetComponent<Scrollbar>();
+        }
+        if (chordRecommendButton == null && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            chordRecommendButton = GameObject.Find("ChordRecommendButton").GetComponent<Button>();
         }
         if ((mainCamera == null || !mainCamera.name.Equals("Main Camera")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
@@ -103,6 +110,11 @@ public class Manager : MonoBehaviour {
                 g.GetComponentInChildren<Text>().text = (i + 1).ToString();
             }
             RecommendChords(null);
+            staffs[0].InteractionAllOff();
+            staffs[1].InteractionAllOff();
+            staffs[2].InteractionAllOff();
+            staffs[2].GetMeasure(0).InteractionOn();
+            staffs[2].GetMeasure(0).HighlightOn();
         }
 
         if (scrollbar != null && mainCamera != null)
@@ -140,6 +152,21 @@ public class Manager : MonoBehaviour {
         {
             Debug.LogError("SetMeasure Error!");
         }
+    }
+
+    public void SetCursor(object thing)
+    {
+        cursor = thing;
+    }
+
+    public Camera GetMainCamera()
+    {
+        return mainCamera.GetComponent<Camera>();
+    }
+
+    public Button GetChordRecommendButton()
+    {
+        return chordRecommendButton;
     }
 
     public void RecommendChords(Chord prevChord)
