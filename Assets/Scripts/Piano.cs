@@ -15,7 +15,7 @@ public class Piano : MonoBehaviour {
  
     private void OnMouseDown()
     {
-        float x = Input.mousePosition.x / 1280, y = Input.mousePosition.y / 140;
+        float x = Input.mousePosition.x / Screen.width, y = Input.mousePosition.y / (Screen.height / 5f);
         if (y > 1) return;
         int key = (int)Mathf.Floor(x * 29);
         int tone = key / 7 * 17;

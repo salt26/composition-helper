@@ -54,4 +54,9 @@ public class ChordButton : MonoBehaviour {
             // TODO 미디 기준 번호 대신 고유한 인코딩을 사용하자.
         } 
     }
+
+    public void PlayChord()
+    {
+        chord.PlayChord();
+    }
 }
