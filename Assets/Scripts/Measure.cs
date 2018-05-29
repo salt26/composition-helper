@@ -10,15 +10,20 @@ public class Measure : MonoBehaviour
     Color disabledColor = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
     Color enabledColor = Color.black;
     Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
-    
+
     void FixedUpdate()
     {
-        if (Manager.manager != null && Manager.manager.GetCursor().Equals(this) && isInteractive)
+        if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()) && isInteractive)
         {
             GetComponent<SpriteRenderer>().color = selectedColor;
-        } else
+        }
+        else if (isInteractive)
         {
-            GetComponent<SpriteRenderer>().color = selectedColor;
+            GetComponent<SpriteRenderer>().color = enabledColor;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = disabledColor;
         }
     }
 
