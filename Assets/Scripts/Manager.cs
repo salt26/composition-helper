@@ -169,6 +169,11 @@ public class Manager : MonoBehaviour {
         return chordRecommendButton;
     }
 
+    public object GetCursor()
+    {
+        return cursor;
+    }
+
     public void RecommendChords(Chord prevChord)
     {
         if (prevChord == null)

@@ -7,21 +7,20 @@ public class Measure : MonoBehaviour
 
     List<Note> notes = new List<Note>();
     bool isInteractive = true;
-    bool isHighlighting = false;
-
-    /*
+    Color disabledColor = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
+    Color enabledColor = Color.black;
+    Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
+    
     void FixedUpdate()
     {
-        Ray ray = Manager.manager.GetMainCamera().ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (isInteractive && Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 8))) {
-            Debug.Log("Hello");
-            HighlightOff();
-            Manager.manager.GetChordRecommendButton().interactable = true;
-            Selected();
+        if (Manager.manager != null && Manager.manager.GetCursor().Equals(this) && isInteractive)
+        {
+            GetComponent<SpriteRenderer>().color = selectedColor;
+        } else
+        {
+            GetComponent<SpriteRenderer>().color = selectedColor;
         }
     }
-    */
 
     void OnMouseDown()
     {
@@ -58,58 +57,33 @@ public class Measure : MonoBehaviour
 
     public void InteractionOff()
     {
-        GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
+        GetComponent<SpriteRenderer>().color = disabledColor;
         isInteractive = false;
     }
 
     public void InteractionOn()
     {
-        GetComponent<SpriteRenderer>().color = Color.black;
+        GetComponent<SpriteRenderer>().color = enabledColor;
         isInteractive = true;
     }
 
     public void Selected()
     {
-        GetComponent<SpriteRenderer>().color = new Color(1f, 0.6899f, 0.2405f, 1f);
         Manager.manager.SetCursor(this);
     }
 
     public void HighlightOn()
     {
-        if (isHighlighting) return;
-        isHighlighting = true;
-        StartCoroutine("HighlightColor");
+        GetComponent<Highlighter>().HighlightOn();
     }
 
     public void HighlightOff()
     {
-        if (!isHighlighting) return;
-        isHighlighting = false;
-        StopCoroutine("HighlightColor");
+        GetComponent<Highlighter>().HighlightOff();
+
         if (isInteractive) GetComponent<SpriteRenderer>().color = Color.black;
-        else GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.51f, 0.85f, 0.7f);
+        else GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
     }
 
-    IEnumerator HighlightColor()
-    {
-        while (true)
-        {
-            int frame = 16;
-            for (int i = 0; i < frame; i++)
-            {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.5443f, 0.8962f, 0.1564f, 1f), new Color(0.8980f, 0.1568f, 0.4420f, 1f), i / (float)frame);
-                yield return new WaitForFixedUpdate();
-            }
-            for (int i = 0; i < frame; i++)
-            {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.8980f, 0.1568f, 0.4420f, 1f), new Color(0.1568f, 0.5407f, 0.8980f, 1f), i / (float)frame);
-                yield return new WaitForFixedUpdate();
-            }
-            for (int i = 0; i < frame; i++)
-            {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.1568f, 0.5407f, 0.8980f, 1f), new Color(0.5443f, 0.8962f, 0.1564f, 1f), i / (float)frame);
-                yield return new WaitForFixedUpdate();
-            }
-        }
-    }
+
 }

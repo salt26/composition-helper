@@ -114,7 +114,6 @@ public class Piano : MonoBehaviour {
         press.transform.position = new Vector2(tone / 17 * 308.9f + xpos[tone % 17], 0f);
         press.SetActive(true);
         Manager.manager.Play(Note.NoteToMidi(tone));
-        Generator.GenerateNotes();
     }
 
     private void OnMouseUp()
