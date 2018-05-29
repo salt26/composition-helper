@@ -26,8 +26,7 @@ public class ChordButton : MonoBehaviour {
         foreach (int c in chord.GetNotes())
         {
             if (c < 0 || c > 40) continue;
-            g = Instantiate(Manager.manager.noteObject, measure.GetComponent<Transform>());
-            g.GetComponent<Note>().Initialize(false, c, "온음표", 0);
+            Manager.manager.WriteNote(2, 0, c, "온음표", 0);
         } 
     }
 

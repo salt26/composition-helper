@@ -50,9 +50,9 @@ public class Measure : MonoBehaviour
     {
         foreach (Note n in notes)
         {
-            notes.Remove(n);
             Destroy(n.gameObject);
         }
+        notes.Clear();
     }
 
     public void InteractionOff()

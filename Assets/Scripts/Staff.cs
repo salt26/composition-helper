@@ -60,6 +60,14 @@ public class Staff : MonoBehaviour {
         GetMeasure(measure).AddNote(g.GetComponent<Note>());
     }
 
+    public void WriteNote(int measure, int pitch, string rhythm, int timing, Color color)
+    {
+        if (pitch < 0 || pitch > 68 || rhythm == null || timing < 0 || timing >= 16) return;
+        GameObject g = Instantiate(Manager.manager.noteObject, GetMeasure(measure).GetComponent<Transform>());
+        g.GetComponent<Note>().Initialize(staffName.Equals("Melody"), pitch, rhythm, timing, color);
+        GetMeasure(measure).AddNote(g.GetComponent<Note>());
+    }
+
     public void TogglePlay()
     {
         hasPlay = !hasPlay;
