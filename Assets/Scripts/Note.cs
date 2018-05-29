@@ -11,12 +11,38 @@ public class Note : MonoBehaviour {
                     // 16: 온음표, 4: 4분음표, 1: 16분음표
     int timing = 0; // 음표가 등장하는 x좌표 위치(0 <= timing < 16)
     bool isTreble = true;
+    bool isRecommended = false;
     Color color = Color.black;
+    Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
 
     void Awake()
     {
         noteObject = GetComponent<SpriteRenderer>();
         noteTransform = GetComponent<Transform>();
+    }
+
+    void FixedUpdate()
+    {
+        if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
+        {
+            GetComponent<SpriteRenderer>().color = selectedColor;
+        } else if (Manager.manager != null && isRecommended)
+        {
+            GetComponent<SpriteRenderer>().color = Manager.manager.recommendColor;
+        } else
+        {
+            GetComponent<SpriteRenderer>().color = Color.black;
+        }
+    }
+
+    void OnMouseDown()
+    {
+        Selected();
+    }
+
+    public void Selected()
+    {
+        Manager.manager.SetCursor(this);
     }
 
     public void Initialize(bool isTreble, int pitch, string rhythm, int timing)
@@ -34,6 +60,17 @@ public class Note : MonoBehaviour {
         SetRhythm(rhythm);
         SetTiming(timing);
         SetColor(color);
+    }
+
+    public void Initialize(bool isTreble, int pitch, string rhythm, int timing, Color color, bool isRecommended)
+    {
+        SetIsTreble(isTreble);
+        SetPitch(pitch);
+        SetRhythm(rhythm);
+        SetTiming(timing);
+        SetColor(color);
+        this.isRecommended = isRecommended;
+        Debug.Log(isRecommended);
     }
 
     /// <summary>

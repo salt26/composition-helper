@@ -31,7 +31,7 @@ public class ChordButton : MonoBehaviour {
             Manager.manager.WriteNote(1, 0, c, "4분음표", 4, color);
             Manager.manager.WriteNote(1, 0, c, "4분음표", 8, color);
             Manager.manager.WriteNote(1, 0, c, "4분음표", 12, color);
-        } 
+        }
     }
 
     public void PlayChord()

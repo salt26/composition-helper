@@ -9,6 +9,14 @@ public class Staff : MonoBehaviour {
     bool hasPlay = true;
     List<Measure> measures = new List<Measure>();
 
+    private void FixedUpdate()
+    {
+        /*
+        if (staffName.Equals("Chord") && Manager.manager != null && Manager.manager.GetCursor.GetType() measures.Contains((Measure)Manager.manager.GetCursor())) {
+            Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOn();
+        }
+        */
+    }
     /// <summary>
     /// 인자 m만큼 마디를 생성해주는 함수입니다.
     /// </summary>
@@ -65,6 +73,14 @@ public class Staff : MonoBehaviour {
         if (pitch < 0 || pitch > 68 || rhythm == null || timing < 0 || timing >= 16) return;
         GameObject g = Instantiate(Manager.manager.noteObject, GetMeasure(measure).GetComponent<Transform>());
         g.GetComponent<Note>().Initialize(staffName.Equals("Melody"), pitch, rhythm, timing, color);
+        GetMeasure(measure).AddNote(g.GetComponent<Note>());
+    }
+
+    public void WriteNote(int measure, int pitch, string rhythm, int timing, Color color, bool isRecommended)
+    {
+        if (pitch < 0 || pitch > 68 || rhythm == null || timing < 0 || timing >= 16) return;
+        GameObject g = Instantiate(Manager.manager.noteObject, GetMeasure(measure).GetComponent<Transform>());
+        g.GetComponent<Note>().Initialize(staffName.Equals("Melody"), pitch, rhythm, timing, color, isRecommended);
         GetMeasure(measure).AddNote(g.GetComponent<Note>());
     }
 

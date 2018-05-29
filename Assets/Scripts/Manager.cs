@@ -19,6 +19,7 @@ public class Manager : MonoBehaviour
     public GameObject additionalLineObject;
     public GameObject accidentalObject;
     public GameObject dotObject;
+    public Color recommendColor = new Color(1f, 0.6899f, 0.2405f, 1f);
 
     /*
      * staffs[0] : MelodyStaff
@@ -212,7 +213,7 @@ public class Manager : MonoBehaviour
                 rhythm == 4 ? "4분음표" :
                 rhythm == 6 ? "점4분음표" :
                 rhythm == 8 ? "2분음표" :
-                rhythm == 12 ? "점2분음표" : "온음표", sum, new Color(0, 0, 0, 0.3f));
+                rhythm == 12 ? "점2분음표" : "온음표", sum, recommendColor, true);
             sum += rhythm;
         }
     }
@@ -274,6 +275,13 @@ public class Manager : MonoBehaviour
         Staff st = manager.GetStaff(staff);
         if (st == null) return;
         st.WriteNote(measure, pitch, rhythm, timing, color);
+    }
+
+    public void WriteNote(int staff, int measure, int pitch, string rhythm, int timing, Color color, bool isRecommended)
+    {
+        Staff st = manager.GetStaff(staff);
+        if (st == null) return;
+        st.WriteNote(measure, pitch, rhythm, timing, color, isRecommended);
     }
 
     /// <summary>

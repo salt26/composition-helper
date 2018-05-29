@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Highlighter : MonoBehaviour {
 
@@ -22,23 +23,48 @@ public class Highlighter : MonoBehaviour {
 
     IEnumerator HighlightColor()
     {
-        while (true)
+        if (GetComponent<SpriteRenderer>() != null)
         {
-            int frame = 16;
-            for (int i = 0; i < frame; i++)
+            while (true)
             {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.5443f, 0.8962f, 0.1564f, 1f), new Color(0.8980f, 0.1568f, 0.4420f, 1f), i / (float)frame);
-                yield return new WaitForFixedUpdate();
+                int frame = 16;
+                for (int i = 0; i < frame; i++)
+                {
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.5443f, 0.8962f, 0.1564f, 1f), new Color(0.8980f, 0.1568f, 0.4420f, 1f), i / (float)frame);
+                    yield return new WaitForFixedUpdate();
+                }
+                for (int i = 0; i < frame; i++)
+                {
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.8980f, 0.1568f, 0.4420f, 1f), new Color(0.1568f, 0.5407f, 0.8980f, 1f), i / (float)frame);
+                    yield return new WaitForFixedUpdate();
+                }
+                for (int i = 0; i < frame; i++)
+                {
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.1568f, 0.5407f, 0.8980f, 1f), new Color(0.5443f, 0.8962f, 0.1564f, 1f), i / (float)frame);
+                    yield return new WaitForFixedUpdate();
+                }
             }
-            for (int i = 0; i < frame; i++)
+        }
+        else if (GetComponent<Image>() != null)
+        {
+            while (true)
             {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.8980f, 0.1568f, 0.4420f, 1f), new Color(0.1568f, 0.5407f, 0.8980f, 1f), i / (float)frame);
-                yield return new WaitForFixedUpdate();
-            }
-            for (int i = 0; i < frame; i++)
-            {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.1568f, 0.5407f, 0.8980f, 1f), new Color(0.5443f, 0.8962f, 0.1564f, 1f), i / (float)frame);
-                yield return new WaitForFixedUpdate();
+                int frame = 16;
+                for (int i = 0; i < frame; i++)
+                {
+                    GetComponent<Image>().color = Color.Lerp(new Color(0.5443f, 0.8962f, 0.1564f, 1f), new Color(0.8980f, 0.1568f, 0.4420f, 1f), i / (float)frame);
+                    yield return new WaitForFixedUpdate();
+                }
+                for (int i = 0; i < frame; i++)
+                {
+                    GetComponent<Image>().color = Color.Lerp(new Color(0.8980f, 0.1568f, 0.4420f, 1f), new Color(0.1568f, 0.5407f, 0.8980f, 1f), i / (float)frame);
+                    yield return new WaitForFixedUpdate();
+                }
+                for (int i = 0; i < frame; i++)
+                {
+                    GetComponent<Image>().color = Color.Lerp(new Color(0.1568f, 0.5407f, 0.8980f, 1f), new Color(0.5443f, 0.8962f, 0.1564f, 1f), i / (float)frame);
+                    yield return new WaitForFixedUpdate();
+                }
             }
         }
     }
