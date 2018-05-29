@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,10 +34,12 @@ public class Manager : MonoBehaviour {
     bool isChordDriven;
     int measureNum = 0;
 
-    OutputDevice outDevice = new OutputDevice(0);
+    OutputDevice outDevice;
 
     // Use this for initialization
-    void Awake () {
+    void Awake ()
+    {
+        outDevice = new OutputDevice(0);
         manager = this;
         DontDestroyOnLoad(this);
         isScoreScene = false;
@@ -139,20 +141,20 @@ public class Manager : MonoBehaviour {
             Debug.LogError("SetMeasure Error!");
         }
     }
-    
+
     public void RecommendChords(Chord prevChord)
     {
         if (prevChord == null)
         {
             tempChords.Clear();
-            
+
             // This is only for demo!
-            tempChords.Add(new Chord(Note.MidiToNote(49)+1, Note.MidiToNote(53), Note.MidiToNote(56)+1));
+            tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
             tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
             tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
             tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
             tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49), Note.MidiToNote(54)));
-            tempChords.Add(new Chord(Note.MidiToNote(51)+1, Note.MidiToNote(55), Note.MidiToNote(58)+1, Note.MidiToNote(61)+1));
+            tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
         }
         else
         {
@@ -188,7 +190,7 @@ public class Manager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 화음을 연주합니다.
+    /// 음을 연주합니다.
     /// </summary>
     /// <param name="tone"></param>
     public void Play(int tone)
@@ -198,86 +200,7 @@ public class Manager : MonoBehaviour {
             outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
         }
     }
-
-    /// <summary>
-    /// 화음을 연주합니다.
-    /// </summary>
-    /// <param name="fundamentalTone"></param>
-    /// <param name="second"></param>
-    /// <param name="third"></param>
-    /// <param name="fourth"></param>
-    public void PlayChord(int fundamentalTone, int second, int third, int fourth = -1)
-    {
-        for (int i = 3; i <= 6; i++)
-        {
-            Play(fundamentalTone + i * 12);
-            Play(fundamentalTone + second + i * 12);
-            Play(fundamentalTone + third + i * 12);
-            if (fourth != -1) Play(fundamentalTone + fourth + i * 12);
-        }
-    }
-
-    /// <summary>
-    /// 화음을 연주합니다.
-    /// </summary>
-    /// <param name="chord"></param>
-    public void PlayChord(string chord)
-    {
-        int fundamentalTone = 0;
-        int second = 4, third = 7, fourth = -1;
-        foreach (char c in chord)
-        {
-            switch (c)
-            {
-                case 'A':
-                    fundamentalTone = 9;
-                    break;
-                case 'B':
-                    fundamentalTone = 11;
-                    break;
-                case 'C':
-                    break;
-                case 'D':
-                    fundamentalTone = 2;
-                    break;
-                case 'E':
-                    fundamentalTone = 4;
-                    break;
-                case 'F':
-                    fundamentalTone = 5;
-                    break;
-                case 'G':
-                    fundamentalTone = 7;
-                    break;
-                case '#':
-                    fundamentalTone++;
-                    break;
-                case 'b':
-                    fundamentalTone--;
-                    break;
-                case 'd':
-                    third = 6;
-                    break;
-                case 'm':
-                    second = 3;
-                    break;
-                case '2':
-                    second = 2;
-                    break;
-                case '4':
-                    second = 5;
-                    break;
-                case '6':
-                    fourth = 9;
-                    break;
-                case '7':
-                    fourth = 10;
-                    break;
-            }
-        }
-        PlayChord(fundamentalTone, second, third, fourth);
-    }
-
+    
     /// <summary>
     /// 프로그램을 종료합니다.
     /// </summary>
