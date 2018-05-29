@@ -33,10 +33,12 @@ public class Manager : MonoBehaviour {
     bool isChordDriven;
     int measureNum = 0;
 
-    OutputDevice outDevice = new OutputDevice(0);
+    OutputDevice outDevice;
 
     // Use this for initialization
-    void Awake () {
+    void Awake ()
+    {
+        outDevice = new OutputDevice(0);
         manager = this;
         DontDestroyOnLoad(this);
         isScoreScene = false;
