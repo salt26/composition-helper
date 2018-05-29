@@ -10,6 +10,11 @@ using UnityEditor;
 public class Manager : MonoBehaviour {
 
     public static Manager manager;
+    
+    public GameObject measureNumCanvas;
+    public GameObject noteObject;
+    public GameObject additionalLineObject;
+    public GameObject accidentalObject;
 
     /*
      * staffs[0] : MelodyStaff
@@ -17,6 +22,7 @@ public class Manager : MonoBehaviour {
      * staffs[2] : ChordStaff
      */
     List<Staff> staffs = new List<Staff>();
+    List<Chord> tempChords = new List<Chord>(); // TODO This variable is only for demo.
     GameObject melodyPanel;
     GameObject mainCamera;
     Scrollbar scrollbar;
@@ -38,6 +44,8 @@ public class Manager : MonoBehaviour {
 
     void FixedUpdate()
     {
+        GameObject g;
+
         if ((melodyPanel == null || !melodyPanel.name.Equals("MelodyPanel")) && SceneManager.GetActiveScene().name.Equals("Start"))
         {
             melodyPanel = GameObject.Find("MelodyPanel");
@@ -82,6 +90,11 @@ public class Manager : MonoBehaviour {
                 if (measureNum <= 1) scrollbar.size = 1f;
                 else scrollbar.size = 1f / ((measureNum - 1) * 11f - 5f);
             }
+            for (int i = 0; i < measureNum; i++)
+            {
+                g = Instantiate(measureNumCanvas, new Vector3(-1.45f + (11f * i), 4.7f, 0f), Quaternion.identity);
+                g.GetComponentInChildren<Text>().text = (i + 1).ToString();
+            }
         }
 
         if (scrollbar != null && mainCamera != null)
@@ -121,6 +134,53 @@ public class Manager : MonoBehaviour {
         }
     }
     
+    public void RecommendChords(Chord prevChord)
+    {
+        if (prevChord == null)
+        {
+            tempChords.Clear();
+            
+            // This is only for demo!
+            // TODO this is midi encoding. PLEASE change integers to our encoding!
+            tempChords.Add(new Chord(49, 53, 56));
+            tempChords.Add(new Chord(54, 58, 61));
+            tempChords.Add(new Chord(47, 50, 54));
+            tempChords.Add(new Chord(51, 54, 57));
+            tempChords.Add(new Chord(47, 49, 54));
+            tempChords.Add(new Chord(51, 55, 58, 61));
+        }
+        else
+        {
+            tempChords.Clear();
+
+            // TODO
+        }
+    }
+
+    public Chord GetTempChord(int i)
+    {
+        if (i >= 0 && i < tempChords.Count)
+        {
+            return tempChords[i];
+        }
+        else return null;
+    }
+
+    /// <summary>
+    /// 특정된 종류의 보표(Staff)를 반환합니다.
+    /// kind가 0이면 멜로디, 1이면 반주, 2이면 화음 보표를 반환합니다.
+    /// 어느 것도 아니면 null이 반환됩니다.
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns></returns>
+    public Staff GetStaff(int kind)
+    {
+        if (kind >= 0 && kind < 3)
+        {
+            return staffs[kind];
+        }
+        else return null;
+    }
 
     /// <summary>
     /// 프로그램을 종료합니다.

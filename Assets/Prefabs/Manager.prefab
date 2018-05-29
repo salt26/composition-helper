@@ -51,6 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b27fea31c0704448ac10040a9fd0657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  melodyPanel: {fileID: 0}
-  isChordDriven: 0
-  measure: 0
+  measureNumCanvas: {fileID: 1347080673230390, guid: 56d1f3e03f6278b439e8fa3c24e7cdb8,
+    type: 2}
+  noteObject: {fileID: 1159266590693010, guid: 5512c1a666b9a4d448adc22c88f3cc44, type: 2}
+  additionalLineObject: {fileID: 1526981407201220, guid: 4c287ba762b8e1a4aaef6260f70105d8,
+    type: 2}
+  accidentalObject: {fileID: 1811807560070144, guid: bab3213ffe7dce34c933d86148b1da6b,
+    type: 2}
