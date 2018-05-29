@@ -9,7 +9,8 @@ using UnityEditor;
 
 using Sanford.Multimedia.Midi;
 
-public class Manager : MonoBehaviour {
+public class Manager : MonoBehaviour
+{
 
     public static Manager manager;
     
@@ -169,6 +170,11 @@ public class Manager : MonoBehaviour {
         return chordRecommendButton;
     }
 
+    public object GetCursor()
+    {
+        return cursor;
+    }
+
     public void RecommendChords(Chord prevChord)
     {
         if (prevChord == null)
@@ -308,14 +314,14 @@ public class Manager : MonoBehaviour {
     /// <param name="timing"></param>
     public void WriteNote(int staff, int measure, int pitch, string rhythm, int timing)
     {
-        Staff st = GetStaff(staff);
+        Staff st = manager.GetStaff(staff);
         if (st == null) return;
         st.WriteNote(measure, pitch, rhythm, timing);
     }
 
     public void WriteNote(int staff, int measure, int pitch, string rhythm, int timing, Color color)
     {
-        Staff st = GetStaff(staff);
+        Staff st = manager.GetStaff(staff);
         if (st == null) return;
         st.WriteNote(measure, pitch, rhythm, timing, color);
     }
