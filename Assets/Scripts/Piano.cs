@@ -47,5 +47,6 @@ public class Piano : MonoBehaviour {
             if (x > 0.6f) tone++;
         }
         Manager.manager.Play(Note.NoteToMidi(tone));
+        Generator.GenerateNotes();
     }
 }
