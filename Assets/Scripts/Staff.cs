@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Staff : MonoBehaviour {
 
+    public GameObject chordPanel;
+
     public GameObject measure;
     public string staffName;  // "Melody", "Accompaniment", "Chord" 중 하나
     bool hasPlay = true;
@@ -49,6 +51,18 @@ public class Staff : MonoBehaviour {
             return measures[measureIndex];
         }
         return null;
+    }
+
+    /// <summary>
+    /// 특정된 마디의 마디 번호를 반환합니다.
+    /// 없으면 -1을 반환합니다.
+    /// </summary>
+    /// <param name="m"></param>
+    /// <returns></returns>
+    public int GetMeasureNum(Measure m)
+    {
+        if (m == null || !measures.Contains(m)) return -1;
+        else return measures.IndexOf(m);
     }
 
     /// <summary>

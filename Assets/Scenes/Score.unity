@@ -361,6 +361,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 98735468}
+        m_MethodName: HighlightOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &98735466
@@ -4293,7 +4304,7 @@ Prefab:
     - target: {fileID: 224915191312816722, guid: 6eae66746276b1f4c93b1edd4ce0165d,
         type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224915191312816722, guid: 6eae66746276b1f4c93b1edd4ce0165d,
         type: 2}
@@ -4406,6 +4417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304718d1d745c234e9abfd6fea414041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chordPanel: {fileID: 153306928}
   measure: {fileID: 1229778017608958, guid: 1b938ae21ca1ab0469baa1c7448fdd20, type: 2}
   staffName: Melody
 --- !u!1 &1328435599
@@ -4758,6 +4770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304718d1d745c234e9abfd6fea414041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chordPanel: {fileID: 153306928}
   measure: {fileID: 1229778017608958, guid: 1b938ae21ca1ab0469baa1c7448fdd20, type: 2}
   staffName: Accompaniment
 --- !u!1 &1396035571
@@ -5154,6 +5167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304718d1d745c234e9abfd6fea414041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chordPanel: {fileID: 153306928}
   measure: {fileID: 1229778017608958, guid: 1b938ae21ca1ab0469baa1c7448fdd20, type: 2}
   staffName: Chord
 --- !u!224 &1452503191 stripped
@@ -5888,6 +5902,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 98735465}
+    - target: {fileID: 114466061243960976, guid: 389362c543059ef4e8371e136501c6e1,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 389362c543059ef4e8371e136501c6e1, type: 2}
   m_IsPrefabParent: 0

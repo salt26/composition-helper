@@ -34,7 +34,9 @@ public class Manager : MonoBehaviour
     GameObject canvas;
     Scrollbar scrollbar;
     Button chordRecommendButton;
+    Button rhythmRecommendButton;
     object cursor;
+    int cursorMeasureNum;
     bool isScoreScene;
 
     bool isChordDriven;
@@ -54,6 +56,7 @@ public class Manager : MonoBehaviour
             staffs.Add(null);
         }
         cursor = null;
+        cursorMeasureNum = -1;
     }
 
     void FixedUpdate()
@@ -88,6 +91,10 @@ public class Manager : MonoBehaviour
         if ((canvas == null || !canvas.name.Equals("Canvas")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             canvas = GameObject.Find("Canvas");
+        }
+        if (rhythmRecommendButton == null && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            rhythmRecommendButton = GameObject.Find("RhythmRecommendButton").GetComponent<Button>();
         }
         if ((mainCamera == null || !mainCamera.name.Equals("Main Camera")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
@@ -162,9 +169,10 @@ public class Manager : MonoBehaviour
         }
     }
 
-    public void SetCursor(object thing)
+    public void SetCursor(object thing, int measureNum)
     {
         cursor = thing;
+        cursorMeasureNum = measureNum;
     }
 
     public Camera GetMainCamera()
@@ -177,9 +185,19 @@ public class Manager : MonoBehaviour
         return chordRecommendButton;
     }
 
+    public Button GetRhythmRecommendButton()
+    {
+        return rhythmRecommendButton;
+    }
+
     public object GetCursor()
     {
         return cursor;
+    }
+
+    public int GetCursorMeasureNum()
+    {
+        return cursorMeasureNum;
     }
 
     public void RecommendChords(Chord prevChord)

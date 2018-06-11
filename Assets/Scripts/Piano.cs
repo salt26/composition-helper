@@ -201,7 +201,7 @@ public class Piano : MonoBehaviour {
                     {
                         if (note.GetTiming() == n.GetTiming())
                         {
-                            Manager.manager.SetCursor(note);
+                            Manager.manager.SetCursor(note, m.GetComponentInParent<Staff>().GetMeasureNum(m));
                             break;
                         }
                     }
@@ -349,6 +349,17 @@ public class Piano : MonoBehaviour {
                 else
                     keyHighlight[i] = false;
             }
+        }
+    }
+
+    /// <summary>
+    /// 모든 건반의 주황색 하이라이트를 해제합니다.
+    /// </summary>
+    public static void SetAllKeyHighlightOff()
+    {
+        for (int i = 0; i <= 68; i++)
+        {
+            keyHighlight[i] = false;
         }
     }
 }
