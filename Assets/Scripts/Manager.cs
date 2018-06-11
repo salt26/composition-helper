@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -197,7 +197,6 @@ public class Manager : MonoBehaviour
 
     public int GetCursorMeasureNum()
     {
-        Debug.Log(cursorMeasureNum);
         return cursorMeasureNum;
     }
 
@@ -230,8 +229,7 @@ public class Manager : MonoBehaviour
 
     public void RecommendRhythm()
     {
-        int mn = GetCursorMeasureNum();
-        Debug.Log("MeasureNum " + mn);
+        int mn = manager.GetCursorMeasureNum();
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
         manager.GetStaff(0).GetMeasure(mn).ClearMeasure();

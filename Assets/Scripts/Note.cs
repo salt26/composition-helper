@@ -51,12 +51,12 @@ public class Note : MonoBehaviour {
         else if (Manager.manager != null && isRecommended)
         {
             SetColor(Manager.manager.recommendColor);
-            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, 0f);
+            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, -0.5f);
         }
         else
         {
             SetColor(color = Color.black);
-            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, 0f);
+            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, -0.5f);
         }
     }
 
@@ -85,20 +85,13 @@ public class Note : MonoBehaviour {
 
     public void Initialize(bool isTreble, int pitch, string rhythm, int timing, Color color)
     {
-        SetIsTreble(isTreble);
-        SetPitch(pitch);
-        SetRhythm(rhythm);
-        SetTiming(timing);
+        Initialize(isTreble, pitch, rhythm, timing);
         SetColor(color);
     }
 
     public void Initialize(bool isTreble, int pitch, string rhythm, int timing, Color color, bool isRecommended)
     {
-        SetIsTreble(isTreble);
-        SetPitch(pitch);
-        SetRhythm(rhythm);
-        SetTiming(timing);
-        SetColor(color);
+        Initialize(isTreble, pitch, rhythm, timing, color);
         this.isRecommended = isRecommended;
         //Debug.Log(isRecommended);
     }
@@ -124,7 +117,7 @@ public class Note : MonoBehaviour {
         if (p < 0 || p > 68) pitch = -1;
         else pitch = p;
 
-        noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, NoteToScore(pitch, isTreble));
+        noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, NoteToScore(pitch, isTreble), 1f);
 
         /* Additional Line */
         GameObject temp1, temp2;
