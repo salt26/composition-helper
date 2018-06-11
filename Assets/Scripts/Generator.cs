@@ -66,7 +66,6 @@ public class Generator {
                 }
             }
             if (i > 16) break;
-            Debug.Log("Failed");
         }
         return res;
     }
