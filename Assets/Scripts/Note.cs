@@ -67,7 +67,8 @@ public class Note : MonoBehaviour {
 
     public void Selected()
     {
-        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy)
+        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy ||
+            GetComponentInParent<Staff>().developingPanel.activeInHierarchy)
             return;
 
         Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
