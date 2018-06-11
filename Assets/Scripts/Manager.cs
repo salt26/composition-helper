@@ -91,7 +91,7 @@ public class Manager : MonoBehaviour
         if ((canvas == null || !canvas.name.Equals("Canvas")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             canvas = GameObject.Find("Canvas");
-        }
+        }   
         if (rhythmRecommendButton == null && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             rhythmRecommendButton = GameObject.Find("RhythmRecommendButton").GetComponent<Button>();
