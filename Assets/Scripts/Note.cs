@@ -100,7 +100,7 @@ public class Note : MonoBehaviour {
         SetTiming(timing);
         SetColor(color);
         this.isRecommended = isRecommended;
-        Debug.Log(isRecommended);
+        //Debug.Log(isRecommended);
     }
 
     /// <summary>

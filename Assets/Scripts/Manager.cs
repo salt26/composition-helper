@@ -197,6 +197,7 @@ public class Manager : MonoBehaviour
 
     public int GetCursorMeasureNum()
     {
+        Debug.Log(cursorMeasureNum);
         return cursorMeasureNum;
     }
 
