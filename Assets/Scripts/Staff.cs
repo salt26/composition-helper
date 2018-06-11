@@ -27,16 +27,20 @@ public class Staff : MonoBehaviour {
     {
         GameObject g;
         measures.Clear();
-        for (int i = 0; i < m - 1; i++)
+        for (int i = 0; i < m; i++)
         {
-            g = Instantiate(measure, GetComponent<Transform>());
-            g.GetComponent<Transform>().localPosition = new Vector3(i * 11f, 0f, 0f);
-            measures.Add(g.GetComponent<Measure>());
+            measures.Add(null);
         }
         g = Instantiate(measure, GetComponent<Transform>());
         g.GetComponent<Transform>().localPosition = new Vector3((m - 1) * 11f, 0f, 0f);
         g.GetComponent<SpriteRenderer>().sprite = Resources.Load("staff5", typeof(Sprite)) as Sprite;
-        measures.Add(g.GetComponent<Measure>());
+        measures[m - 1] = g.GetComponent<Measure>();
+        for (int i = m - 2; i >= 0; i--)
+        {
+            g = Instantiate(measure, GetComponent<Transform>());
+            g.GetComponent<Transform>().localPosition = new Vector3(i * 11f, 0f, 0f);
+            measures[i] = g.GetComponent<Measure>();
+        }
     }
 
     /// <summary>

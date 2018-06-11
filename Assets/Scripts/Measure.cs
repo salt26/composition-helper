@@ -47,6 +47,11 @@ public class Measure : MonoBehaviour
             {
                 HighlightOn();
             }
+            if (GetComponentInParent<Staff>().staffName.Equals("Chord")
+                && notes.Count == 0)
+            {
+                HighlightOn();
+            }
         }
         else
         {

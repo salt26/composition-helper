@@ -295,7 +295,7 @@ public class Note : MonoBehaviour {
             return;
         }
         timing = t;
-        noteTransform.localPosition = new Vector3(-5.16f + (timing * 0.66f), noteTransform.localPosition.y);
+        noteTransform.localPosition = new Vector3(-4.9f + (timing * 0.66f), noteTransform.localPosition.y);
 
     }
 

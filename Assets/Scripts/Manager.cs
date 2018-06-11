@@ -123,7 +123,7 @@ public class Manager : MonoBehaviour
             staffs[1].InteractionAllOff();
             staffs[2].InteractionAllOff();
             staffs[2].GetMeasure(0).InteractionOn();
-            staffs[2].GetMeasure(0).HighlightOn();
+            //staffs[2].GetMeasure(0).HighlightOn();
         }
 
         if (scrollbar != null && mainCamera != null)
@@ -194,6 +194,11 @@ public class Manager : MonoBehaviour
         return cursorMeasureNum;
     }
 
+    public int GetMaxMeasureNum()
+    {
+        return measureNum;
+    }
+
     public void RecommendChords(Chord prevChord)
     {
         if (prevChord == null)
@@ -218,13 +223,15 @@ public class Manager : MonoBehaviour
 
     public void RecommendRhythm()
     {
+        int mn = GetCursorMeasureNum();
+        Debug.Log("MeasureNum " + mn);
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
-        manager.GetStaff(0).GetMeasure(0).ClearMeasure();
+        manager.GetStaff(0).GetMeasure(mn).ClearMeasure();
         int sum = 0;
         foreach (int rhythm in rhythms)
         {
-            manager.WriteNote(0, 0, 51,
+            manager.WriteNote(0, mn, 51,
                 rhythm == 1 ? "16분음표" :
                 rhythm == 2 ? "8분음표" :
                 rhythm == 3 ? "점8분음표" :

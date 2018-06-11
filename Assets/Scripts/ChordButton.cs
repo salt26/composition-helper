@@ -35,12 +35,10 @@ public class ChordButton : MonoBehaviour {
 
         Manager.manager.GetStaff(1).GetMeasure(measureNum).InteractionOn();
         Manager.manager.GetStaff(0).GetMeasure(measureNum).InteractionOn();
-        /*
-        if (Manager.manager.GetStaff(0).GetMeasure(measureNum).GetNotes().Count == 0)
+        if (measureNum < Manager.manager.GetMaxMeasureNum() - 1)
         {
-            Manager.manager.GetStaff(0).GetMeasure(measureNum).HighlightOn();
+            Manager.manager.GetStaff(2).GetMeasure(measureNum + 1).InteractionOn();
         }
-        */
     }
 
     public void PlayChord()
