@@ -201,7 +201,7 @@ public class Piano : MonoBehaviour {
                     {
                         if (note.GetTiming() == n.GetTiming())
                         {
-                            Manager.manager.SetCursor(note);
+                            Manager.manager.SetCursor(note, m.GetComponentInParent<Staff>().GetMeasureNum(m));
                             break;
                         }
                     }
