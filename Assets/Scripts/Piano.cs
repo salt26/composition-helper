@@ -10,12 +10,91 @@ public class Piano : MonoBehaviour {
 
     public Sprite piano3, piano_1, piano_1R, piano_2, piano_2L, piano_2R, piano_3, piano_3L;
 
-    static float[] xpos = { 0f, 0f, 45.5f, 45.5f, 45.5f, 91f, 91f, 131f, 131f, 176.5f, 176.5f, 176.5f, 222.2f, 222.2f, 222.2f, 267.9f, 267.9f };
+    static float[] xpos = { 0f, 0f, 45.5f, 45.5f, 45.5f, 91f, 91f, 131f, 131f, 176.5f, 176.5f, 176.5f, 222.2f, 222.2f, 222.2f, 267.7f, 267.7f };
+    static Color whiteGray = new Color(0.6f, 0.6f, 0.6f, 1f);
+    static Color blackGray = new Color(0.3f, 0.3f, 0.3f, 1f);
+
+    List<GameObject> buttons = new List<GameObject>();
+    public int mode = 0;   // 0: disable all, 1: bass clef, 2: treble clef, 3: enable all
 
 	// Use this for initialization
 	void Start () {
         pressImage = press.GetComponent<Image>();
-	}
+        for (int tone = 0; tone <= 68; tone++)
+        {
+            GameObject p = Instantiate(press, GetComponent<Transform>());
+            p.transform.position = new Vector2(tone / 17 * 308.9f + xpos[tone % 17], 0f);
+            p.SetActive(true);
+            Image pi = p.GetComponent<Image>();
+            switch (tone % 17)
+            {
+                case 0:
+                    if (tone == 68) pi.sprite = piano3;
+                    else pi.sprite = piano_1;
+                    break;
+                case 1:
+                    pi.sprite = piano_1R;
+                    break;
+                case 2:
+                    pi.sprite = piano_2L;
+                    break;
+                case 3:
+                    pi.sprite = piano_2;
+                    break;
+                case 4:
+                    pi.sprite = piano_2R;
+                    break;
+                case 5:
+                    pi.sprite = piano_3L;
+                    break;
+                case 6:
+                    pi.sprite = piano_3;
+                    break;
+                case 7:
+                    pi.sprite = piano_1;
+                    break;
+                case 8:
+                    pi.sprite = piano_1R;
+                    break;
+                case 9:
+                    pi.sprite = piano_2L;
+                    break;
+                case 10:
+                    pi.sprite = piano_2;
+                    break;
+                case 11:
+                    pi.sprite = piano_2R;
+                    break;
+                case 12:
+                    pi.sprite = piano_2L;
+                    break;
+                case 13:
+                    pi.sprite = piano_2;
+                    break;
+                case 14:
+                    pi.sprite = piano_2R;
+                    break;
+                case 15:
+                    pi.sprite = piano_3L;
+                    break;
+                case 16:
+                    pi.sprite = piano_3;
+                    break;
+            }
+
+            if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29))
+            {
+                if (IsBlackKey(tone)) pi.color = blackGray;
+                else pi.color = whiteGray;
+            }
+            else
+            {
+                if (IsBlackKey(tone)) pi.color = Color.black;
+                else pi.color = Color.white;
+            }
+            buttons.Add(p);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -56,6 +135,11 @@ public class Piano : MonoBehaviour {
             if (x < 0.4f && key != 0 && key != 3) tone--;
             if (x > 0.6f && key != 2 && key != 6) tone++;
         }
+        if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29))
+        {
+            return;
+        }
+        if (tone == 69) tone = 68;      // prevent IndexOutOfRangeException
         if (tone > 28)
         {
             Measure m = Manager.manager.GetStaff(0).GetMeasure(0);
@@ -69,6 +153,7 @@ public class Piano : MonoBehaviour {
                 }
             }
         }
+        /*
         switch (tone % 17)
         {
             case 0:
@@ -126,11 +211,47 @@ public class Piano : MonoBehaviour {
         }
         press.transform.position = new Vector2(tone / 17 * 308.9f + xpos[tone % 17], 0f);
         press.SetActive(true);
+        */
+        buttons[tone].GetComponent<Image>().color = new Color(0.8352f, 0.1686f, 0.1686f);
         Manager.manager.Play(Note.NoteToMidi(tone));
     }
 
     private void OnMouseUp()
     {
         press.SetActive(false);
+        for (int tone = 0; tone <= 68; tone++)
+        {
+            if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29))
+            {
+                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = blackGray;
+                else buttons[tone].GetComponent<Image>().color = whiteGray;
+            } else
+            {
+                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = Color.black;
+                else buttons[tone].GetComponent<Image>().color = Color.white;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 검은 건반이면 true, 흰 건반이면 false를 반환합니다.
+    /// </summary>
+    /// <param name="tone"></param>
+    /// <returns></returns>
+    private bool IsBlackKey(int tone)
+    {
+        switch (tone % 17)
+        {
+            case 0:
+            case 3:
+            case 6:
+            case 7:
+            case 10:
+            case 13:
+            case 16:
+                return false;
+            default:
+                return true;
+        }
     }
 }
