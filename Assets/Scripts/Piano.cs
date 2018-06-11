@@ -191,21 +191,24 @@ public class Piano : MonoBehaviour {
             if (cur.GetType() == typeof(Note))
             {
                 Note n = (Note)cur;
-                Measure m = n.GetComponentInParent<Measure>();
-                Staff s = m.GetComponentInParent<Staff>();
-                if (s == Manager.manager.GetStaff(0))
+                if (n.GetIsTreble())
                 {
-                    m.RemoveNote(n);
-                    Manager.manager.WriteNote(0, n.GetComponentInParent<Staff>().GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                    Note nextcur = null, newnote = null;
-                    foreach (Note note in m.GetNotes())
+                    Measure m = n.GetComponentInParent<Measure>();
+                    Staff s = m.GetComponentInParent<Staff>();
+                    if (s == Manager.manager.GetStaff(0))
                     {
-                        if (note.GetTiming() == n.GetTiming()) newnote = note;
-                        if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                        m.RemoveNote(n);
+                        Manager.manager.WriteNote(0, n.GetComponentInParent<Staff>().GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                        Note nextcur = null, newnote = null;
+                        foreach (Note note in m.GetNotes())
+                        {
+                            if (note.GetTiming() == n.GetTiming()) newnote = note;
+                            if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                        }
+                        Manager.manager.SetCursor(nextcur != null && nextcur.GetIsRecommended() ? nextcur : newnote, m.GetComponentInParent<Staff>().GetMeasureNum(m));
                     }
-                    Manager.manager.SetCursor(nextcur != null && nextcur.GetIsRecommended() ? nextcur : newnote, m.GetComponentInParent<Staff>().GetMeasureNum(m));
+                    Destroy(n);
                 }
-                Destroy(n);
             }
         }
         /*
