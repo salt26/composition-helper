@@ -32,6 +32,21 @@ public class Note : MonoBehaviour {
                 //Debug.Log(pitch);
             }
             noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, -1f);
+            if (GetComponentInParent<Staff>().staffName.Equals("Chord"))
+            {
+                Manager.manager.GetChordRecommendButton().interactable = true;
+                Manager.manager.GetRhythmRecommendButton().interactable = false;
+            }
+            else if (GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
+            {
+                Manager.manager.GetChordRecommendButton().interactable = false;
+                Manager.manager.GetRhythmRecommendButton().interactable = false;
+            }
+            else if (GetComponentInParent<Staff>().staffName.Equals("Melody"))
+            {
+                Manager.manager.GetChordRecommendButton().interactable = false;
+                Manager.manager.GetRhythmRecommendButton().interactable = true;
+            }
         }
         else if (Manager.manager != null && isRecommended)
         {
@@ -52,7 +67,12 @@ public class Note : MonoBehaviour {
 
     public void Selected()
     {
-        Manager.manager.SetCursor(this);
+        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy)
+            return;
+
+        Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
+        Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();
+        Manager.manager.SetCursor(this, GetComponentInParent<Staff>().GetMeasureNum(GetComponentInParent<Measure>()));
     }
 
     public void Initialize(bool isTreble, int pitch, string rhythm, int timing)

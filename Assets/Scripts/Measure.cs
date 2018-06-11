@@ -4,24 +4,55 @@ using UnityEngine;
 
 public class Measure : MonoBehaviour
 {
-
     List<Note> notes = new List<Note>();
     bool isInteractive = true;
     bool isHighlighting = false;
 
-    /*
     void FixedUpdate()
     {
-        Ray ray = Manager.manager.GetMainCamera().ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (isInteractive && Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 8))) {
-            Debug.Log("Hello");
-            HighlightOff();
-            Manager.manager.GetChordRecommendButton().interactable = true;
-            Selected();
+        if (isHighlighting)
+        {
+
+        }
+        else if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1f, 0.6899f, 0.2405f, 1f);
+
+            if (GetComponentInParent<Staff>().staffName.Equals("Chord"))
+            {
+                Manager.manager.GetChordRecommendButton().interactable = true;
+                Manager.manager.GetRhythmRecommendButton().interactable = false;
+                if (notes.Count == 0)
+                    Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOn();
+            }
+            else if (GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
+            {
+                Manager.manager.GetChordRecommendButton().interactable = false;
+                Manager.manager.GetRhythmRecommendButton().interactable = false;
+            }
+            else if (GetComponentInParent<Staff>().staffName.Equals("Melody"))
+            {
+                Manager.manager.GetChordRecommendButton().interactable = false;
+                Manager.manager.GetRhythmRecommendButton().interactable = true;
+                if (notes.Count == 0)
+                    Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOn();
+            }
+        }
+        else if (isInteractive)
+        {
+            GetComponent<SpriteRenderer>().color = Color.black;
+            if (GetComponentInParent<Staff>().staffName.Equals("Melody")
+                && notes.Count == 0
+                && Manager.manager.GetStaff(2).GetMeasure(GetComponentInParent<Staff>().GetMeasureNum(this)).GetNotes().Count != 0)
+            {
+                HighlightOn();
+            }
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
         }
     }
-    */
 
     public List<Note> GetNotes()
     {
@@ -44,9 +75,19 @@ public class Measure : MonoBehaviour
         if (isInteractive)
         {
             HighlightOff();
-            Manager.manager.GetChordRecommendButton().interactable = true;
             Selected();
         }
+    }
+
+    public void Selected()
+    {
+        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy)
+            return;
+        Piano.SetAllKeyHighlightOff();
+
+        Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
+        Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();
+        Manager.manager.SetCursor(this, GetComponentInParent<Staff>().GetMeasureNum(this));
     }
 
     public void AddNote(Note note)
@@ -76,25 +117,18 @@ public class Measure : MonoBehaviour
 
     public void InteractionOff()
     {
-        GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
         isInteractive = false;
+        HighlightOff();
     }
 
     public void InteractionOn()
     {
-        GetComponent<SpriteRenderer>().color = Color.black;
         isInteractive = true;
-    }
-
-    public void Selected()
-    {
-        GetComponent<SpriteRenderer>().color = new Color(1f, 0.6899f, 0.2405f, 1f);
-        Manager.manager.SetCursor(this);
     }
 
     public void HighlightOn()
     {
-        if (isHighlighting) return;
+        if (isHighlighting || !isInteractive) return;
         isHighlighting = true;
         StartCoroutine("HighlightColor");
     }
@@ -104,8 +138,8 @@ public class Measure : MonoBehaviour
         if (!isHighlighting) return;
         isHighlighting = false;
         StopCoroutine("HighlightColor");
-        if (isInteractive) GetComponent<SpriteRenderer>().color = Color.black;
-        else GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.51f, 0.85f, 0.7f);
+        //if (isInteractive) GetComponent<SpriteRenderer>().color = Color.black;
+        //else GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.51f, 0.85f, 0.7f);
     }
 
     IEnumerator HighlightColor()

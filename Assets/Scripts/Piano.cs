@@ -341,4 +341,15 @@ public class Piano : MonoBehaviour {
             }
         }
     }
+
+    /// <summary>
+    /// 모든 건반의 주황색 하이라이트를 해제합니다.
+    /// </summary>
+    public static void SetAllKeyHighlightOff()
+    {
+        for (int i = 0; i <= 68; i++)
+        {
+            keyHighlight[i] = false;
+        }
+    }
 }
