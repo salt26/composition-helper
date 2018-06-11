@@ -342,6 +342,10 @@ public class Manager : MonoBehaviour
         if (play != null) manager.StopCoroutine(play);
     }
 
+    public void SaveAll()
+    {
+    }
+        
     /// <summary>
     /// 특정 악보의 원하는 위치에 원하는 음표를 하나 그리는 메서드입니다.
     /// </summary>
