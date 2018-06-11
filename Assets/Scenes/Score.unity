@@ -1833,21 +1833,21 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114196483152537662, guid: 73806f8eb23254940a566a891092cb67,
-        type: 2}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1395032783}
-    - target: {fileID: 114145689251827942, guid: 73806f8eb23254940a566a891092cb67,
-        type: 2}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1436939920}
     - target: {fileID: 114155593096112960, guid: 73806f8eb23254940a566a891092cb67,
         type: 2}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1297679779}
+    - target: {fileID: 114145689251827942, guid: 73806f8eb23254940a566a891092cb67,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1436939920}
+    - target: {fileID: 114196483152537662, guid: 73806f8eb23254940a566a891092cb67,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395032783}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73806f8eb23254940a566a891092cb67, type: 2}
   m_IsPrefabParent: 0

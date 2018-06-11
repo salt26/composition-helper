@@ -26,14 +26,22 @@ public class Note : MonoBehaviour {
         if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
         {
             SetColor(selectedColor);
+            if (pitch >= 0)
+            {
+                Piano.SetKeyHighlight(pitch, true);
+                //Debug.Log(pitch);
+            }
+            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, -1f);
         }
         else if (Manager.manager != null && isRecommended)
         {
             SetColor(Manager.manager.recommendColor);
+            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, 0f);
         }
         else
         {
             SetColor(color = Color.black);
+            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, 0f);
         }
     }
 

@@ -13,8 +13,17 @@ public class Piano : MonoBehaviour {
     static float[] xpos = { 0f, 0f, 45.5f, 45.5f, 45.5f, 91f, 91f, 131f, 131f, 176.5f, 176.5f, 176.5f, 222.2f, 222.2f, 222.2f, 267.7f, 267.7f };
     static Color whiteGray = new Color(0.6f, 0.6f, 0.6f, 1f);
     static Color blackGray = new Color(0.3f, 0.3f, 0.3f, 1f);
+    static Color highlighted = new Color(1f, 0.6899f, 0.2405f, 1f); // new Color(1f, 0.7607f, 0.5047f, 1f);
+    static Color grayHighlight = new Color(0.755f, 0.5210f, 0.1806f, 1f); // new Color(0.56f, 0.3620f, 0.1512f, 1f);
+    static Color whiteChord = new Color(0.9531f, 0.5058f, 1f, 1f);
+    static Color blackChord = new Color(0.5178f, 0.1496f, 0.5566f, 1f);
+    static Color clicked = new Color(0.8352f, 0.1686f, 0.1686f);
 
     List<GameObject> buttons = new List<GameObject>();
+    static List<bool> keyEnable = new List<bool>();     // [index]: tone, false: disable, true: enable
+    static List<bool> keyChord = new List<bool>();      // [index]: tone, true: chord helper
+    static List<bool> keyHighlight = new List<bool>();  // [index]: tone, true: highlight(selected)
+    static List<bool> keyClick = new List<bool>();      // [index]: tone, true: clicked
     public int mode = 0;   // 0: disable all, 1: bass clef, 2: treble clef, 3: enable all
 
 	// Use this for initialization
@@ -93,6 +102,10 @@ public class Piano : MonoBehaviour {
                 else pi.color = Color.white;
             }
             buttons.Add(p);
+            keyEnable.Add(true);
+            keyChord.Add(false);
+            keyHighlight.Add(false);
+            keyClick.Add(false);
         }
     }
 	
@@ -100,7 +113,39 @@ public class Piano : MonoBehaviour {
 	void Update ()
     {
     }
- 
+
+    void FixedUpdate()
+    {
+        for (int tone = 0; tone <= 68; tone++)
+        {
+            if (keyClick[tone]) // click
+            {
+                buttons[tone].GetComponent<Image>().color = clicked;
+            }
+            else if (keyHighlight[tone]) // highlight
+            {
+                if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29) || !keyEnable[tone])
+                    buttons[tone].GetComponent<Image>().color = grayHighlight;
+                else buttons[tone].GetComponent<Image>().color = highlighted;
+            }
+            else if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29) || !keyEnable[tone]) // disable
+            {
+                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = blackGray;
+                else buttons[tone].GetComponent<Image>().color = whiteGray;
+            }
+            else if (keyChord[tone]) // chord helper
+            {
+                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = blackChord;
+                else buttons[tone].GetComponent<Image>().color = whiteChord;
+            }
+            else if (keyEnable[tone]) // enable
+            {
+                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = Color.black;
+                else buttons[tone].GetComponent<Image>().color = Color.white;
+            }
+        }
+    }
+
     private void OnMouseDown()
     {
         float x = Input.mousePosition.x / Screen.width, y = Input.mousePosition.y / (Screen.height / 5f);
@@ -212,24 +257,19 @@ public class Piano : MonoBehaviour {
         press.transform.position = new Vector2(tone / 17 * 308.9f + xpos[tone % 17], 0f);
         press.SetActive(true);
         */
-        buttons[tone].GetComponent<Image>().color = new Color(0.8352f, 0.1686f, 0.1686f);
+        //buttons[tone].GetComponent<Image>().color = new Color(0.8352f, 0.1686f, 0.1686f);
+        if (!keyClick[tone])
+            keyClick[tone] = true;   // clicked state
         Manager.manager.Play(Note.NoteToMidi(tone));
     }
 
     private void OnMouseUp()
     {
-        press.SetActive(false);
+        //press.SetActive(false);
         for (int tone = 0; tone <= 68; tone++)
         {
-            if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29))
-            {
-                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = blackGray;
-                else buttons[tone].GetComponent<Image>().color = whiteGray;
-            } else
-            {
-                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = Color.black;
-                else buttons[tone].GetComponent<Image>().color = Color.white;
-            }
+            if (keyClick[tone])
+                keyClick[tone] = false;   // unclicked state
         }
     }
 
@@ -252,6 +292,53 @@ public class Piano : MonoBehaviour {
                 return false;
             default:
                 return true;
+        }
+    }
+
+    /// <summary>
+    /// tone 음을 내는 건반의 상태를 설정합니다.
+    /// enable이 false이면 회색으로 누를 수 없게 되고, true이면 흰색 또는 검은색으로 누를 수 있게 됩니다.
+    /// </summary>
+    /// <param name="tone"></param>
+    /// <param name="enable"></param>
+    public static void SetKeyEnable(int tone, bool enable)
+    {
+        if (tone < 0 || tone > 68) return;
+        keyEnable[tone] = enable;
+    }
+
+    /// <summary>
+    /// tone 음을 내는 건반의 상태를 설정합니다.
+    /// on이 true이면 보라색으로 화음에 맞는 음이라고 표시됩니다.
+    /// </summary>
+    /// <param name="tone"></param>
+    /// <param name="on"></param>
+    public static void SetKeyChord(int tone, bool on)
+    {
+        if (tone < 0 || tone > 68) return;
+        keyChord[tone] = on;
+    }
+
+    /// <summary>
+    /// tone 음을 내는 건반의 상태를 설정합니다.
+    /// on이 true이면 주황색으로 커서 위치의 음표의 음이라고 표시됩니다.
+    /// 한 번에 최대 하나의 건반만 주황색으로 하이라이트됩니다.
+    /// </summary>
+    /// <param name="tone"></param>
+    /// <param name="on"></param>
+    public static void SetKeyHighlight(int tone, bool on)
+    {
+        //Debug.Log("SetKeyHighlight " + tone);
+        if (tone < 0 || tone > 68) return;
+        if (keyHighlight[tone] != on)
+        {
+            for (int i = 0; i <= 68; i++)
+            {
+                if (i == tone)
+                    keyHighlight[tone] = on;
+                else
+                    keyHighlight[i] = false;
+            }
         }
     }
 }

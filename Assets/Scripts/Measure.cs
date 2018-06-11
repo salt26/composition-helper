@@ -58,6 +58,7 @@ public class Measure : MonoBehaviour
     {
         if (notes.Contains(note))
         {
+            Piano.SetKeyHighlight(note.GetPitch(), false);
             notes.Remove(note);
             Destroy(note.gameObject);
         }
@@ -67,6 +68,7 @@ public class Measure : MonoBehaviour
     {
         foreach (Note n in notes)
         {
+            Piano.SetKeyHighlight(n.GetPitch(), false);
             Destroy(n.gameObject);
         }
         notes.Clear();
