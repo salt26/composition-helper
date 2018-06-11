@@ -70,6 +70,26 @@ public class Note : MonoBehaviour {
         if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy ||
             GetComponentInParent<Staff>().developingPanel.activeInHierarchy)
             return;
+        
+        Piano.SetAllKeyChordOff();
+        int mn = GetComponentInParent<Staff>().GetMeasureNum(GetComponentInParent<Measure>());
+        if (Manager.manager.GetStaff(2).GetMeasure(mn).GetNotes().Count > 0)
+        {
+            for (int tone = 0; tone <= 68; tone++)
+            {
+                bool b = false;
+                foreach (Note n in Manager.manager.GetStaff(2).GetMeasure(mn).GetNotes())
+                {
+                    if ((tone - n.GetPitch()) % 17 == 0)
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b) Piano.SetKeyChord(tone, true);
+
+            }
+        }
 
         Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
         Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();

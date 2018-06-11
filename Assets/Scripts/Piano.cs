@@ -365,4 +365,15 @@ public class Piano : MonoBehaviour {
             keyHighlight[i] = false;
         }
     }
+
+    /// <summary>
+    /// 모든 건반의, 화음에 어울리는 음에 대한 보라색 표시를 해제합니다.
+    /// </summary>
+    public static void SetAllKeyChordOff()
+    {
+        for (int i = 0; i <= 68; i++)
+        {
+            keyChord[i] = false;
+        }
+    }
 }
