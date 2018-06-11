@@ -14,6 +14,7 @@ public class Manager : MonoBehaviour
 
     public static Manager manager;
     
+    public GameObject tooltip;
     public GameObject measureNumCanvas;
     public GameObject noteObject;
     public GameObject additionalLineObject;
@@ -30,6 +31,7 @@ public class Manager : MonoBehaviour
     List<Chord> tempChords = new List<Chord>(); // TODO This variable is only for demo.
     GameObject melodyPanel;
     GameObject mainCamera;
+    GameObject canvas;
     Scrollbar scrollbar;
     Button chordRecommendButton;
     object cursor;
@@ -82,6 +84,10 @@ public class Manager : MonoBehaviour
         if (chordRecommendButton == null && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             chordRecommendButton = GameObject.Find("ChordRecommendButton").GetComponent<Button>();
+        }
+        if ((canvas == null || !canvas.name.Equals("Canvas")) && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            canvas = GameObject.Find("Canvas");
         }
         if ((mainCamera == null || !mainCamera.name.Equals("Main Camera")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
@@ -241,6 +247,11 @@ public class Manager : MonoBehaviour
             return staffs[kind];
         }
         else return null;
+    }
+
+    public GameObject GetCanvas()
+    {
+        return canvas;
     }
 
     /// <summary>
