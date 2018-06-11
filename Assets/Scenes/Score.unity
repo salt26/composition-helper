@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 98735466}
   - component: {fileID: 98735465}
   - component: {fileID: 98735468}
+  - component: {fileID: 98735469}
   m_Layer: 5
   m_Name: RhythmRecommendButton
   m_TagString: Untagged
@@ -417,6 +418,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5821a1058a2b14586019cc49c5c632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &98735469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 98735463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uBB34\uC791\uC704 \uB9AC\uB4EC\uC73C\uB85C \uD604\uC7AC \uB9C8\uB514\uB97C
+    \uCC44\uC6CC\uC90D\uB2C8\uB2E4"
+  LD: {x: 0.52, y: 0.81}
+  RU: {x: 0.87, y: 0.91}
 --- !u!1 &108966883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,6 +2957,7 @@ GameObject:
   - component: {fileID: 940187546}
   - component: {fileID: 940187545}
   - component: {fileID: 940187548}
+  - component: {fileID: 940187549}
   m_Layer: 5
   m_Name: ChordRecommendButton
   m_TagString: Untagged
@@ -3063,6 +3080,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5821a1058a2b14586019cc49c5c632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &940187549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 940187543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uBA5C\uB85C\uB514\uC5D0 \uC5B4\uC6B8\uB9AC\uB294 \uD654\uC74C\uC744 \uCD94\uCC9C\uD574\uC90D\uB2C8\uB2E4"
+  LD: {x: 0.13, y: 0.81}
+  RU: {x: 0.48, y: 0.91}
 --- !u!1 &970493687
 GameObject:
   m_ObjectHideFlags: 0
@@ -4477,6 +4508,7 @@ GameObject:
   - component: {fileID: 1364279585}
   - component: {fileID: 1364279584}
   - component: {fileID: 1364279583}
+  - component: {fileID: 1364279586}
   m_Layer: 5
   m_Name: StopButton
   m_TagString: Untagged
@@ -4576,6 +4608,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1364279581}
+--- !u!114 &1364279586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1364279581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uADF8\uB9CC\uB4E3\uAE30"
+  LD: {x: 0.07, y: 0.81}
+  RU: {x: 0.17, y: 0.91}
 --- !u!1 &1374163713
 GameObject:
   m_ObjectHideFlags: 0
@@ -4738,6 +4784,7 @@ GameObject:
   - component: {fileID: 1396035575}
   - component: {fileID: 1396035574}
   - component: {fileID: 1396035573}
+  - component: {fileID: 1396035576}
   m_Layer: 5
   m_Name: SetupButton
   m_TagString: Untagged
@@ -4848,6 +4895,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1396035571}
+--- !u!114 &1396035576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1396035571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uD658\uACBD\uC124\uC815"
+  LD: {x: 0.9, y: 0.81}
+  RU: {x: 1, y: 0.91}
 --- !u!1 &1430282491
 GameObject:
   m_ObjectHideFlags: 0
@@ -4938,6 +4999,7 @@ GameObject:
   - component: {fileID: 1433466597}
   - component: {fileID: 1433466596}
   - component: {fileID: 1433466595}
+  - component: {fileID: 1433466598}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -5048,6 +5110,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1433466593}
+--- !u!114 &1433466598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1433466593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uC800\uC7A5\uD558\uAE30"
+  LD: {x: 0.83, y: 0.81}
+  RU: {x: 0.93, y: 0.91}
 --- !u!1 &1436939918
 GameObject:
   m_ObjectHideFlags: 0
@@ -5264,6 +5340,7 @@ GameObject:
   - component: {fileID: 1538290173}
   - component: {fileID: 1538290172}
   - component: {fileID: 1538290171}
+  - component: {fileID: 1538290174}
   m_Layer: 5
   m_Name: PlayButon
   m_TagString: Untagged
@@ -5375,6 +5452,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1538290169}
+--- !u!114 &1538290174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1538290169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uB4E4\uC5B4\uBCF4\uAE30"
+  LD: {x: 0, y: 0.81}
+  RU: {x: 0.1, y: 0.91}
 --- !u!224 &1593973046 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224096344758336758, guid: a2616cdba88cdf245a81cf87ffc4c8b7,

@@ -197,15 +197,15 @@ public class Piano : MonoBehaviour {
                 {
                     m.RemoveNote(n);
                     Manager.manager.WriteNote(0, 0, tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                    Note nextcur = null, newnote = null;
                     foreach (Note note in m.GetNotes())
                     {
-                        if (note.GetTiming() == n.GetTiming())
-                        {
-                            Manager.manager.SetCursor(note, m.GetComponentInParent<Staff>().GetMeasureNum(m));
-                            break;
-                        }
+                        if (note.GetTiming() == n.GetTiming()) newnote = note;
+                        if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
                     }
+                    Manager.manager.SetCursor(nextcur != null && nextcur.GetIsRecommended() ? nextcur : newnote, m.GetComponentInParent<Staff>().GetMeasureNum(m));
                 }
+                Destroy(n);
             }
         }
         /*

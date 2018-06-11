@@ -386,6 +386,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114794076944782192, guid: fc659bdfbc02cd94f97e9220e76bf96e,
+        type: 2}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1701511897597268, guid: 5645a522bf6f1fa4e9ca2e91e1b4adad,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fc659bdfbc02cd94f97e9220e76bf96e, type: 2}
   m_IsPrefabParent: 0
