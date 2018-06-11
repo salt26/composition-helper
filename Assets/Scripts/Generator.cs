@@ -54,6 +54,7 @@ public class Generator {
                 }
             }
             int cnt = 0;
+            res.Clear();
             for (i = 1; i <= 16; i++)
             {
                 cnt++;
