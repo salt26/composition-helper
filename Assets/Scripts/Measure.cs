@@ -87,7 +87,8 @@ public class Measure : MonoBehaviour
 
     public void Selected()
     {
-        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy)
+        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy ||
+            GetComponentInParent<Staff>().developingPanel.activeInHierarchy)
             return;
         Piano.SetAllKeyHighlightOff();
 
