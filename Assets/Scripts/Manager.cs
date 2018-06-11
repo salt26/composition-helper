@@ -229,7 +229,7 @@ public class Manager : MonoBehaviour
 
     public void RecommendRhythm()
     {
-        int mn = GetCursorMeasureNum();
+        int mn = manager.GetCursorMeasureNum();
         Debug.Log("MeasureNum " + mn);
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
