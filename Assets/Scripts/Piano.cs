@@ -196,7 +196,7 @@ public class Piano : MonoBehaviour {
                 if (s == Manager.manager.GetStaff(0))
                 {
                     m.RemoveNote(n);
-                    Manager.manager.WriteNote(0, 0, tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                    Manager.manager.WriteNote(0, n.GetComponentInParent<Staff>().GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
                     Note nextcur = null, newnote = null;
                     foreach (Note note in m.GetNotes())
                     {

@@ -67,10 +67,11 @@ public class Measure : MonoBehaviour
     public List<KeyValuePair<float, int> > ToMidi()
     {
         List<KeyValuePair<float, int> > res = new List<KeyValuePair<float, int>>();
+        int this_m = GetComponentInParent<Staff>().GetMeasureNum(this) * 4;
         foreach (Note n in notes)
         {
-            res.Add(new KeyValuePair<float, int>(n.GetTiming() / 4f, Note.NoteToMidi(n.GetPitch())));
-            res.Add(new KeyValuePair<float, int>((n.GetTiming() + n.GetRhythm() * 0.9f) / 4f, -Note.NoteToMidi(n.GetPitch())));
+            res.Add(new KeyValuePair<float, int>(this_m + n.GetTiming() / 4f, Note.NoteToMidi(n.GetPitch())));
+            res.Add(new KeyValuePair<float, int>(this_m + (n.GetTiming() + n.GetRhythm() * 0.9f) / 4f, -Note.NoteToMidi(n.GetPitch())));
         }
         return res;
     }
