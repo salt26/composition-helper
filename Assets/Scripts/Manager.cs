@@ -314,12 +314,6 @@ public class Manager : MonoBehaviour
         {
             return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : p1.Value < p2.Value ? -1 : p1.Value > p2.Value ? 1 : 0;
         });
-        string tmp = "";
-        foreach (KeyValuePair<float, int> p in list)
-        {
-            tmp += "(" + p.Key + ", " + p.Value + ") ";
-        }
-        Debug.Log(tmp);
         manager.StartCoroutine(__PlayAll(list));
     }
 

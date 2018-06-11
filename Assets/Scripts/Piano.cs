@@ -187,14 +187,24 @@ public class Piano : MonoBehaviour {
         if (tone == 69) tone = 68;      // prevent IndexOutOfRangeException
         if (tone > 28)
         {
-            Measure m = Manager.manager.GetStaff(0).GetMeasure(0);
-            foreach (Note n in m.GetNotes())
+            object cur = Manager.manager.GetCursor();
+            if (cur.GetType() == typeof(Note))
             {
-                if (n.GetIsRecommended())
+                Note n = (Note)cur;
+                Measure m = n.GetComponentInParent<Measure>();
+                Staff s = m.GetComponentInParent<Staff>();
+                if (s == Manager.manager.GetStaff(0))
                 {
-                    Manager.manager.WriteNote(0, 0, tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
                     m.RemoveNote(n);
-                    break;
+                    Manager.manager.WriteNote(0, 0, tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                    foreach (Note note in m.GetNotes())
+                    {
+                        if (note.GetTiming() == n.GetTiming())
+                        {
+                            Manager.manager.SetCursor(note);
+                            break;
+                        }
+                    }
                 }
             }
         }

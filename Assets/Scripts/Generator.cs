@@ -54,6 +54,7 @@ public class Generator {
                 }
             }
             int cnt = 0;
+            res.Clear();
             for (i = 1; i <= 16; i++)
             {
                 cnt++;
@@ -65,7 +66,6 @@ public class Generator {
                 }
             }
             if (i > 16) break;
-            Debug.Log("Failed");
         }
         return res;
     }
