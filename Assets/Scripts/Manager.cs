@@ -43,6 +43,7 @@ public class Manager : MonoBehaviour
     int measureNum = 0;
 
     OutputDevice outDevice;
+    IEnumerator play;
 
     // Use this for initialization
     void Awake ()
@@ -331,7 +332,14 @@ public class Manager : MonoBehaviour
         {
             return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : p1.Value < p2.Value ? -1 : p1.Value > p2.Value ? 1 : 0;
         });
-        manager.StartCoroutine(__PlayAll(list));
+        if (play != null) manager.StopCoroutine(play);
+        play = __PlayAll(list);
+        manager.StartCoroutine(play);
+    }
+
+    public void StopAll()
+    {
+        if (play != null) manager.StopCoroutine(play);
     }
 
     /// <summary>
