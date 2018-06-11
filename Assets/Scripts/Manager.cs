@@ -283,11 +283,11 @@ public class Manager : MonoBehaviour
     /// 음을 연주합니다.
     /// </summary>
     /// <param name="tone"></param>
-    public void Play(int tone)
+    public void Play(int tone, int staff)
     {
         if (tone >= 0 && tone < 128)
         {
-            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, 0, tone, 127));
+            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOn, staff, tone, 127));
         }
     }
 
@@ -295,12 +295,29 @@ public class Manager : MonoBehaviour
     /// 음을 멈춥니다.
     /// </summary>
     /// <param name="tone"></param>
-    public void Stop(int tone)
+    public void Stop(int tone, int staff)
     {
         if (tone >= 0 && tone < 128)
         {
-            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOff, 0, tone, 127));
+            manager.outDevice.Send(new ChannelMessage(ChannelCommand.NoteOff, staff, tone, 127));
         }
+    }
+
+    List<KeyValuePair<float, int>> ToMidi()
+    {
+        List<KeyValuePair<float, int>> list = new List<KeyValuePair<float, int>>();
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (KeyValuePair<float, int> p in manager.staffs[i].ToMidi())
+            {
+                list.Add(new KeyValuePair<float, int>(p.Key, p.Value < 0 ? -(-p.Value | i << 16) : p.Value | i << 16));
+            }
+        }
+        list.Sort(delegate (KeyValuePair<float, int> p1, KeyValuePair<float, int> p2)
+        {
+            return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : p1.Value < p2.Value ? -1 : p1.Value > p2.Value ? 1 : 0;
+        });
+        return list;
     }
 
     IEnumerator __PlayAll(List<KeyValuePair<float, int>> list)
@@ -313,25 +330,14 @@ public class Manager : MonoBehaviour
                 yield return new WaitForSecondsRealtime((p.Key - last) / 2);
                 last = p.Key;
             }
-            if (p.Value > 0) Play(p.Value);
-            else Stop(-p.Value);
+            if (p.Value > 0) Play(p.Value & 65535, p.Value >> 16);
+            else Stop(-p.Value & 65535, -p.Value >> 16);
         }
     }
 
     public void PlayAll()
     {
-        List<KeyValuePair<float, int>> list = new List<KeyValuePair<float, int>>();
-        foreach (Staff staff in manager.staffs)
-        {
-            foreach (KeyValuePair<float, int> p in staff.ToMidi())
-            {
-                list.Add(p);
-            }
-        }
-        list.Sort(delegate (KeyValuePair<float, int> p1, KeyValuePair<float, int> p2)
-        {
-            return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : p1.Value < p2.Value ? -1 : p1.Value > p2.Value ? 1 : 0;
-        });
+        List<KeyValuePair<float, int>> list = ToMidi();
         if (play != null) manager.StopCoroutine(play);
         play = __PlayAll(list);
         manager.StartCoroutine(play);
@@ -344,6 +350,18 @@ public class Manager : MonoBehaviour
 
     public void SaveAll()
     {
+        List<KeyValuePair<float, int>> list = ToMidi();
+        Sequence seq = new Sequence();
+        Track tr = new Track();
+        float last = 0;
+        foreach (KeyValuePair<float, int> p in list)
+        {
+            Debug.Log((int)(p.Key * 28 + .5) + " " + p.Value);
+            tr.Insert((int)(p.Key * 28 + .5), new ChannelMessage(p.Value > 0 ? ChannelCommand.NoteOn : ChannelCommand.NoteOff, p.Value < 0 ? -p.Value >> 16 : p.Value >> 16, p.Value < 0 ? -p.Value & 65535 : p.Value & 65535, 127));
+            last = p.Key;
+        }
+        seq.Add(tr);
+        seq.Save("output.midi");
     }
         
     /// <summary>

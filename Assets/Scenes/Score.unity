@@ -5238,9 +5238,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1275025317}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 114794076944782192, guid: fc659bdfbc02cd94f97e9220e76bf96e,
+          type: 2}
+        m_MethodName: SaveAll
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -71,7 +71,7 @@ public class Measure : MonoBehaviour
         foreach (Note n in notes)
         {
             res.Add(new KeyValuePair<float, int>(this_m + n.GetTiming() / 4f, Note.NoteToMidi(n.GetPitch())));
-            res.Add(new KeyValuePair<float, int>(this_m + (n.GetTiming() + n.GetRhythm() * 0.9f) / 4f, -Note.NoteToMidi(n.GetPitch())));
+            res.Add(new KeyValuePair<float, int>(this_m + (n.GetTiming() + n.GetRhythm() * 6f / 7f) / 4f, -Note.NoteToMidi(n.GetPitch())));
         }
         return res;
     }

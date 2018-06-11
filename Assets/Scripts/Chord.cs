@@ -65,7 +65,7 @@ public class Chord {
     {
         foreach (int note in notes)
         {
-            Manager.manager.Play(Note.NoteToMidi(note));
+            Manager.manager.Play(Note.NoteToMidi(note), 0);
         }
     }
 }
