@@ -14,8 +14,6 @@ public class Manager : MonoBehaviour
 
     public static Manager manager;
 
-    public GameObject InstructionPanel;
-    public GameObject InstructionPanel2;
     public GameObject tooltip;
     public GameObject measureNumCanvas;
     public GameObject noteObject;
@@ -32,6 +30,8 @@ public class Manager : MonoBehaviour
     List<Staff> staffs = new List<Staff>();
     List<Chord> tempChords = new List<Chord>(); // TODO This variable is only for demo.
     GameObject melodyPanel;
+    GameObject InstructionPanel;
+    GameObject InstructionPanel2;
     GameObject mainCamera;
     GameObject canvas;
     Scrollbar scrollbar;
@@ -86,6 +86,14 @@ public class Manager : MonoBehaviour
         if (scrollbar == null && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             scrollbar = GameObject.Find("Scrollbar").GetComponent<Scrollbar>();
+        }
+        if (InstructionPanel == null && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            InstructionPanel = GameObject.Find("InstructionPanel");
+        }
+        if (InstructionPanel2 == null && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            InstructionPanel2 = GameObject.Find("InstructionPanel2");
         }
         if (chordRecommendButton == null && SceneManager.GetActiveScene().name.Equals("Score"))
         {
@@ -301,7 +309,7 @@ public class Manager : MonoBehaviour
         if (isFirstTime)
         {
             isFirstTime = false;
-            Instantiate(manager.InstructionPanel, manager.canvas.transform);
+            manager.InstructionPanel.SetActive(true);
         }
     }
 
