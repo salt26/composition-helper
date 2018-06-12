@@ -126,6 +126,17 @@ public class Manager : MonoBehaviour
                 g.GetComponentInChildren<Text>().text = (i + 1).ToString();
             }
             RecommendChords(null);
+            /*
+           if (manager.GetCursorMeasureNum() > 0)
+            {
+                List<int> tempNotes = new List<int>();
+                foreach (Note n in manager.GetStaff(2).GetMeasure(manager.GetCursorMeasureNum() - 1).GetNotes())
+                {
+                    tempNotes.Add(n.GetPitch());
+                }
+                RecommendChords(new Chord(tempNotes));
+            }
+            */
             staffs[0].InteractionAllOff();
             staffs[1].InteractionAllOff();
             staffs[2].InteractionAllOff();
@@ -235,21 +246,39 @@ public class Manager : MonoBehaviour
     {
         if (prevChord == null)
         {
-            tempChords.Clear();
+            manager.tempChords.Clear();
 
             // This is only for demo!
-            tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
-            tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
-            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
-            tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
-            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49)+1, Note.MidiToNote(54)+1));
-            tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49)+1, Note.MidiToNote(54)+1));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
+            manager.tempChords[0].SetChordText("레b 파 라b\n(Db)");
+            manager.tempChords[1].SetChordText("파# 라# 도#\n(F#)");
+            manager.tempChords[2].SetChordText("시 레 파#\n(Bm)");
+            manager.tempChords[3].SetChordText("레# 파# 라\n(D#dim)");
+            manager.tempChords[4].SetChordText("시 레b 솔b\n(Bsus2)");
+            manager.tempChords[5].SetChordText("미b 솔 시b 레b\n(Eb7)");
         }
         else
         {
-            tempChords.Clear();
+            manager.tempChords.Clear();
 
             // TODO
+            manager.tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49) + 1, Note.MidiToNote(54) + 1));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
+            manager.tempChords[0].SetChordText("레b 파 라b\n(Db)");
+            manager.tempChords[1].SetChordText("파# 라# 도#\n(F#)");
+            manager.tempChords[2].SetChordText("시 레 파#\n(Bm)");
+            manager.tempChords[3].SetChordText("레# 파# 라\n(D#dim)");
+            manager.tempChords[4].SetChordText("시 레b 솔b\n(Bsus2)");
+            manager.tempChords[5].SetChordText("미b 솔 시b 레b\n(Eb7)");
         }
     }
 
@@ -307,9 +336,14 @@ public class Manager : MonoBehaviour
     {
         if (i >= 0 && i < manager.tempChords.Count)
         {
+            Debug.Log(manager.tempChords[i].GetChordText());
             return manager.tempChords[i];
         }
-        else return null;
+        else
+        {
+            Debug.LogError("Why?");
+            return null;
+        }
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChordButton : MonoBehaviour {
 
@@ -13,7 +14,11 @@ public class ChordButton : MonoBehaviour {
         chord = Manager.manager.GetTempChord(buttonNum);
         if (chord == null)
         {
-            Debug.Log("Error in ChordButton "+this.name);
+            Debug.Log("Error in ChordButton " + this.name);
+        }
+        else if (!chord.GetChordText().Equals(""))
+        {
+            GetComponentInChildren<Text>().text = chord.GetChordText();
         }
 	}
 

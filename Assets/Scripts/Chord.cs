@@ -7,6 +7,7 @@ public class Chord {
     // 각 음표를 표현하는 값은 특별히 인코딩된 숫자를 사용한다.
     // 예) 가장 낮은 도: 0 / 바로 다음 음인 도#: 1 / 같은 음인 레b: 2 / 바로 다음 음인 레: 3 / 가장 높은 도: 68
     List<int> notes = new List<int>();
+    string chordText = "";
 
     public Chord()
     {
@@ -44,6 +45,11 @@ public class Chord {
         notes.Add(note);
     }
 
+    public void SetChordText(string text)
+    {
+        chordText = text;
+    }
+
     public bool IsChordal(int note)
     {
         foreach (int n in notes)
@@ -59,6 +65,11 @@ public class Chord {
     public List<int> GetNotes()
     {
         return new List<int>(notes);
+    }
+
+    public string GetChordText()
+    {
+        return chordText;
     }
 
     public void PlayChord()
