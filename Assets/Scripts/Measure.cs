@@ -114,6 +114,7 @@ public class Measure : MonoBehaviour
 
             }
         }
+        Manager.manager.RecommendChords(null);
 
         Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
         Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();
