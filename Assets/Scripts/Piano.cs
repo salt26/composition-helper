@@ -26,6 +26,8 @@ public class Piano : MonoBehaviour {
     static List<bool> keyClick = new List<bool>();      // [index]: tone, true: clicked
     public int mode = 0;   // 0: disable all, 1: bass clef, 2: treble clef, 3: enable all
 
+    static bool isFirstTime = true;
+
 	// Use this for initialization
 	void Start () {
         //pressImage = press.GetComponent<Image>();
@@ -272,6 +274,11 @@ public class Piano : MonoBehaviour {
                     }
                     Destroy(n);
                 }
+                if (isFirstTime)
+                {
+                    isFirstTime = false;
+                    Instantiate(Manager.manager.InstructionPanel2, Manager.manager.GetCanvas().transform);
+                }
             }
             else if (cur != null) // Measure(마디) 선택 시
             {
@@ -302,6 +309,11 @@ public class Piano : MonoBehaviour {
                         // 커서 사라짐
                         Manager.manager.SetCursorToNull();
                     }
+                }
+                if (isFirstTime)
+                {
+                    isFirstTime = false;
+                    Instantiate(Manager.manager.InstructionPanel2, Manager.manager.GetCanvas().transform);
                 }
             }
         }
