@@ -135,6 +135,8 @@ public class Manager : MonoBehaviour
 
         if (scrollbar != null && mainCamera != null)
         {
+            //Debug.Log(Input.mouseScrollDelta); // (0, 0), (0, -1), (0, -2), (0, 1), (0, 2)
+            scrollbar.value -= Input.mouseScrollDelta.y / (measureNum * 2 + 1);
             mainCamera.GetComponent<Transform>().SetPositionAndRotation(
                 new Vector3((scrollbar.value * ((measureNum - 1) * 11f - 5f)), 0f, -10f), Quaternion.identity);
         }
@@ -174,6 +176,25 @@ public class Manager : MonoBehaviour
     {
         cursor = thing;
         cursorMeasureNum = measureNum;
+    }
+
+    /// <summary>
+    /// 커서가 아무것도 가리키지 않게 합니다.
+    /// </summary>
+    public void SetCursorToNull()
+    {
+        if (!manager.GetStaff(0).chordPanel.activeInHierarchy &&
+                                !manager.GetStaff(0).developingPanel.activeInHierarchy)
+        {
+            Piano.SetAllKeyHighlightOff();
+            Piano.SetAllKeyChordOff();
+            manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
+            manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();
+            manager.GetChordRecommendButton().interactable = false;
+            manager.GetRhythmRecommendButton().interactable = false;
+            cursor = null;
+            cursorMeasureNum = -1;
+        }
     }
 
     public Camera GetMainCamera()
@@ -231,6 +252,7 @@ public class Manager : MonoBehaviour
     public void RecommendRhythm()
     {
         int mn = manager.GetCursorMeasureNum();
+        if (mn < 0) return;
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
         manager.GetStaff(0).GetMeasure(mn).ClearMeasure();
@@ -361,7 +383,7 @@ public class Manager : MonoBehaviour
             last = p.Key;
         }
         seq.Add(tr);
-        seq.Save("output.midi");
+        seq.Save("Awesome.midi");
     }
         
     /// <summary>

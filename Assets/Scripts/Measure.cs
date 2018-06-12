@@ -92,7 +92,7 @@ public class Measure : MonoBehaviour
             return;
         Piano.SetAllKeyHighlightOff();
         Piano.SetAllKeyChordOff();
-        int mn = GetComponentInParent<Staff>().GetMeasureNum(GetComponentInParent<Measure>());
+        int mn = GetComponentInParent<Staff>().GetMeasureNum(this);
         if (Manager.manager.GetStaff(2).GetMeasure(mn).GetNotes().Count > 0)
         {
             for (int tone = 0; tone <= 68; tone++)
