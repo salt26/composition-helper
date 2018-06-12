@@ -249,12 +249,25 @@ public class Manager : MonoBehaviour
             manager.tempChords.Clear();
 
             // This is only for demo!
-            tempChords.Add(Generator.GenerateChord());
-            tempChords.Add(Generator.GenerateChord());
-            tempChords.Add(Generator.GenerateChord());
-            tempChords.Add(Generator.GenerateChord());
-            tempChords.Add(Generator.GenerateChord());
-            tempChords.Add(Generator.GenerateChord());
+            for (int i = 0; i < 6; i++)
+            {
+                Chord ch = Generator.GenerateChord();
+                bool b = false;
+                for (int j = 0; j < i; j++)
+                {
+                    if (ch.Equals(tempChords[j]))
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b)
+                {
+                    i--;
+                    continue;
+                }
+                tempChords.Add(ch);
+            }
             manager.tempChords[0].SetChordText("기호 1번");
             manager.tempChords[1].SetChordText("기호 2번");
             manager.tempChords[2].SetChordText("기호 3번");
@@ -352,7 +365,7 @@ public class Manager : MonoBehaviour
     {
         if (i >= 0 && i < manager.tempChords.Count)
         {
-            Debug.Log(manager.tempChords[i].GetChordText());
+            //Debug.Log(manager.tempChords[i].GetChordText());
             return manager.tempChords[i];
         }
         else

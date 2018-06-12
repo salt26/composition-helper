@@ -74,24 +74,46 @@ public class Generator {
 
     public static Chord GenerateChord()
     {
-        int a = baseNote[Random.Range(0, 12)], b, c;
-        switch (Random.Range(0, 2))
+        int a = baseNote[Random.Range(0, 12)], b, c, d = -1;
+        switch (Random.Range(0, 8))
         {
             case 0:
+            case 1:     // major
                 b = Note.NoteToMidi(a) + 4;
                 c = b + 3;
                 break;
-            default:
+            case 2:     // diminish
+                b = Note.NoteToMidi(a) + 3;
+                c = b + 3;
+                break;
+            case 3:     // augmentation
+                b = Note.NoteToMidi(a) + 4;
+                c = b + 4;
+                break;
+            case 5:     // minor 7
+                b = Note.NoteToMidi(a) + 3;
+                c = b + 4;
+                d = c + 3;
+                break;
+            case 4:     // major 7
+                b = Note.NoteToMidi(a) + 4;
+                c = b + 3;
+                d = c + 3;
+                break;
+            default:    // minor
                 b = Note.NoteToMidi(a) + 3;
                 c = b + 4;
                 break;
         }
         b = Note.MidiToNote(b);
         c = Note.MidiToNote(c);
+        if (d != -1) d = Note.MidiToNote(d);
         if ((int)((Note.NoteToScore(b, false) - Note.NoteToScore(a, false)) * 8 + .5) != 2) b++;
         if ((int)((Note.NoteToScore(c, false) - Note.NoteToScore(a, false)) * 8 + .5) != 4) c++;
-        Debug.Log(a + " " + b + " " + c);
-        Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
+        if (d != -1 && (int)((Note.NoteToScore(d, false) - Note.NoteToScore(a, false)) * 8 + .5) != 6) d++;
+        //Debug.Log(a + " " + b + " " + c);
+        //Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
+        if (d != -1) return new Chord(a, b, c, d);
         return new Chord(a, b, c);
     }
 }
