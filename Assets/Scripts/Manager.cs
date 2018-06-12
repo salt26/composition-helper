@@ -360,14 +360,16 @@ public class Manager : MonoBehaviour
     public void PlayAll()
     {
         List<KeyValuePair<float, int>> list = ToMidi();
-        if (play != null) manager.StopCoroutine(play);
+        StopAll();
         play = __PlayAll(list);
         manager.StartCoroutine(play);
     }
 
     public void StopAll()
     {
+        int i, j;
         if (play != null) manager.StopCoroutine(play);
+        for (i = 0; i < 128; i++) for (j = 0; j < 3; j++) Stop(i, j);
     }
 
     public void SaveAll()
