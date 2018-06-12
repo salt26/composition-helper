@@ -14,6 +14,7 @@ public class Note : MonoBehaviour {
     bool isRecommended = false;
     static Color color = Color.black;
     static Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
+    static Color selectedRecommendedColor = new Color(0.7647f, 0.2536f, 0f, 0.6980392f);
 
     void Awake()
     {
@@ -25,8 +26,10 @@ public class Note : MonoBehaviour {
     {
         if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
         {
-            SetColor(selectedColor);
-            if (pitch >= 0)
+            if (isRecommended) SetColor(selectedRecommendedColor);
+            else SetColor(selectedColor);
+
+            if (pitch >= 0 && !isRecommended)
             {
                 Piano.SetKeyHighlight(pitch, true);
                 //Debug.Log(pitch);

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Piano : MonoBehaviour {
 
     public GameObject press;
-    Image pressImage;
+    //Image pressImage;
 
     public Sprite piano3, piano_1, piano_1R, piano_2, piano_2L, piano_2R, piano_3, piano_3L;
 
@@ -28,7 +28,7 @@ public class Piano : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        pressImage = press.GetComponent<Image>();
+        //pressImage = press.GetComponent<Image>();
         for (int tone = 0; tone <= 68; tone++)
         {
             GameObject p = Instantiate(press, GetComponent<Transform>());
@@ -188,7 +188,7 @@ public class Piano : MonoBehaviour {
         if (tone > 28)
         {
             object cur = Manager.manager.GetCursor();
-            if (cur.GetType() == typeof(Note))
+            if (cur != null && cur.GetType() == typeof(Note))
             {
                 Note n = (Note)cur;
                 if (n.GetIsTreble())
@@ -198,16 +198,60 @@ public class Piano : MonoBehaviour {
                     if (s == Manager.manager.GetStaff(0))
                     {
                         m.RemoveNote(n);
-                        Manager.manager.WriteNote(0, n.GetComponentInParent<Staff>().GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                        Note nextcur = null, newnote = null;
+                        Manager.manager.WriteNote(0, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                        Note nextcur = null;//, newnote = null;
                         foreach (Note note in m.GetNotes())
                         {
-                            if (note.GetTiming() == n.GetTiming()) newnote = note;
+                            //if (note.GetTiming() == n.GetTiming()) newnote = note;
                             if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
                         }
-                        Manager.manager.SetCursor(nextcur != null && nextcur.GetIsRecommended() ? nextcur : newnote, m.GetComponentInParent<Staff>().GetMeasureNum(m));
+                        if (nextcur != null && nextcur.GetIsRecommended())
+                            nextcur.Selected();
+                        else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
+                            && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
+                            && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
+                        {
+                            // 다음 마디의 첫 음표를 확인해보자.
+                            Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
+                        }
+                        else
+                        {
+                            // 커서 사라짐
+                            Manager.manager.SetCursorToNull();
+                        }
                     }
                     Destroy(n);
+                }
+            }
+            else if (cur != null) // Measure(마디) 선택 시
+            {
+                Measure m = (Measure)cur;
+                Staff s = m.GetComponentInParent<Staff>();
+                if (s == Manager.manager.GetStaff(0) && m.GetNotes().Count > 0 && m.GetNotes()[0].GetIsRecommended())
+                {
+                    Note n = m.GetNotes()[0];
+                    m.RemoveNote(n);
+                    Manager.manager.WriteNote(0, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                    Note nextcur = null;//, newnote = null;
+                    foreach (Note note in m.GetNotes())
+                    {
+                        //if (note.GetTiming() == n.GetTiming()) newnote = note;
+                        if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                    }
+                    if (nextcur != null && nextcur.GetIsRecommended())
+                        nextcur.Selected();
+                    else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
+                        && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
+                        && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
+                    {
+                        // 다음 마디의 첫 음표를 확인해보자.
+                        Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
+                    }
+                    else
+                    {
+                        // 커서 사라짐
+                        Manager.manager.SetCursorToNull();
+                    }
                 }
             }
         }
