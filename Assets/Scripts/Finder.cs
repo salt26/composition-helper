@@ -9,7 +9,9 @@ public class Finder : MonoBehaviour {
     public GameObject chordPanel;
     public GameObject developingPanel;
     public GameObject savePanel;
-
+    public GameObject instructionPanel;
+    public GameObject instructionPanel2;
+    
     private void Awake()
     {
         finder = this;

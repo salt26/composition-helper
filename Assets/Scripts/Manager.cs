@@ -188,7 +188,9 @@ public class Manager : MonoBehaviour
         if (!Finder.finder.chordPanel.activeInHierarchy
             && !Finder.finder.developingPanel.activeInHierarchy 
             && !Finder.finder.rhythmCaveatPanel.activeInHierarchy
-            && !Finder.finder.savePanel.activeInHierarchy)
+            && !Finder.finder.savePanel.activeInHierarchy
+            && !Finder.finder.instructionPanel.activeInHierarchy
+            && !Finder.finder.instructionPanel2.activeInHierarchy)
         {
             Piano.SetAllKeyHighlightOff();
             Piano.SetAllKeyChordOff();
