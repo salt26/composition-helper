@@ -35,7 +35,7 @@ public class LongPanel : MonoBehaviour {
         if (Manager.manager != null)
         {
             // TODO
-            if (Mathf.Round(slider.value) > 4f)
+            if (Mathf.Round(slider.value) > 2f)
             {
                 devPanel.SetActive(true);
             }

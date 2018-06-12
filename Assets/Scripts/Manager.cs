@@ -171,9 +171,9 @@ public class Manager : MonoBehaviour
     public void SetMeasureAndChangeScene(float sliderVal)
     {
         float i = Mathf.Round(sliderVal);
-        if (i >= 2f)
+        if (i == 2f)
         {
-            measureNum = 8 * (int)i;
+            measureNum = 8 * (int)(i - 1);
             SceneManager.LoadScene("Score");
         }
         // TODO i == 5f일 때 마디 수 자유
