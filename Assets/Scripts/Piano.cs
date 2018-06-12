@@ -188,7 +188,7 @@ public class Piano : MonoBehaviour {
         if (tone > 28)
         {
             object cur = Manager.manager.GetCursor();
-            if (cur.GetType() == typeof(Note))
+            if (cur != null && cur.GetType() == typeof(Note))
             {
                 Note n = (Note)cur;
                 if (n.GetIsTreble())
