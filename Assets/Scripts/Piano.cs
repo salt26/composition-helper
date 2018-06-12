@@ -277,7 +277,7 @@ public class Piano : MonoBehaviour {
                 if (isFirstTime)
                 {
                     isFirstTime = false;
-                    Instantiate(Manager.manager.InstructionPanel2, Manager.manager.GetCanvas().transform);
+                    Finder.finder.instructionPanel2.SetActive(true);
                 }
             }
             else if (cur != null) // Measure(마디) 선택 시
@@ -313,7 +313,7 @@ public class Piano : MonoBehaviour {
                 if (isFirstTime)
                 {
                     isFirstTime = false;
-                    Instantiate(Manager.manager.InstructionPanel2, Manager.manager.GetCanvas().transform);
+                    Finder.finder.instructionPanel2.SetActive(true);
                 }
             }
         }
