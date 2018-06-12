@@ -183,8 +183,10 @@ public class Manager : MonoBehaviour
     /// </summary>
     public void SetCursorToNull()
     {
-        if (!manager.GetStaff(0).chordPanel.activeInHierarchy &&
-                                !manager.GetStaff(0).developingPanel.activeInHierarchy)
+        if (!Finder.finder.chordPanel.activeInHierarchy
+            && !Finder.finder.developingPanel.activeInHierarchy 
+            && !Finder.finder.rhythmCaveatPanel.activeInHierarchy
+            && !Finder.finder.savePanel.activeInHierarchy)
         {
             Piano.SetAllKeyHighlightOff();
             Piano.SetAllKeyChordOff();
@@ -249,10 +251,33 @@ public class Manager : MonoBehaviour
         }
     }
 
+    public void CaveatRhythm()
+    {
+        bool b = false;
+        if (manager.GetCursorMeasureNum() < 0) return;
+        foreach (Note n in manager.GetStaff(0).GetMeasure(manager.GetCursorMeasureNum()).GetNotes())
+        {
+            if (!n.GetIsRecommended())
+            {
+                b = true;
+                break;
+            }
+        }
+        if (b)
+        {
+            Finder.finder.rhythmCaveatPanel.SetActive(true);
+        }
+        else
+        {
+            RecommendRhythm();
+        }
+    }
+
     public void RecommendRhythm()
     {
         int mn = manager.GetCursorMeasureNum();
         if (mn < 0) return;
+        manager.SetCursor(manager.GetStaff(0).GetMeasure(mn), mn);
         List<int> rhythms = Generator.GenerateNotes();
         // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
         manager.GetStaff(0).GetMeasure(mn).ClearMeasure();

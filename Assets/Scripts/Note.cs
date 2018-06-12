@@ -70,8 +70,10 @@ public class Note : MonoBehaviour {
 
     public void Selected()
     {
-        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy ||
-            GetComponentInParent<Staff>().developingPanel.activeInHierarchy)
+        if (Finder.finder.chordPanel.activeInHierarchy ||
+            Finder.finder.developingPanel.activeInHierarchy ||
+            Finder.finder.rhythmCaveatPanel.activeInHierarchy ||
+            Finder.finder.savePanel.activeInHierarchy)
             return;
         
         Piano.SetAllKeyChordOff();

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Staff : MonoBehaviour {
 
-    public GameObject chordPanel;
-    public GameObject developingPanel;
-
     public GameObject measure;
     public string staffName;  // "Melody", "Accompaniment", "Chord" 중 하나
     bool hasPlay = true;

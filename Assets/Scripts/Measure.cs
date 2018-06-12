@@ -87,8 +87,10 @@ public class Measure : MonoBehaviour
 
     public void Selected()
     {
-        if (GetComponentInParent<Staff>().chordPanel.activeInHierarchy ||
-            GetComponentInParent<Staff>().developingPanel.activeInHierarchy)
+        if (Finder.finder.chordPanel.activeInHierarchy ||
+            Finder.finder.developingPanel.activeInHierarchy ||
+            Finder.finder.rhythmCaveatPanel.activeInHierarchy ||
+            Finder.finder.savePanel.activeInHierarchy)
             return;
         Piano.SetAllKeyHighlightOff();
         Piano.SetAllKeyChordOff();
@@ -126,6 +128,7 @@ public class Measure : MonoBehaviour
         if (notes.Contains(note))
         {
             Piano.SetKeyHighlight(note.GetPitch(), false);
+            if (note.Equals(Manager.manager.GetCursor())) Manager.manager.SetCursorToNull();
             notes.Remove(note);
             Destroy(note.gameObject);
         }
@@ -136,6 +139,7 @@ public class Measure : MonoBehaviour
         foreach (Note n in notes)
         {
             Piano.SetKeyHighlight(n.GetPitch(), false);
+            if (n.Equals(Manager.manager.GetCursor())) Manager.manager.SetCursorToNull();
             Destroy(n.gameObject);
         }
         notes.Clear();
