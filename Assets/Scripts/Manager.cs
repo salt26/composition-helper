@@ -13,7 +13,8 @@ public class Manager : MonoBehaviour
 {
 
     public static Manager manager;
-    
+
+    public GameObject InstructionPanel;
     public GameObject tooltip;
     public GameObject measureNumCanvas;
     public GameObject noteObject;
@@ -38,9 +39,9 @@ public class Manager : MonoBehaviour
     object cursor;
     int cursorMeasureNum;
     bool isScoreScene;
-
     bool isChordDriven;
     int measureNum = 0;
+    bool isFirstTime = true;
 
     OutputDevice outDevice;
     IEnumerator play;
@@ -268,6 +269,11 @@ public class Manager : MonoBehaviour
                 rhythm == 8 ? "2분음표" :
                 rhythm == 12 ? "점2분음표" : "온음표", sum, recommendColor, true);
             sum += rhythm;
+        }
+        if (manager.isFirstTime)
+        {
+            manager.isFirstTime = false;
+            Instantiate(manager.InstructionPanel, manager.canvas.transform);
         }
     }
 

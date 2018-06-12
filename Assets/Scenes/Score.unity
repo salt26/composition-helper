@@ -3289,7 +3289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: "\uBA5C\uB85C\uB514\uC5D0 \uC5B4\uC6B8\uB9AC\uB294 \uD654\uC74C\uC744 \uCD94\uCC9C\uD574\uC90D\uB2C8\uB2E4"
+  text: "\uB178\uB798\uC5D0 \uC5B4\uC6B8\uB9AC\uB294 \uD654\uC74C\uC744 \uCD94\uCC9C\uD574\uC90D\uB2C8\uB2E4"
   LD: {x: 0.13, y: 0.81}
   RU: {x: 0.48, y: 0.91}
 --- !u!1 &970493687
@@ -4122,6 +4122,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359772404323398, guid: 6eef1eb4f931cf84ca9edaec138e4ab4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eef1eb4f931cf84ca9edaec138e4ab4, type: 2}
@@ -7415,7 +7419,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD654\uC74C \uC124\uC815"
+  m_Text: "\uD654\uC74C \uCD94\uCC9C"
 --- !u!222 &2136028340
 CanvasRenderer:
   m_ObjectHideFlags: 0
