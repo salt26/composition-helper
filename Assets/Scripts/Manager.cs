@@ -249,12 +249,12 @@ public class Manager : MonoBehaviour
             manager.tempChords.Clear();
 
             // This is only for demo!
-            manager.tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49)+1, Note.MidiToNote(54)+1));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
             manager.tempChords[0].SetChordText("레b 파 라b\n(Db)");
             manager.tempChords[1].SetChordText("파# 라# 도#\n(F#)");
             manager.tempChords[2].SetChordText("시 레 파#\n(Bm)");

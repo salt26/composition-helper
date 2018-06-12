@@ -69,4 +69,29 @@ public class Generator {
         }
         return res;
     }
+
+    static int[] baseNote = { 17, 10, 20, 13, 23, 16, 8, 7, 16, 22, 12, 19 };
+
+    public static Chord GenerateChord()
+    {
+        int a = baseNote[Random.Range(0, 12)], b, c;
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                b = Note.NoteToMidi(a) + 4;
+                c = b + 3;
+                break;
+            default:
+                b = Note.NoteToMidi(a) + 3;
+                c = b + 4;
+                break;
+        }
+        b = Note.MidiToNote(b);
+        c = Note.MidiToNote(c);
+        if ((int)((Note.NoteToScore(b, false) - Note.NoteToScore(a, false)) * 8 + .5) != 2) b++;
+        if ((int)((Note.NoteToScore(c, false) - Note.NoteToScore(a, false)) * 8 + .5) != 4) c++;
+        Debug.Log(a + " " + b + " " + c);
+        Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
+        return new Chord(a, b, c);
+    }
 }
