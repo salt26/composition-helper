@@ -25,6 +25,7 @@ public class ChordButton : MonoBehaviour {
     public void WriteChord()
     {
         int measureNum = Manager.manager.GetCursorMeasureNum();
+        Manager.manager.SetCursor(Manager.manager.GetStaff(2).GetMeasure(measureNum), measureNum);
         Manager.manager.GetStaff(1).GetMeasure(measureNum).ClearMeasure();
         Manager.manager.GetStaff(2).GetMeasure(measureNum).ClearMeasure();
         Color color = new Color(0, 0, 0, 0.3f);

@@ -70,7 +70,7 @@ public class Generator {
         return res;
     }
 
-    static int[] baseNote = { 17, 10, 20, 13, 23, 16, 8, 7, 16, 22, 12, 19 };
+    static int[] baseNote = { 17, 10, 20, 13, 23, 14, 8, 7, 16, 21, 11, 18 };
 
     public static Chord GenerateChord()
     {
@@ -108,11 +108,28 @@ public class Generator {
         b = Note.MidiToNote(b);
         c = Note.MidiToNote(c);
         if (d != -1) d = Note.MidiToNote(d);
-        if ((int)((Note.NoteToScore(b, false) - Note.NoteToScore(a, false)) * 8 + .5) != 2) b++;
-        if ((int)((Note.NoteToScore(c, false) - Note.NoteToScore(a, false)) * 8 + .5) != 4) c++;
-        if (d != -1 && (int)((Note.NoteToScore(d, false) - Note.NoteToScore(a, false)) * 8 + .5) != 6) d++;
-        //Debug.Log(a + " " + b + " " + c);
-        //Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
+        Debug.Log("before " + a + " " + b + " " + c);
+        Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
+        if ((int)((Note.NoteToScore(b, false) - Note.NoteToScore(a, false)) * 8 + .5) != 2
+            && Note.NoteToMidi(b) == Note.NoteToMidi(b + 1)) b++;
+        if ((int)((Note.NoteToScore(c, false) - Note.NoteToScore(a, false)) * 8 + .5) != 4
+            && Note.NoteToMidi(c) == Note.NoteToMidi(c + 1)) c++;
+        if (d != -1 && (int)((Note.NoteToScore(d, false) - Note.NoteToScore(a, false)) * 8 + .5) != 6
+            && Note.NoteToMidi(d) == Note.NoteToMidi(d + 1)) d++;
+        Debug.Log("after " + a + " " + b + " " + c);
+        Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
+        if (a == 18 && b == 24 && c == 28)
+        {
+            a = 19;
+            b = 24;
+            c = 29;
+        }
+        if (a == 21 && b == 27 && c == 31)
+        {
+            a = 22;
+            b = 27;
+            c = 32;
+        }
         if (d != -1) return new Chord(a, b, c, d);
         return new Chord(a, b, c);
     }

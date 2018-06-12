@@ -556,7 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: "\uBB34\uC791\uC704 \uB9AC\uB4EC\uC73C\uB85C \uD604\uC7AC \uB9C8\uB514\uB97C
-    \uCC44\uC6CC\uC90D\uB2C8\uB2E4"
+    \uCC44\uC6CC\uC90D\uB2C8\uB2E4."
   LD: {x: 0.52, y: 0.81}
   RU: {x: 0.87, y: 0.91}
 --- !u!1 &108966883
@@ -3403,7 +3403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: "\uB178\uB798\uC5D0 \uC5B4\uC6B8\uB9AC\uB294 \uD654\uC74C\uC744 \uCD94\uCC9C\uD574\uC90D\uB2C8\uB2E4"
+  text: "\uB178\uB798\uC5D0 \uC5B4\uC6B8\uB9AC\uB294 \uD654\uC74C\uC744 \uCD94\uCC9C\uD574\uC90D\uB2C8\uB2E4."
   LD: {x: 0.13, y: 0.81}
   RU: {x: 0.48, y: 0.91}
 --- !u!1 &970493687
@@ -5553,9 +5553,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: "\uC800\uC7A5\uD558\uAE30"
-  LD: {x: 0.83, y: 0.81}
-  RU: {x: 0.93, y: 0.91}
+  text: "MIDI\uB85C \uC800\uC7A5"
+  LD: {x: 0.82, y: 0.81}
+  RU: {x: 0.94, y: 0.91}
 --- !u!1 &1436939918
 GameObject:
   m_ObjectHideFlags: 0

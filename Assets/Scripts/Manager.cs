@@ -255,7 +255,9 @@ public class Manager : MonoBehaviour
                 bool b = false;
                 for (int j = 0; j < i; j++)
                 {
-                    if (ch.Equals(tempChords[j]))
+                    if (ch.GetNotes()[0] == tempChords[j].GetNotes()[0]
+                        && ch.GetNotes()[1] == tempChords[j].GetNotes()[1]
+                        && ch.GetNotes()[2] == tempChords[j].GetNotes()[2])
                     {
                         b = true;
                         break;
