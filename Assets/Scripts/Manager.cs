@@ -238,12 +238,12 @@ public class Manager : MonoBehaviour
             tempChords.Clear();
 
             // This is only for demo!
-            tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
-            tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
-            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
-            tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
-            tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49)+1, Note.MidiToNote(54)+1));
-            tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
+            tempChords.Add(Generator.GenerateChord());
         }
         else
         {
