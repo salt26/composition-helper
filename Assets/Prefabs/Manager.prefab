@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b27fea31c0704448ac10040a9fd0657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltip: {fileID: 1701511897597268, guid: 5645a522bf6f1fa4e9ca2e91e1b4adad, type: 2}
   measureNumCanvas: {fileID: 1347080673230390, guid: 56d1f3e03f6278b439e8fa3c24e7cdb8,
     type: 2}
   noteObject: {fileID: 1159266590693010, guid: 5512c1a666b9a4d448adc22c88f3cc44, type: 2}
@@ -59,3 +60,4 @@ MonoBehaviour:
   accidentalObject: {fileID: 1811807560070144, guid: bab3213ffe7dce34c933d86148b1da6b,
     type: 2}
   dotObject: {fileID: 1448790954174228, guid: 38dfee3c9cc19564db1b648ab6a04656, type: 2}
+  recommendColor: {r: 0, g: 0, b: 0, a: 0.3}

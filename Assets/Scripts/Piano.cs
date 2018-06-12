@@ -116,6 +116,56 @@ public class Piano : MonoBehaviour {
 
     void FixedUpdate()
     {
+        object cur = Manager.manager.GetCursor();
+        if (cur == null)
+        {
+            mode = 3;
+        }
+        else if (cur.GetType() == typeof(Note))
+        {
+            Note n = (Note)cur;
+            if (n.GetComponentInParent<Staff>().staffName.Equals("Chord"))
+            {
+                mode = 0;
+            }
+            else if (n.GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
+            {
+                // TODO 반주를 입력 가능하게 하면 mode = 1로 바꾸기!
+                mode = 0;
+            }
+            else // 멜로디 보표
+            {
+                mode = 2;
+            }
+        }
+        else     // measure(마디) 선택 시
+        {
+            Measure m = (Measure)cur;
+            if (m.GetComponentInParent<Staff>().staffName.Equals("Chord"))
+            {
+                mode = 0;
+            }
+            else if (m.GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
+            {
+                // TODO 반주를 입력 가능하게 하면 mode = 1로 바꾸기!
+                mode = 0;
+            }
+            else // 멜로디 보표
+            {
+                bool b = false;
+                foreach (Note n in m.GetNotes())
+                {
+                    if (n.GetIsRecommended())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b) mode = 2;
+                else mode = 0;
+            }
+        }
+
         for (int tone = 0; tone <= 68; tone++)
         {
             if (keyClick[tone]) // click
