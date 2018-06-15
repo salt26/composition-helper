@@ -131,6 +131,7 @@ public class Chord {
 
     public void PlayChord()
     {
+        Manager.manager.StopAll();
         foreach (int note in notes)
         {
             Manager.manager.Play(Note.NoteToMidi(note), 0);
@@ -206,7 +207,9 @@ public class Chord {
         List<Chord> enumerated = new List<Chord>();
         List<Chord> temp = new List<Chord>();
         Chord initChord = new Chord();
-
+        initChord.SetChordName(chord.GetChordName());
+        initChord.SetChordText(chord.GetChordText());
+        initChord.SetBass(chord.GetBass());
 
         // Initialize (half moving)
         foreach (int n in chord.GetNotes())
@@ -220,19 +223,20 @@ public class Chord {
                 initChord.AddNote(n);
             }
         }
-        
+        Debug.Log("Chord ReviseScoreNotation " + initChord.GetBass());
+
         for (int i = 0; i < initChord.GetNotes().Count; i++)
         {
             if (isTreble && (initChord.GetNotes()[i] / 17 < 2
                 || initChord.GetNotes()[i] / 17 > 3)) {
                 initChord = ReviseNote(initChord, initChord.GetNotes()[i],
-                    initChord.GetNotes()[i] / 17 + 34);
+                    initChord.GetNotes()[i] % 17 + 34);
             }
             else if (!isTreble && (initChord.GetNotes()[i] / 17 < 0
                 || initChord.GetNotes()[i] / 17 > 1))
             {
                 initChord = ReviseNote(initChord, initChord.GetNotes()[i],
-                    initChord.GetNotes()[i] / 17 + 17);
+                    initChord.GetNotes()[i] % 17 + 17);
             }
         }
 
@@ -257,7 +261,7 @@ public class Chord {
         // Check each case (half moving)
         foreach (Chord c in enumerated)
         {
-            Debug.Log("enumerated " + c.NotesName());
+            //Debug.Log("enumerated " + c.NotesName());
             if (CheckScoreNotation(c, isTreble))
             {
                 return c;
@@ -267,6 +271,9 @@ public class Chord {
         // 반음 조절로 실패한 경우 옥타브 조절을 시도
         initChord = new Chord();
         enumerated.Clear();
+        initChord.SetChordName(chord.GetChordName());
+        initChord.SetChordText(chord.GetChordText());
+        initChord.SetBass(chord.GetBass());
 
         // Initialize (octave moving)
         foreach (int n in chord.GetNotes())
@@ -295,7 +302,7 @@ public class Chord {
         // Check each case (octave moving)
         foreach (Chord c in enumerated)
         {
-            Debug.Log("octave enumerated " + c.NotesName());
+            //Debug.Log("octave enumerated " + c.NotesName());
             if (CheckScoreNotation(c, isTreble))
             {
                 return c;
@@ -332,6 +339,9 @@ public class Chord {
     static Chord ReviseNote(Chord chord, int before, int after)
     {
         Chord newChord = new Chord();
+        newChord.SetChordName(chord.GetChordName());
+        newChord.SetChordText(chord.GetChordText());
+        newChord.SetBass(chord.GetBass());
         foreach (int n in chord.GetNotes())
         {
             if (n == before)
@@ -343,6 +353,7 @@ public class Chord {
                 newChord.AddNote(n);
             }
         }
+        Debug.Log("Chord ReviseNote " + newChord.GetBass());
         if (chord.GetBass() == before) newChord.SetBass(after);
         else newChord.SetBass(chord.GetBass());
         return newChord;

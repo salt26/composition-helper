@@ -67,8 +67,15 @@ public class Measure : MonoBehaviour
 
     public List<KeyValuePair<float, int> > ToMidi()
     {
+        int cursorMN = 0;
+        if (Manager.manager != null)
+        {
+            cursorMN = Manager.manager.GetCursorMeasureNum();
+            if (cursorMN < 0) cursorMN = 0;
+        }
         List<KeyValuePair<float, int> > res = new List<KeyValuePair<float, int>>();
-        int this_m = GetComponentInParent<Staff>().GetMeasureNum(this) * 4;
+        int this_m = (GetComponentInParent<Staff>().GetMeasureNum(this) - cursorMN) * 4;
+        if (this_m < 0) this_m = GetComponentInParent<Staff>().GetMeasureNum(this) * 4;
         foreach (Note n in notes)
         {
             res.Add(new KeyValuePair<float, int>(this_m + n.GetTiming() / 4f, Note.NoteToMidi(n.GetPitch())));
@@ -115,10 +122,6 @@ public class Measure : MonoBehaviour
 
             }
         }
-        if (mn >= 1)
-            Manager.manager.RecommendChords(Manager.manager.GetStaff(2).GetMeasure(mn - 1).GetChord());
-        else
-            Manager.manager.RecommendChords(null);
 
         Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
         Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();
@@ -159,6 +162,7 @@ public class Measure : MonoBehaviour
 
     public Chord GetChord()
     {
+        Debug.Log("Measure.GetChord " + chord.GetBass());
         Chord ch = new Chord(chord.GetNotes());
         ch.SetBass(chord.GetBass());
         ch.SetChordName(chord.GetChordName());

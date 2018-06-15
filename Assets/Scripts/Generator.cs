@@ -137,7 +137,8 @@ public class Generator {
             chord = new Chord(a, b, c);
         }
         chord.SetChordName(chordName);
-        Debug.Log("before " + chord.NotesName());
+        
+        //Debug.Log("before " + chord.NotesName());
         /*
         Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
         if ((int)((Note.NoteToScore(b, false) - Note.NoteToScore(a, false)) * 8 + .5) != 2
@@ -152,7 +153,8 @@ public class Generator {
             Debug.Log("fail to revise chord");
             return GenerateChord();
         }
-        Debug.Log("after " + chord.NotesName());
+        //Debug.Log("after " + chord.NotesName());
+        Debug.Log("Generator " + chord.GetBass());
         chord.SetChordText(Note.NoteToName2(a) + chordText + "\n<size=10>(" + chord.NotesName() + ")</size>");
         return chord;
     }

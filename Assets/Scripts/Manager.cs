@@ -151,6 +151,15 @@ public class Manager : MonoBehaviour
             mainCamera.GetComponent<Transform>().SetPositionAndRotation(
                 new Vector3((scrollbar.value * ((measureNum - 1) * 11f - 5f)), 0f, -10f), Quaternion.identity);
         }
+
+        if (isScoreScene && GetCursor() == null && Finder.finder.playButton.GetComponent<Button>().interactable)
+        {
+            Finder.finder.playButton.GetComponent<Button>().interactable = false;
+        }
+        else if (isScoreScene && GetCursor() != null && !Finder.finder.playButton.GetComponent<Button>().interactable)
+        {
+            Finder.finder.playButton.GetComponent<Button>().interactable = true;
+        }
     }
 
     /// <summary>
@@ -272,13 +281,16 @@ public class Manager : MonoBehaviour
                     i--;
                     continue;
                 }
+                Debug.Log("Manager RecommendChords " + ch.GetBass());
                 tempChords.Add(ch);
             }
         }
-        else if (prevChord.GetChordName() == "Major")
+        else if (prevChord.GetChordName().Equals("Major"))
         {
+            Debug.Log("Major Recommended");
             manager.tempChords.Clear();
-            midiBass = Note.MidiToNote(prevChord.GetBass());
+            midiBass = Note.NoteToMidi(prevChord.GetBass());
+            Debug.Log(midiBass);
             manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 7),
                 Note.MidiToNote(midiBass + 11), Note.MidiToNote(midiBass + 14)), false));   // 5 Major
             manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
@@ -290,6 +302,12 @@ public class Manager : MonoBehaviour
                 Note.MidiToNote(midiBass + 3), Note.MidiToNote(midiBass + 7)), false));   // 1 minor
             manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
                 Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 8)), false));   // 1 aug
+            
+            manager.tempChords[0].SetChordName("Major");
+            manager.tempChords[1].SetChordName("Major");
+            manager.tempChords[2].SetChordName("Major7");
+            manager.tempChords[3].SetChordName("minor");
+            manager.tempChords[4].SetChordName("augmented");
 
             bool b;
             Chord ch;
@@ -299,9 +317,8 @@ public class Manager : MonoBehaviour
                 b = false;
                 for (int j = 0; j < 5; j++)
                 {
-                    if (ch.GetNotes()[0] == tempChords[j].GetNotes()[0]
-                        && ch.GetNotes()[1] == tempChords[j].GetNotes()[1]
-                        && ch.GetNotes()[2] == tempChords[j].GetNotes()[2])
+                    if (ch.GetBass() == tempChords[j].GetBass() 
+                        && ch.GetChordName() == tempChords[j].GetChordName())
                     {
                         b = true;
                         break;
@@ -309,12 +326,6 @@ public class Manager : MonoBehaviour
                 }
             } while (b);
             manager.tempChords.Add(ch); // random
-
-            manager.tempChords[0].SetChordName("Major");
-            manager.tempChords[1].SetChordName("Major");
-            manager.tempChords[2].SetChordName("Major7");
-            manager.tempChords[3].SetChordName("minor");
-            manager.tempChords[4].SetChordName("augmented");
 
             manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n긴장");
             manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n편안");
@@ -520,6 +531,9 @@ public class Manager : MonoBehaviour
         manager.StartCoroutine(play);
     }
 
+    /// <summary>
+    /// 모든 재생 중인 음을 멈춥니다.
+    /// </summary>
     public void StopAll()
     {
         int i, j;

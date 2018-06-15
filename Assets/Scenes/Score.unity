@@ -3346,6 +3346,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1374163718}
+        m_MethodName: RecommendChords
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &940187546
@@ -5142,6 +5153,7 @@ MonoBehaviour:
   savePanel: {fileID: 1030848404}
   instructionPanel: {fileID: 1817041922}
   instructionPanel2: {fileID: 779284495}
+  playButton: {fileID: 1538290169}
 --- !u!4 &1384978565 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4328942895361234, guid: 4c287ba762b8e1a4aaef6260f70105d8,

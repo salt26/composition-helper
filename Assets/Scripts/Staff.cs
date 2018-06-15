@@ -103,11 +103,13 @@ public class Staff : MonoBehaviour {
     public List<KeyValuePair<float, int>> ToMidi()
     {
         List<KeyValuePair<float, int>> res = new List<KeyValuePair<float, int>>();
-        if (hasPlay)
+        if (hasPlay && Manager.manager != null)
         {
-            foreach (Measure m in measures)
+            int cursorMN = Manager.manager.GetCursorMeasureNum();
+            if (cursorMN < 0) cursorMN = 0;
+            for (int i = Manager.manager.GetCursorMeasureNum(); i < measures.Count; i++)
             {
-                foreach (KeyValuePair<float, int> p in m.ToMidi())
+                foreach (KeyValuePair<float, int> p in measures[i].ToMidi())
                 {
                     res.Add(p);
                 }

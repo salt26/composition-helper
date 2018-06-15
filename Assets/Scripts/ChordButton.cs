@@ -38,6 +38,7 @@ public class ChordButton : MonoBehaviour {
             Manager.manager.WriteNote(1, measureNum, c, "4분음표", 8, color);
             Manager.manager.WriteNote(1, measureNum, c, "4분음표", 12, color);
         }
+        Debug.Log("ChordButton WriteChord " + chord.GetBass());
         Manager.manager.GetStaff(2).GetMeasure(measureNum).SetChord(chord);
 
         Manager.manager.GetStaff(1).GetMeasure(measureNum).InteractionOn();
