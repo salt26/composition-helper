@@ -7,6 +7,7 @@ public class Measure : MonoBehaviour
     List<Note> notes = new List<Note>();
     bool isInteractive = true;
     bool isHighlighting = false;
+    Chord chord;
 
     void FixedUpdate()
     {
@@ -114,7 +115,10 @@ public class Measure : MonoBehaviour
 
             }
         }
-        Manager.manager.RecommendChords(null);
+        if (mn >= 1)
+            Manager.manager.RecommendChords(Manager.manager.GetStaff(2).GetMeasure(mn - 1).GetChord());
+        else
+            Manager.manager.RecommendChords(null);
 
         Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
         Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();
@@ -146,6 +150,20 @@ public class Measure : MonoBehaviour
             Destroy(n.gameObject);
         }
         notes.Clear();
+    }
+
+    public void SetChord(Chord ch)
+    {
+        chord = ch;
+    }
+
+    public Chord GetChord()
+    {
+        Chord ch = new Chord(chord.GetNotes());
+        ch.SetBass(chord.GetBass());
+        ch.SetChordName(chord.GetChordName());
+        ch.SetChordText(chord.GetChordText());
+        return ch;
     }
 
     public void InteractionOff()

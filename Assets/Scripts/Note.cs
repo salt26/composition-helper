@@ -448,6 +448,36 @@ public class Note : MonoBehaviour {
     }
 
     /// <summary>
+    /// 우리의 음표 인코딩에서 음이름으로 바꿔줍니다.
+    /// </summary>
+    /// <param name="note"></param>
+    /// <returns></returns>
+    public static string NoteToName2(int note)
+    {
+        int b = note % 17;
+        switch (b)
+        {
+            case 0: return "C";
+            case 1: return "C#";
+            case 2: return "Db";
+            case 3: return "D";
+            case 4: return "D#";
+            case 5: return "Eb";
+            case 6: return "E";
+            case 7: return "F";
+            case 8: return "F#";
+            case 9: return "Gb";
+            case 10: return "G";
+            case 11: return "G#";
+            case 12: return "Ab";
+            case 13: return "A";
+            case 14: return "A#";
+            case 15: return "Bb";
+            default: return "B";
+        }
+    }
+
+    /// <summary>
     /// 우리의 음표 인코딩에서 악보에 넣을 y좌표로 바꿔줍니다.
     /// </summary>
     /// <param name="note"></param>
@@ -543,7 +573,7 @@ public class Note : MonoBehaviour {
 
     /// <summary>
     /// 우리의 음표 인코딩으로부터 어떤 임시표가 붙는지 알려줍니다.
-    /// 0은 내추럴, 1은 샵(#), 2는 플랫(b)이다.
+    /// 0은 내추럴, 1은 샵(#), 2는 플랫(b)입니다.
     /// </summary>
     /// <param name="note"></param>
     /// <returns></returns>

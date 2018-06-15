@@ -171,7 +171,7 @@ public class Manager : MonoBehaviour
     public void SetMeasureAndChangeScene(float sliderVal)
     {
         float i = Mathf.Round(sliderVal);
-        if (i == 2f)
+        if (i >= 2f)
         {
             measureNum = 8 * (int)(i - 1);
             SceneManager.LoadScene("Score");
@@ -244,11 +244,109 @@ public class Manager : MonoBehaviour
 
     public void RecommendChords(Chord prevChord)
     {
+        int midiBass = -1;
         if (prevChord == null)
         {
             manager.tempChords.Clear();
+            
+            for (int i = 0; i < 6; i++)
+            {
+                Chord ch = Generator.GenerateChord();
+                // 첫 화음으로는 Major, minor, Major7, minor7만 온다.
+                while (ch.GetChordName().Equals("suspension4")
+                    || ch.GetChordName().Equals("augmented") || ch.GetChordName().Equals("diminished"))
+                    ch = Generator.GenerateChord();
+                bool b = false;
+                for (int j = 0; j < i; j++)
+                {
+                    if (ch.GetNotes()[0] == tempChords[j].GetNotes()[0]
+                        && ch.GetNotes()[1] == tempChords[j].GetNotes()[1]
+                        && ch.GetNotes()[2] == tempChords[j].GetNotes()[2])
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b)
+                {
+                    i--;
+                    continue;
+                }
+                tempChords.Add(ch);
+            }
+        }
+        else if (prevChord.GetChordName() == "Major")
+        {
+            manager.tempChords.Clear();
+            midiBass = Note.MidiToNote(prevChord.GetBass());
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 7),
+                Note.MidiToNote(midiBass + 11), Note.MidiToNote(midiBass + 14)), false));   // 5 Major
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 9), Note.MidiToNote(midiBass + 12)), false));   // 4 Major
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 2),
+                Note.MidiToNote(midiBass + 6), Note.MidiToNote(midiBass + 9),
+                Note.MidiToNote(midiBass + 12)), false));                                   // 2 Major7
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 3), Note.MidiToNote(midiBass + 7)), false));   // 1 minor
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 8)), false));   // 1 aug
 
-            // This is only for demo!
+            bool b;
+            Chord ch;
+            do
+            {
+                ch = Generator.GenerateChord();
+                b = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (ch.GetNotes()[0] == tempChords[j].GetNotes()[0]
+                        && ch.GetNotes()[1] == tempChords[j].GetNotes()[1]
+                        && ch.GetNotes()[2] == tempChords[j].GetNotes()[2])
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+            } while (b);
+            manager.tempChords.Add(ch); // random
+
+            manager.tempChords[0].SetChordName("Major");
+            manager.tempChords[1].SetChordName("Major");
+            manager.tempChords[2].SetChordName("Major7");
+            manager.tempChords[3].SetChordName("minor");
+            manager.tempChords[4].SetChordName("augmented");
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n긴장");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n편안");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "7\n진행, 변화");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "m\n어두움");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "aug\n불안");
+
+            /*
+            manager.tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49) + 1, Note.MidiToNote(54) + 1));
+            manager.tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
+            manager.tempChords[0].SetChordText("기호 1번");
+            manager.tempChords[1].SetChordText("기호 2번");
+            manager.tempChords[2].SetChordText("기호 3번");
+            manager.tempChords[3].SetChordText("기호 4번");
+            manager.tempChords[4].SetChordText("기호 5번");
+            manager.tempChords[5].SetChordText("기호 6번");
+            manager.tempChords[0].SetChordText("레b 파 라b\n(Db)");
+            manager.tempChords[1].SetChordText("파# 라# 도#\n(F#)");
+            manager.tempChords[2].SetChordText("시 레 파#\n(Bm)");
+            manager.tempChords[3].SetChordText("레# 파# 라\n(D#dim)");
+            manager.tempChords[4].SetChordText("시 레b 솔b\n(Bsus2)");
+            manager.tempChords[5].SetChordText("미b 솔 시b 레b\n(Eb7)");
+            */
+        }
+        else
+        {
+            manager.tempChords.Clear();
+
             for (int i = 0; i < 6; i++)
             {
                 Chord ch = Generator.GenerateChord();
@@ -270,46 +368,6 @@ public class Manager : MonoBehaviour
                 }
                 tempChords.Add(ch);
             }
-            manager.tempChords[0].SetChordText("기호 1번");
-            manager.tempChords[1].SetChordText("기호 2번");
-            manager.tempChords[2].SetChordText("기호 3번");
-            manager.tempChords[3].SetChordText("기호 4번");
-            manager.tempChords[4].SetChordText("기호 5번");
-            manager.tempChords[5].SetChordText("기호 6번");
-            /*
-            manager.tempChords[0].SetChordText("레b 파 라b\n(Db)");
-            manager.tempChords[1].SetChordText("파# 라# 도#\n(F#)");
-            manager.tempChords[2].SetChordText("시 레 파#\n(Bm)");
-            manager.tempChords[3].SetChordText("레# 파# 라\n(D#dim)");
-            manager.tempChords[4].SetChordText("시 레b 솔b\n(Bsus2)");
-            manager.tempChords[5].SetChordText("미b 솔 시b 레b\n(Eb7)");
-            */
-        }
-        else
-        {
-            manager.tempChords.Clear();
-
-            // TODO
-            manager.tempChords.Add(new Chord(Note.MidiToNote(49) + 1, Note.MidiToNote(53), Note.MidiToNote(56) + 1));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(54), Note.MidiToNote(58), Note.MidiToNote(61)));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(50), Note.MidiToNote(54)));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(51), Note.MidiToNote(54), Note.MidiToNote(57)));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(47), Note.MidiToNote(49) + 1, Note.MidiToNote(54) + 1));
-            manager.tempChords.Add(new Chord(Note.MidiToNote(51) + 1, Note.MidiToNote(55), Note.MidiToNote(58) + 1, Note.MidiToNote(61) + 1));
-            manager.tempChords[0].SetChordText("기호 1번");
-            manager.tempChords[1].SetChordText("기호 2번");
-            manager.tempChords[2].SetChordText("기호 3번");
-            manager.tempChords[3].SetChordText("기호 4번");
-            manager.tempChords[4].SetChordText("기호 5번");
-            manager.tempChords[5].SetChordText("기호 6번");
-            /*
-            manager.tempChords[0].SetChordText("레b 파 라b\n(Db)");
-            manager.tempChords[1].SetChordText("파# 라# 도#\n(F#)");
-            manager.tempChords[2].SetChordText("시 레 파#\n(Bm)");
-            manager.tempChords[3].SetChordText("레# 파# 라\n(D#dim)");
-            manager.tempChords[4].SetChordText("시 레b 솔b\n(Bsus2)");
-            manager.tempChords[5].SetChordText("미b 솔 시b 레b\n(Eb7)");
-            */
         }
     }
 

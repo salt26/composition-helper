@@ -74,41 +74,71 @@ public class Generator {
 
     public static Chord GenerateChord()
     {
+        Chord chord;
         int a = baseNote[Random.Range(0, 12)], b, c, d = -1;
-        switch (Random.Range(0, 8))
+        string chordText = "";
+        string chordName = "";
+        switch (Random.Range(0, 7))
         {
-            case 0:
-            case 1:     // major
+            case 0:     // major
                 b = Note.NoteToMidi(a) + 4;
                 c = b + 3;
+                chordText = "";
+                chordName = "Major";
                 break;
             case 2:     // diminish
                 b = Note.NoteToMidi(a) + 3;
                 c = b + 3;
+                chordText = "dim";
+                chordName = "diminished";
                 break;
             case 3:     // augmentation
                 b = Note.NoteToMidi(a) + 4;
                 c = b + 4;
+                chordText = "aug";
+                chordName = "augmented";
                 break;
             case 5:     // minor 7
                 b = Note.NoteToMidi(a) + 3;
                 c = b + 4;
                 d = c + 3;
+                chordText = "m7";
+                chordName = "minor7";
                 break;
             case 4:     // major 7
                 b = Note.NoteToMidi(a) + 4;
                 c = b + 3;
                 d = c + 3;
+                chordText = "7";
+                chordName = "Major7";
+                break;
+            case 6:     // sus4 (sus2)
+                b = Note.NoteToMidi(a) + 5;
+                c = b + 2;
+                chordText = "sus4";
+                chordName = "suspension4";
                 break;
             default:    // minor
                 b = Note.NoteToMidi(a) + 3;
                 c = b + 4;
+                chordText = "m";
+                chordName = "minor";
                 break;
         }
         b = Note.MidiToNote(b);
         c = Note.MidiToNote(c);
-        if (d != -1) d = Note.MidiToNote(d);
-        Debug.Log("before " + a + " " + b + " " + c);
+        if (d != -1)
+        {
+            d = Note.MidiToNote(d);
+            chord = new Chord(a, b, c, d);
+        }
+        else
+        {
+            chord = new Chord(a, b, c);
+        }
+        chord.SetChordName(chordName);
+        Debug.Log("before " + chord.NotesName());
+        /*
         Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
         if ((int)((Note.NoteToScore(b, false) - Note.NoteToScore(a, false)) * 8 + .5) != 2
             && Note.NoteToMidi(b) == Note.NoteToMidi(b + 1)) b++;
@@ -116,21 +146,14 @@ public class Generator {
             && Note.NoteToMidi(c) == Note.NoteToMidi(c + 1)) c++;
         if (d != -1 && (int)((Note.NoteToScore(d, false) - Note.NoteToScore(a, false)) * 8 + .5) != 6
             && Note.NoteToMidi(d) == Note.NoteToMidi(d + 1)) d++;
-        Debug.Log("after " + a + " " + b + " " + c);
-        Debug.Log(Note.NoteToScore(a, false) + " " + Note.NoteToScore(b, false) + " " + Note.NoteToScore(c, false));
-        if (a == 18 && b == 24 && c == 28)
+        */
+        if ((chord = Chord.ReviseScoreNotation(chord, false)) == null)
         {
-            a = 19;
-            b = 24;
-            c = 29;
+            Debug.Log("fail to revise chord");
+            return GenerateChord();
         }
-        if (a == 21 && b == 27 && c == 31)
-        {
-            a = 22;
-            b = 27;
-            c = 32;
-        }
-        if (d != -1) return new Chord(a, b, c, d);
-        return new Chord(a, b, c);
+        Debug.Log("after " + chord.NotesName());
+        chord.SetChordText(Note.NoteToName2(a) + chordText + "\n<size=10>(" + chord.NotesName() + ")</size>");
+        return chord;
     }
 }

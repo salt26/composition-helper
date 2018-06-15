@@ -581,8 +581,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.2
-  m_Text: "\uB808b \uD30C \uB77Cb\n(Db)"
+    m_LineSpacing: 1
+  m_Text: "Db\n<size=10>(\uB808b,\uD30C,\uB77Cb)</size>"
 --- !u!114 &114324513278502832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1049,8 +1049,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.2
-  m_Text: "\uC2DC \uB808 \uD30C#\n(Bm)"
+    m_LineSpacing: 1
+  m_Text: "Bm\n<size=10>(\uC2DC,\uB808,\uD30C#)</size>"
 --- !u!114 &114486881250223976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1167,8 +1167,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.2
-  m_Text: "\uBBF8b \uC194 \uC2DCb \uB808b\n(Eb7)"
+    m_LineSpacing: 1
+  m_Text: "Eb7\n<size=10>(\uBBF8b,\uC194,\uC2DCb,\uB808b)</size>"
 --- !u!114 &114518364963044510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1594,8 +1594,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.2
-  m_Text: "\uD30C# \uB77C# \uB3C4#\n(F#)"
+    m_LineSpacing: 1
+  m_Text: "F#\n<size=10>(\uD30C#,\uB77C#,\uB3C4#)</size>"
 --- !u!114 &114739192440482912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1718,8 +1718,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.2
-  m_Text: "\uB808# \uD30C# \uB77C\n(D#dim)"
+    m_LineSpacing: 1
+  m_Text: "D#dim\n<size=10>(\uB808#,\uD30C#,\uB77C)</size>"
 --- !u!114 &114827231600013328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1751,8 +1751,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.2
-  m_Text: "\uC2DC \uB808b \uC194b\n(Bsus2)"
+    m_LineSpacing: 1
+  m_Text: "Bsus2\n<size=10>(\uC2DC,\uB808b,\uC194b)</size>"
 --- !u!114 &114847688086871266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2167,8 +2167,8 @@ RectTransform:
   m_Father: {fileID: 224948628495069668}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.25}
-  m_AnchorMax: {x: 0.9, y: 0.75}
+  m_AnchorMin: {x: 0.1, y: 0.15}
+  m_AnchorMax: {x: 0.9, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2185,8 +2185,8 @@ RectTransform:
   m_Father: {fileID: 224536049808038758}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.25}
-  m_AnchorMax: {x: 0.9, y: 0.75}
+  m_AnchorMin: {x: 0.1, y: 0.15}
+  m_AnchorMax: {x: 0.9, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2240,8 +2240,8 @@ RectTransform:
   m_Father: {fileID: 224760676106266168}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.25}
-  m_AnchorMax: {x: 0.9, y: 0.75}
+  m_AnchorMin: {x: 0.1, y: 0.15}
+  m_AnchorMax: {x: 0.9, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2277,8 +2277,8 @@ RectTransform:
   m_Father: {fileID: 224756461141700618}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.25}
-  m_AnchorMax: {x: 0.9, y: 0.75}
+  m_AnchorMin: {x: 0.1, y: 0.15}
+  m_AnchorMax: {x: 0.9, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2369,8 +2369,8 @@ RectTransform:
   m_Father: {fileID: 224493296977776128}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.25}
-  m_AnchorMax: {x: 0.9, y: 0.75}
+  m_AnchorMin: {x: 0.1, y: 0.15}
+  m_AnchorMax: {x: 0.9, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2443,8 +2443,8 @@ RectTransform:
   m_Father: {fileID: 224928724749456488}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.25}
-  m_AnchorMax: {x: 0.9, y: 0.75}
+  m_AnchorMin: {x: 0.1, y: 0.15}
+  m_AnchorMax: {x: 0.9, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

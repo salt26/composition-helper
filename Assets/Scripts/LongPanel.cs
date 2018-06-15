@@ -34,6 +34,7 @@ public class LongPanel : MonoBehaviour {
     {
         if (Manager.manager != null)
         {
+            /*
             // TODO
             if (Mathf.Round(slider.value) > 2f)
             {
@@ -43,6 +44,8 @@ public class LongPanel : MonoBehaviour {
             {
                 Manager.manager.SetMeasureAndChangeScene(slider.value);
             }
+            */
+            Manager.manager.SetMeasureAndChangeScene(slider.value);
         } else
         {
             Debug.LogError("Decide Error! Manager is null!");
