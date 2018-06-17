@@ -858,9 +858,10 @@ public class Manager : MonoBehaviour
 
     IEnumerator __PlayAll(List<KeyValuePair<float, int>> list)
     {
-        float last = 0;
+        float last = 0, timingf;
+        int mn, timing;
         manager.isPlaying = true;
-        Debug.LogWarning("Playing...");
+        //Debug.LogWarning("Playing...");
         foreach (KeyValuePair<float, int> p in list)
         {
             if (last != p.Key)
@@ -868,11 +869,29 @@ public class Manager : MonoBehaviour
                 yield return new WaitForSecondsRealtime((p.Key - last) / 2);
                 last = p.Key;
             }
-            if (p.Value > 0) PlayTone(p.Value & 65535, p.Value >> 16);
-            else Stop(-p.Value & 65535, -p.Value >> 16);
+            if ((mn = manager.GetCursorMeasureNum()) != -1)
+                mn += (int)(p.Key) / 4;
+            else
+                mn = (int)(p.Key) / 4;
+            if (p.Value > 0)
+            {
+                timing = (int)(p.Key * 4f) % 16;
+                PlayTone(p.Value & 65535, p.Value >> 16);
+                /* TODO */
+                SetNotesPlaying(mn, timing, true);
+                Piano.SetKeyPlaying(Note.MidiToNote(p.Value & 65535), true);
+            }
+            else
+            {
+                timingf = (p.Key - ((int)(p.Key) / 4)) * 4f;
+                //Debug.LogWarning("off note " + mn + ", " + timingf);
+                Stop(-p.Value & 65535, -p.Value >> 16);
+                SetNotesEndPlaying(mn, timingf, -p.Value >> 16);
+                Piano.SetKeyPlaying(Note.MidiToNote(-p.Value & 65535), false);
+            }
         }
         manager.isPlaying = false;
-        Debug.LogWarning("End playing");
+        //Debug.LogWarning("End playing");
     }
 
     public void PlayAll()
@@ -964,6 +983,41 @@ public class Manager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// 조건에 맞는 음표들을 악보에서 모두 찾아 isPlaying 상태로 만들어줍니다.
+    /// playing 상태로 체크된 음표는 초록색으로 표시됩니다.
+    /// </summary>
+    /// <param name="measureNum"></param>
+    /// <param name="timing"></param>
+    private void SetNotesPlaying(int measureNum, int timing, bool isPlaying)
+    {
+        if (measureNum < 0 || measureNum > manager.GetMaxMeasureNum()) measureNum = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            if (!manager.GetStaff(j).GetHasPlay()) continue;
+            foreach (Note n in manager.GetStaff(j).GetMeasure(measureNum).GetNotes()) {
+                if (n.GetTiming() == timing) n.SetIsPlaying(isPlaying);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 주어진 보표(staff)의 마디(measureNum)에서 timing보다 낮은 timing을 가진 
+    /// 모든 음표를 찾아 playing 상태를 해제합니다.
+    /// </summary>
+    /// <param name="measureNum"></param>
+    /// <param name="timing"></param>
+    /// <param name="staff"></param>
+    private void SetNotesEndPlaying(int measureNum, float timing, int staff)
+    {
+        if (measureNum < 0 || measureNum > manager.GetMaxMeasureNum()) measureNum = 0;
+        if (!manager.GetStaff(staff).GetHasPlay()) return;
+        foreach (Note n in manager.GetStaff(staff).GetMeasure(measureNum).GetNotes())
+        {
+            if (n.GetTiming() < timing) n.SetIsPlaying(false);
+        }
     }
 
     /// <summary>

@@ -12,10 +12,12 @@ public class Note : MonoBehaviour {
     int timing = 0; // 음표가 등장하는 x좌표 위치(0 <= timing < 16)
     bool isTreble = true;
     bool isRecommended = false;
+    bool isPlaying = false;
     bool hasHoveringSaveButton = false;
     static Color color = Color.black;
     static Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
     static Color selectedRecommendedColor = new Color(0.7647f, 0.2536f, 0f, 0.6980392f);
+    static Color playingColor = new Color(0f, 0.839f, 0.5312847f, 1f);
 
     void Awake()
     {
@@ -26,7 +28,12 @@ public class Note : MonoBehaviour {
     void FixedUpdate()
     {
         hasHoveringSaveButton = GetComponentInParent<Measure>().GetHoveringSaveButton();
-        if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
+        if (Manager.manager != null && isPlaying)
+        {
+            SetColor(playingColor);
+            noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, -1.5f);
+        }
+        else if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
         {
             if (isRecommended) SetColor(selectedRecommendedColor);
             else SetColor(selectedColor);
@@ -346,6 +353,16 @@ public class Note : MonoBehaviour {
     public bool GetIsRecommended()
     {
         return isRecommended;
+    }
+
+    public void SetIsPlaying(bool p)
+    {
+        isPlaying = p;
+    }
+
+    public bool GetIsPlaying()
+    {
+        return isPlaying;
     }
 
     public bool GetIsTreble()

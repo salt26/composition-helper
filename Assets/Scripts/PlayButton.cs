@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class PlayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public Toggle melodyToggle;
+    public Toggle accompanimentToggle;
+    public Toggle chordToggle;
     bool isPlaying = false;
 
     void FixedUpdate()
@@ -14,10 +17,16 @@ public class PlayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             isPlaying = true;
             StopCoroutine(ToWhite());
             GetComponent<Image>().color = new Color(0f, 0.839f, 0.5312847f, 1f);
+            melodyToggle.interactable = false;
+            accompanimentToggle.interactable = false;
+            chordToggle.interactable = false;
         }
         else if (Manager.manager != null && !Manager.manager.GetIsPlaying() && isPlaying)
         {
             isPlaying = false;
+            melodyToggle.interactable = true;
+            accompanimentToggle.interactable = true;
+            chordToggle.interactable = true;
             StartCoroutine(ToWhite());
         }
     }

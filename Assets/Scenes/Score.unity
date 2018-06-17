@@ -2015,6 +2015,24 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73806f8eb23254940a566a891092cb67, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &505823508 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114145689251827942, guid: 73806f8eb23254940a566a891092cb67,
+    type: 2}
+  m_PrefabInternal: {fileID: 505823507}
+  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &505823509 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114196483152537662, guid: 73806f8eb23254940a566a891092cb67,
+    type: 2}
+  m_PrefabInternal: {fileID: 505823507}
+  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &505823510 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114155593096112960, guid: 73806f8eb23254940a566a891092cb67,
+    type: 2}
+  m_PrefabInternal: {fileID: 505823507}
+  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &510726888
 GameObject:
   m_ObjectHideFlags: 0
@@ -6034,6 +6052,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1937b8854283d0a49abdf049100b1ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  melodyToggle: {fileID: 505823510}
+  accompanimentToggle: {fileID: 505823509}
+  chordToggle: {fileID: 505823508}
 --- !u!224 &1593973046 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224096344758336758, guid: a2616cdba88cdf245a81cf87ffc4c8b7,

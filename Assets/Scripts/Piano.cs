@@ -18,12 +18,14 @@ public class Piano : MonoBehaviour {
     static Color whiteChord = new Color(0.9531f, 0.5058f, 1f, 1f);
     static Color blackChord = new Color(0.5178f, 0.1496f, 0.5566f, 1f);
     static Color clicked = new Color(0.8352f, 0.1686f, 0.1686f);
+    static Color playing = new Color(0f, 0.839f, 0.5312847f, 1f);
 
     List<GameObject> buttons = new List<GameObject>();
     static List<bool> keyEnable = new List<bool>();     // [index]: tone, false: disable, true: enable
     static List<bool> keyChord = new List<bool>();      // [index]: tone, true: chord helper
     static List<bool> keyHighlight = new List<bool>();  // [index]: tone, true: highlight(selected)
     static List<bool> keyClick = new List<bool>();      // [index]: tone, true: clicked
+    static List<int> keyPlaying = new List<int>();    // [index]: tone, value: playing count
     public int mode = 0;   // 0: disable all, 1: bass clef, 2: treble clef, 3: enable all
 
     static bool isFirstTime = true;
@@ -108,6 +110,7 @@ public class Piano : MonoBehaviour {
             keyChord.Add(false);
             keyHighlight.Add(false);
             keyClick.Add(false);
+            keyPlaying.Add(0);
         }
     }
 	
@@ -173,6 +176,10 @@ public class Piano : MonoBehaviour {
             if (keyClick[tone]) // click
             {
                 buttons[tone].GetComponent<Image>().color = clicked;
+            }
+            else if (keyPlaying[tone] > 0) // playing
+            {
+                buttons[tone].GetComponent<Image>().color = playing;
             }
             else if (keyHighlight[tone]) // highlight
             {
@@ -440,6 +447,15 @@ public class Piano : MonoBehaviour {
     {
         if (tone < 0 || tone > 68) return;
         keyChord[tone] = on;
+    }
+
+    public static void SetKeyPlaying(int tone, bool on)
+    {
+        if (tone < 0 || tone > 68) return;
+        if (on)
+            keyPlaying[tone]++;
+        else
+            keyPlaying[tone]--;
     }
 
     /// <summary>
