@@ -118,6 +118,22 @@ public class Staff : MonoBehaviour {
         return res;
     }
 
+    public List<KeyValuePair<float, int>> ToMidiAll()
+    {
+        List<KeyValuePair<float, int>> res = new List<KeyValuePair<float, int>>();
+        if (hasPlay && Manager.manager != null)
+        {
+            for (int i = 0; i < measures.Count; i++)
+            {
+                foreach (KeyValuePair<float, int> p in measures[i].ToMidi())
+                {
+                    res.Add(p);
+                }
+            }
+        }
+        return res;
+    }
+
     public void TogglePlay()
     {
         hasPlay = !hasPlay;

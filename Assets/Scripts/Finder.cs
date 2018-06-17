@@ -12,6 +12,7 @@ public class Finder : MonoBehaviour {
     public GameObject instructionPanel;
     public GameObject instructionPanel2;
     public GameObject playButton;
+    public GameObject playPrevChordButton;
     
     private void Awake()
     {
@@ -26,6 +27,20 @@ public class Finder : MonoBehaviour {
             if ((mn = Manager.manager.GetCursorMeasureNum()) >= 1)
                 Manager.manager.RecommendChords(Manager.manager.GetStaff(2).GetMeasure(mn - 1).GetChord());
             else Manager.manager.RecommendChords(null);
+        }
+    }
+
+    public void PlayPrevChord()
+    {
+        if (Manager.manager != null)
+        {
+            int mn;
+            if ((mn = Manager.manager.GetCursorMeasureNum()) >= 1)
+            {
+                Debug.LogWarning("PlayPrevChord");
+                Debug.LogWarning(Manager.manager.GetStaff(2).GetMeasure(mn - 1).GetChord().GetNotes().Count);
+                Manager.manager.GetStaff(2).GetMeasure(mn - 1).GetChord().PlayChord();
+            }
         }
     }
 }

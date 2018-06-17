@@ -167,6 +167,7 @@ public class Measure : MonoBehaviour
         ch.SetBass(chord.GetBass());
         ch.SetChordName(chord.GetChordName());
         ch.SetChordText(chord.GetChordText());
+        Debug.LogWarning("GetChord " + ch.GetNotes().Count + " / chord " + chord.GetNotes().Count);
         return ch;
     }
 

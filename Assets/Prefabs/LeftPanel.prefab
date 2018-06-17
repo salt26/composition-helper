@@ -71,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224311804057641952}
   - component: {fileID: 114155593096112960}
+  - component: {fileID: 114597321153376646}
   m_Layer: 5
   m_Name: MelodyToggle
   m_TagString: Untagged
@@ -104,6 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224212815092841612}
   - component: {fileID: 114145689251827942}
+  - component: {fileID: 114790758716055306}
   m_Layer: 5
   m_Name: ChordToggle
   m_TagString: Untagged
@@ -205,6 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224243199013186390}
   - component: {fileID: 114196483152537662}
+  - component: {fileID: 114802290702418370}
   m_Layer: 5
   m_Name: AccompanimentToggle
   m_TagString: Untagged
@@ -550,6 +553,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uBC18\uC8FC"
+--- !u!114 &114597321153376646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140487302745630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uBA5C\uB85C\uB514 \uCF1C\uAE30/\uB044\uAE30 (\uC800\uC7A5 \uC2DC \uBC18\uC601)"
+  LD: {x: 0.07, y: 0.66}
+  RU: {x: 0.22, y: 0.77}
 --- !u!114 &114651250425779992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -631,6 +648,34 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114790758716055306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1490323384084984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uD654\uC74C \uCF1C\uAE30/\uB044\uAE30 (\uC800\uC7A5 \uC2DC \uBC18\uC601)"
+  LD: {x: 0.07, y: 0.26}
+  RU: {x: 0.22, y: 0.37}
+--- !u!114 &114802290702418370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1882278577649560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca225dd42a81544484e5408198733fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uBC18\uC8FC \uCF1C\uAE30/\uB044\uAE30 (\uC800\uC7A5 \uC2DC \uBC18\uC601)"
+  LD: {x: 0.07, y: 0.46}
+  RU: {x: 0.22, y: 0.57}
 --- !u!114 &114865618685794250
 MonoBehaviour:
   m_ObjectHideFlags: 1

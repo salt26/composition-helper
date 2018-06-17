@@ -32,6 +32,7 @@ public class Manager : MonoBehaviour
     GameObject melodyPanel;
     GameObject mainCamera;
     GameObject canvas;
+    GameObject backgroundCollider;
     Scrollbar scrollbar;
     Button chordRecommendButton;
     Button rhythmRecommendButton;
@@ -101,6 +102,10 @@ public class Manager : MonoBehaviour
         {
             mainCamera = GameObject.Find("Main Camera");
         }
+        if (backgroundCollider == null && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            backgroundCollider = ScoreBackground.sb.gameObject;
+        }
 
         if (!isScoreScene && SceneManager.GetActiveScene().name.Equals("Score"))
         {
@@ -147,9 +152,11 @@ public class Manager : MonoBehaviour
         if (scrollbar != null && mainCamera != null)
         {
             //Debug.Log(Input.mouseScrollDelta); // (0, 0), (0, -1), (0, -2), (0, 1), (0, 2)
-            scrollbar.value -= Input.mouseScrollDelta.y / (measureNum * 2 + 1);
+            //scrollbar.value -= Input.mouseScrollDelta.y / (measureNum * 2 + 1);
             mainCamera.GetComponent<Transform>().SetPositionAndRotation(
                 new Vector3((scrollbar.value * ((measureNum - 1) * 11f - 5f)), 0f, -10f), Quaternion.identity);
+            backgroundCollider.GetComponent<Transform>().SetPositionAndRotation(
+                mainCamera.GetComponent<Transform>().position + new Vector3(0.7f, 0.9f, 15f), Quaternion.identity);
         }
 
         if (isScoreScene && GetCursor() == null && Finder.finder.playButton.GetComponent<Button>().interactable)
@@ -159,6 +166,16 @@ public class Manager : MonoBehaviour
         else if (isScoreScene && GetCursor() != null && !Finder.finder.playButton.GetComponent<Button>().interactable)
         {
             Finder.finder.playButton.GetComponent<Button>().interactable = true;
+        }
+        if (isScoreScene && GetCursorMeasureNum() < 1 && Finder.finder.playPrevChordButton.GetComponent<Button>().interactable)
+        {
+            Debug.LogWarning("off button");
+            Finder.finder.playPrevChordButton.GetComponent<Button>().interactable = false;
+        }
+        else if (isScoreScene && GetCursorMeasureNum() >= 1 && !Finder.finder.playPrevChordButton.GetComponent<Button>().interactable)
+        {
+            Debug.LogWarning("on button");
+            Finder.finder.playPrevChordButton.GetComponent<Button>().interactable = true;
         }
     }
 
@@ -257,7 +274,7 @@ public class Manager : MonoBehaviour
         if (prevChord == null)
         {
             manager.tempChords.Clear();
-            
+
             for (int i = 0; i < 6; i++)
             {
                 Chord ch = Generator.GenerateChord();
@@ -302,7 +319,7 @@ public class Manager : MonoBehaviour
                 Note.MidiToNote(midiBass + 3), Note.MidiToNote(midiBass + 7)), false));   // 1 minor
             manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
                 Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 8)), false));   // 1 aug
-            
+
             manager.tempChords[0].SetChordName("Major");
             manager.tempChords[1].SetChordName("Major");
             manager.tempChords[2].SetChordName("Major7");
@@ -317,7 +334,7 @@ public class Manager : MonoBehaviour
                 b = false;
                 for (int j = 0; j < 5; j++)
                 {
-                    if (ch.GetBass() == tempChords[j].GetBass() 
+                    if (ch.GetBass() == tempChords[j].GetBass()
                         && ch.GetChordName() == tempChords[j].GetChordName())
                     {
                         b = true;
@@ -327,9 +344,9 @@ public class Manager : MonoBehaviour
             } while (b);
             manager.tempChords.Add(ch); // random
 
-            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n긴장");
-            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n편안");
-            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "7\n진행, 변화");
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n밝음·긴장");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n밝음·편안");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "7\n긴장·변화");
             manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "m\n어두움");
             manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "aug\n불안");
 
@@ -353,6 +370,293 @@ public class Manager : MonoBehaviour
             manager.tempChords[4].SetChordText("시 레b 솔b\n(Bsus2)");
             manager.tempChords[5].SetChordText("미b 솔 시b 레b\n(Eb7)");
             */
+        }
+        else if (prevChord.GetChordName().Equals("minor"))
+        {
+            //Debug.Log("Major Recommended");
+            manager.tempChords.Clear();
+            midiBass = Note.NoteToMidi(prevChord.GetBass());
+            Debug.Log(midiBass);
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 7),
+                Note.MidiToNote(midiBass + 10), Note.MidiToNote(midiBass + 14)), false));   // 5 minor
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 8), Note.MidiToNote(midiBass + 12)), false));   // 4 minor
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 3),
+                Note.MidiToNote(midiBass + 7), Note.MidiToNote(midiBass + 10)), false));                                   // 2 Major7
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 7)), false));   // 1 Major
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 3), Note.MidiToNote(midiBass + 6)), false));   // 1 dim
+
+            manager.tempChords[0].SetChordName("minor");
+            manager.tempChords[1].SetChordName("minor");
+            manager.tempChords[2].SetChordName("Major");
+            manager.tempChords[3].SetChordName("Major");
+            manager.tempChords[4].SetChordName("diminished");
+
+            bool b;
+            Chord ch;
+            do
+            {
+                ch = Generator.GenerateChord();
+                b = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (ch.GetBass() == tempChords[j].GetBass()
+                        && ch.GetChordName() == tempChords[j].GetChordName())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+            } while (b);
+            manager.tempChords.Add(ch); // random
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "m\n어두움·긴장");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "m\n어두움·편안");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "\n밝음·비슷함");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "\n밝음");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "dim\n불안");
+        }
+        else if (prevChord.GetChordName().Equals("diminished"))
+        {
+            //Debug.Log("Major Recommended");
+            manager.tempChords.Clear();
+            midiBass = Note.NoteToMidi(prevChord.GetBass());
+            Debug.Log(midiBass);
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 7)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass - 2),
+                Note.MidiToNote(midiBass + 2), Note.MidiToNote(midiBass + 5)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 3), Note.MidiToNote(midiBass + 7),
+                Note.MidiToNote(midiBass + 10)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass - 2),
+                Note.MidiToNote(midiBass + 2), Note.MidiToNote(midiBass + 6)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 3),
+                Note.MidiToNote(midiBass + 6), Note.MidiToNote(midiBass + 9)), false));
+
+            manager.tempChords[0].SetChordName("Major");
+            manager.tempChords[1].SetChordName("Major");
+            manager.tempChords[2].SetChordName("Major7");
+            manager.tempChords[3].SetChordName("augmented");
+            manager.tempChords[4].SetChordName("diminished");
+
+            bool b;
+            Chord ch;
+            do
+            {
+                ch = Generator.GenerateChord();
+                b = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (ch.GetBass() == tempChords[j].GetBass()
+                        && ch.GetChordName() == tempChords[j].GetChordName())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+            } while (b);
+            manager.tempChords.Add(ch); // random
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n진행");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n편안·해결");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "m7\n어두움·긴장");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "aug\n여전히 불안");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "dim\n비슷한 불안");
+        }
+        else if (prevChord.GetChordName().Equals("augmented"))
+        {
+            //Debug.Log("Major Recommended");
+            manager.tempChords.Clear();
+            midiBass = Note.NoteToMidi(prevChord.GetBass());
+            Debug.Log(midiBass);
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 9), Note.MidiToNote(midiBass + 12)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 8),
+                Note.MidiToNote(midiBass + 12), Note.MidiToNote(midiBass + 15)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 1),
+                Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 8)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass - 3),
+                Note.MidiToNote(midiBass), Note.MidiToNote(midiBass + 4)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 4),
+                Note.MidiToNote(midiBass + 8), Note.MidiToNote(midiBass + 11),
+                Note.MidiToNote(midiBass + 14)), false));
+
+            manager.tempChords[0].SetChordName("Major");
+            manager.tempChords[1].SetChordName("Major");
+            manager.tempChords[2].SetChordName("minor");
+            manager.tempChords[3].SetChordName("minor");
+            manager.tempChords[4].SetChordName("Major7");
+
+            bool b;
+            Chord ch;
+            do
+            {
+                ch = Generator.GenerateChord();
+                b = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (ch.GetBass() == tempChords[j].GetBass()
+                        && ch.GetChordName() == tempChords[j].GetChordName())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+            } while (b);
+            manager.tempChords.Add(ch); // random
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n밝음·편안");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n밝음·변화");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "m\n어두움");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "m\n어두움·변화");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "7\n밝음·긴장");
+        }
+        else if (prevChord.GetChordName().Equals("suspension4"))
+        {
+            //Debug.Log("Major Recommended");
+            manager.tempChords.Clear();
+            midiBass = Note.NoteToMidi(prevChord.GetBass());
+            Debug.Log(midiBass);
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 7)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 9), Note.MidiToNote(midiBass + 12)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass - 5),
+                Note.MidiToNote(midiBass - 1), Note.MidiToNote(midiBass + 2),
+                Note.MidiToNote(midiBass + 5)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass - 5),
+                Note.MidiToNote(midiBass - 2), Note.MidiToNote(midiBass + 2),
+                Note.MidiToNote(midiBass + 5)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 2), Note.MidiToNote(midiBass + 7)), false));
+
+            manager.tempChords[0].SetChordName("Major");
+            manager.tempChords[1].SetChordName("Major");
+            manager.tempChords[2].SetChordName("Major7");
+            manager.tempChords[3].SetChordName("minor7");
+            manager.tempChords[4].SetChordName("suspension4");
+
+            bool b;
+            Chord ch;
+            do
+            {
+                ch = Generator.GenerateChord();
+                b = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (ch.GetBass() == tempChords[j].GetBass()
+                        && ch.GetChordName() == tempChords[j].GetChordName())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+            } while (b);
+            manager.tempChords.Add(ch); // random
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n밝음·해결");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n밝음·해결");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "7\n밝음·긴장");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "m7\n어두움·긴장");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "sus4\n여전히 걸림");
+        }
+        else if (prevChord.GetChordName().Equals("Major7"))
+        {
+            //Debug.Log("Major Recommended");
+            manager.tempChords.Clear();
+            midiBass = Note.NoteToMidi(prevChord.GetBass());
+            Debug.Log(midiBass);
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 7),
+                Note.MidiToNote(midiBass + 10), Note.MidiToNote(midiBass + 14)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 9), Note.MidiToNote(midiBass + 12)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass - 2),
+                Note.MidiToNote(midiBass + 2), Note.MidiToNote(midiBass + 5)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 10), Note.MidiToNote(midiBass + 12)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 8)), false));
+
+            manager.tempChords[0].SetChordName("minor");
+            manager.tempChords[1].SetChordName("Major");
+            manager.tempChords[2].SetChordName("Major");
+            manager.tempChords[3].SetChordName("suspension4");
+            manager.tempChords[4].SetChordName("augmented");
+
+            bool b;
+            Chord ch;
+            do
+            {
+                ch = Generator.GenerateChord();
+                b = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (ch.GetBass() == tempChords[j].GetBass()
+                        && ch.GetChordName() == tempChords[j].GetChordName())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+            } while (b);
+            manager.tempChords.Add(ch); // random
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "m\n어두움·긴장");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n밝음·편안");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "\n밝음·변화");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "sus4\n걸림·긴장");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "aug\n불안");
+        }
+        else if (prevChord.GetChordName().Equals("minor7"))
+        {
+            //Debug.Log("Major Recommended");
+            manager.tempChords.Clear();
+            midiBass = Note.NoteToMidi(prevChord.GetBass());
+            Debug.Log(midiBass);
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 7),
+                Note.MidiToNote(midiBass + 10), Note.MidiToNote(midiBass + 14)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 8), Note.MidiToNote(midiBass + 12)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 4), Note.MidiToNote(midiBass + 7),
+                Note.MidiToNote(midiBass + 10)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass + 5),
+                Note.MidiToNote(midiBass + 10), Note.MidiToNote(midiBass + 12)), false));
+            manager.tempChords.Add(Chord.ReviseScoreNotation(new Chord(Note.MidiToNote(midiBass),
+                Note.MidiToNote(midiBass + 3), Note.MidiToNote(midiBass + 6)), false));
+
+            manager.tempChords[0].SetChordName("minor");
+            manager.tempChords[1].SetChordName("minor");
+            manager.tempChords[2].SetChordName("Major7");
+            manager.tempChords[3].SetChordName("suspension4");
+            manager.tempChords[4].SetChordName("diminished");
+
+            bool b;
+            Chord ch;
+            do
+            {
+                ch = Generator.GenerateChord();
+                b = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (ch.GetBass() == tempChords[j].GetBass()
+                        && ch.GetChordName() == tempChords[j].GetChordName())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+            } while (b);
+            manager.tempChords.Add(ch); // random
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "m\n어두움·긴장");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "m\n어두움·편안");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "7\n긴장");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "sus4\n걸림·긴장");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "dim\n불안");
         }
         else
         {
@@ -471,7 +775,7 @@ public class Manager : MonoBehaviour
     /// 음을 연주합니다.
     /// </summary>
     /// <param name="tone"></param>
-    public void Play(int tone, int staff)
+    public void PlayTone(int tone, int staff)
     {
         if (tone >= 0 && tone < 128)
         {
@@ -508,6 +812,23 @@ public class Manager : MonoBehaviour
         return list;
     }
 
+    List<KeyValuePair<float, int>> ToMidiAll()
+    {
+        List<KeyValuePair<float, int>> list = new List<KeyValuePair<float, int>>();
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (KeyValuePair<float, int> p in manager.staffs[i].ToMidiAll())
+            {
+                list.Add(new KeyValuePair<float, int>(p.Key, p.Value < 0 ? -(-p.Value | i << 16) : p.Value | i << 16));
+            }
+        }
+        list.Sort(delegate (KeyValuePair<float, int> p1, KeyValuePair<float, int> p2)
+        {
+            return p1.Key < p2.Key ? -1 : p1.Key > p2.Key ? 1 : p1.Value < p2.Value ? -1 : p1.Value > p2.Value ? 1 : 0;
+        });
+        return list;
+    }
+
     IEnumerator __PlayAll(List<KeyValuePair<float, int>> list)
     {
         float last = 0;
@@ -518,12 +839,20 @@ public class Manager : MonoBehaviour
                 yield return new WaitForSecondsRealtime((p.Key - last) / 2);
                 last = p.Key;
             }
-            if (p.Value > 0) Play(p.Value & 65535, p.Value >> 16);
+            if (p.Value > 0) PlayTone(p.Value & 65535, p.Value >> 16);
             else Stop(-p.Value & 65535, -p.Value >> 16);
         }
     }
 
     public void PlayAll()
+    {
+        List<KeyValuePair<float, int>> list = ToMidiAll();
+        StopAll();
+        play = __PlayAll(list);
+        manager.StartCoroutine(play);
+    }
+
+    public void PlayFromCursor()
     {
         List<KeyValuePair<float, int>> list = ToMidi();
         StopAll();
@@ -543,7 +872,7 @@ public class Manager : MonoBehaviour
 
     public void SaveAll()
     {
-        List<KeyValuePair<float, int>> list = ToMidi();
+        List<KeyValuePair<float, int>> list = ToMidiAll();
         Sequence seq = new Sequence();
         Track tr = new Track();
         float last = 0;

@@ -17,14 +17,14 @@ public class Chord {
         notes.Clear();
     }
 
-    public Chord(List<int> notes)
+    public Chord(List<int> ns)
     {
         notes.Clear();
-        foreach (int n in notes)
+        foreach (int n in ns)
         {
-            this.notes.Add(n);
+            notes.Add(n);
         }
-        if (notes.Count > 0) bass = notes[0];
+        if (ns.Count > 0) bass = ns[0];
         RemoveDuplicatesAndHalfs();
     }
 
@@ -134,7 +134,7 @@ public class Chord {
         Manager.manager.StopAll();
         foreach (int note in notes)
         {
-            Manager.manager.Play(Note.NoteToMidi(note), 0);
+            Manager.manager.PlayTone(Note.NoteToMidi(note), 0);
         }
     }
 

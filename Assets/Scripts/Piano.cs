@@ -379,7 +379,7 @@ public class Piano : MonoBehaviour {
         //buttons[tone].GetComponent<Image>().color = new Color(0.8352f, 0.1686f, 0.1686f);
         if (!keyClick[tone])
             keyClick[tone] = true;   // clicked state
-        Manager.manager.Play(Note.NoteToMidi(tone), 0);
+        Manager.manager.PlayTone(Note.NoteToMidi(tone), 0);
     }
 
     private void OnMouseUp()
