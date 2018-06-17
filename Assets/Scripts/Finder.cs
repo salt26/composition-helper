@@ -5,6 +5,7 @@ using UnityEngine;
 public class Finder : MonoBehaviour {
 
     static public Finder finder;
+    public GameObject darkPanel;
     public GameObject rhythmCaveatPanel;
     public GameObject chordPanel;
     public GameObject developingPanel;

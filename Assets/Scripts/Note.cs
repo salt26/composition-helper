@@ -39,7 +39,10 @@ public class Note : MonoBehaviour {
             noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, -1f);
             if (GetComponentInParent<Staff>().staffName.Equals("Chord"))
             {
-                Manager.manager.GetChordRecommendButton().interactable = true;
+                if (Manager.manager.GetIsPlaying())
+                    Manager.manager.GetChordRecommendButton().interactable = false;
+                else
+                    Manager.manager.GetChordRecommendButton().interactable = true;
                 Manager.manager.GetRhythmRecommendButton().interactable = false;
             }
             else if (GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
@@ -50,7 +53,10 @@ public class Note : MonoBehaviour {
             else if (GetComponentInParent<Staff>().staffName.Equals("Melody"))
             {
                 Manager.manager.GetChordRecommendButton().interactable = false;
-                Manager.manager.GetRhythmRecommendButton().interactable = true;
+                if (Manager.manager.GetIsPlaying())
+                    Manager.manager.GetRhythmRecommendButton().interactable = false;
+                else
+                    Manager.manager.GetRhythmRecommendButton().interactable = true;
             }
         }
         else if (Manager.manager != null && isRecommended)
@@ -72,7 +78,7 @@ public class Note : MonoBehaviour {
 
     public void Selected()
     {
-        if (Finder.finder.HasPopupOn())
+        if (Finder.finder.HasPopupOn() || Manager.manager == null || Manager.manager.GetIsPlaying())
             return;
         
         Piano.SetAllKeyChordOff();

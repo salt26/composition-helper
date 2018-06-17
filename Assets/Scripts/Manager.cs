@@ -240,7 +240,7 @@ public class Manager : MonoBehaviour
     /// </summary>
     public void SetCursorToNull()
     {
-        if (!Finder.finder.HasPopupOn())
+        if (!Finder.finder.HasPopupOn() && manager != null && !manager.GetIsPlaying())
         {
             Piano.SetAllKeyHighlightOff();
             Piano.SetAllKeyChordOff();
@@ -721,6 +721,7 @@ public class Manager : MonoBehaviour
         if (b)
         {
             Finder.finder.rhythmCaveatPanel.SetActive(true);
+            Finder.finder.darkPanel.SetActive(true);
         }
         else
         {
@@ -753,6 +754,7 @@ public class Manager : MonoBehaviour
         {
             isFirstTime = false;
             Finder.finder.instructionPanel.SetActive(true);
+            Finder.finder.darkPanel.SetActive(true);
         }
     }
 
@@ -857,7 +859,8 @@ public class Manager : MonoBehaviour
     IEnumerator __PlayAll(List<KeyValuePair<float, int>> list)
     {
         float last = 0;
-        isPlaying = true;
+        manager.isPlaying = true;
+        Debug.LogWarning("Playing...");
         foreach (KeyValuePair<float, int> p in list)
         {
             if (last != p.Key)
@@ -868,7 +871,8 @@ public class Manager : MonoBehaviour
             if (p.Value > 0) PlayTone(p.Value & 65535, p.Value >> 16);
             else Stop(-p.Value & 65535, -p.Value >> 16);
         }
-        isPlaying = false;
+        manager.isPlaying = false;
+        Debug.LogWarning("End playing");
     }
 
     public void PlayAll()

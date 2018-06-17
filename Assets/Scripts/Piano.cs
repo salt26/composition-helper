@@ -280,6 +280,7 @@ public class Piano : MonoBehaviour {
                 {
                     isFirstTime = false;
                     Finder.finder.instructionPanel2.SetActive(true);
+                    Finder.finder.darkPanel.SetActive(true);
                 }
             }
             else if (cur != null) // Measure(마디) 선택 시
@@ -316,6 +317,7 @@ public class Piano : MonoBehaviour {
                 {
                     isFirstTime = false;
                     Finder.finder.instructionPanel2.SetActive(true);
+                    Finder.finder.darkPanel.SetActive(true);
                 }
             }
         }

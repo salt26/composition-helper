@@ -23,7 +23,10 @@ public class Measure : MonoBehaviour
 
             if (GetComponentInParent<Staff>().staffName.Equals("Chord"))
             {
-                Manager.manager.GetChordRecommendButton().interactable = true;
+                if (Manager.manager.GetIsPlaying())
+                    Manager.manager.GetChordRecommendButton().interactable = false;
+                else
+                    Manager.manager.GetChordRecommendButton().interactable = true;
                 Manager.manager.GetRhythmRecommendButton().interactable = false;
                 if (notes.Count == 0)
                     Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOn();
@@ -36,7 +39,10 @@ public class Measure : MonoBehaviour
             else if (GetComponentInParent<Staff>().staffName.Equals("Melody"))
             {
                 Manager.manager.GetChordRecommendButton().interactable = false;
-                Manager.manager.GetRhythmRecommendButton().interactable = true;
+                if (Manager.manager.GetIsPlaying())
+                    Manager.manager.GetRhythmRecommendButton().interactable = false;
+                else
+                    Manager.manager.GetRhythmRecommendButton().interactable = true;
                 if (notes.Count == 0)
                     Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOn();
             }
@@ -111,7 +117,7 @@ public class Measure : MonoBehaviour
 
     public void Selected()
     {
-        if (Finder.finder.HasPopupOn())
+        if (Finder.finder.HasPopupOn() || Manager.manager == null || Manager.manager.GetIsPlaying())
             return;
         Piano.SetAllKeyHighlightOff();
         Piano.SetAllKeyChordOff();
