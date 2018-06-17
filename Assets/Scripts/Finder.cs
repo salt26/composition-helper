@@ -43,4 +43,14 @@ public class Finder : MonoBehaviour {
             }
         }
     }
+
+    public bool HasPopupOn()
+    {
+        return (finder.chordPanel.activeInHierarchy ||
+            finder.developingPanel.activeInHierarchy ||
+            finder.rhythmCaveatPanel.activeInHierarchy ||
+            finder.savePanel.activeInHierarchy ||
+            finder.instructionPanel.activeInHierarchy ||
+            finder.instructionPanel2.activeInHierarchy);
+    }
 }

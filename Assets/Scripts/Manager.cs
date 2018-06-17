@@ -36,10 +36,12 @@ public class Manager : MonoBehaviour
     Scrollbar scrollbar;
     Button chordRecommendButton;
     Button rhythmRecommendButton;
+    Button saveButton;
     object cursor;
     int cursorMeasureNum;
     bool isScoreScene;
     bool isChordDriven;
+    bool isPlaying;
     int measureNum = 0;
     static bool isFirstTime = true;
 
@@ -53,6 +55,7 @@ public class Manager : MonoBehaviour
         manager = this;
         DontDestroyOnLoad(this);
         isScoreScene = false;
+        isPlaying = false;
         for (int i = 0; i < 3; i++)
         {
             staffs.Add(null);
@@ -105,6 +108,10 @@ public class Manager : MonoBehaviour
         if (backgroundCollider == null && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             backgroundCollider = ScoreBackground.sb.gameObject;
+        }
+        if (saveButton == null && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            saveButton = SaveButton.sb.GetComponent<Button>();
         }
 
         if (!isScoreScene && SceneManager.GetActiveScene().name.Equals("Score"))
@@ -159,23 +166,36 @@ public class Manager : MonoBehaviour
                 mainCamera.GetComponent<Transform>().position + new Vector3(0.7f, 0.9f, 15f), Quaternion.identity);
         }
 
-        if (isScoreScene && GetCursor() == null && Finder.finder.playButton.GetComponent<Button>().interactable)
+        if (isScoreScene && (GetCursor() == null || !IsThereAnyNote(GetCursorMeasureNum())) && Finder.finder.playButton.GetComponent<Button>().interactable)
         {
+            //Debug.LogWarning("playButton inactive");
             Finder.finder.playButton.GetComponent<Button>().interactable = false;
         }
-        else if (isScoreScene && GetCursor() != null && !Finder.finder.playButton.GetComponent<Button>().interactable)
+        else if (isScoreScene && GetCursor() != null && IsThereAnyNote(GetCursorMeasureNum()) && !Finder.finder.playButton.GetComponent<Button>().interactable)
         {
+            //Debug.LogWarning("playButton active");
             Finder.finder.playButton.GetComponent<Button>().interactable = true;
         }
+
         if (isScoreScene && GetCursorMeasureNum() < 1 && Finder.finder.playPrevChordButton.GetComponent<Button>().interactable)
         {
-            Debug.LogWarning("off button");
             Finder.finder.playPrevChordButton.GetComponent<Button>().interactable = false;
         }
         else if (isScoreScene && GetCursorMeasureNum() >= 1 && !Finder.finder.playPrevChordButton.GetComponent<Button>().interactable)
         {
-            Debug.LogWarning("on button");
             Finder.finder.playPrevChordButton.GetComponent<Button>().interactable = true;
+        }
+
+        if (isScoreScene && saveButton.interactable && !IsThereAnyNote())
+        {
+            //Debug.LogWarning("saveButton inactive");
+            saveButton.interactable = false;
+        }
+        else if (isScoreScene && !saveButton.interactable && IsThereAnyNote())/*GetStaff(2).GetMeasure(0).GetNotes().Count > 0 
+            && (GetStaff(0).GetHasPlay() || GetStaff(1).GetHasPlay() || GetStaff(2).GetHasPlay()))*/
+        {
+            //Debug.LogWarning("saveButton active");
+            saveButton.interactable = true;
         }
     }
 
@@ -220,12 +240,7 @@ public class Manager : MonoBehaviour
     /// </summary>
     public void SetCursorToNull()
     {
-        if (!Finder.finder.chordPanel.activeInHierarchy
-            && !Finder.finder.developingPanel.activeInHierarchy 
-            && !Finder.finder.rhythmCaveatPanel.activeInHierarchy
-            && !Finder.finder.savePanel.activeInHierarchy
-            && !Finder.finder.instructionPanel.activeInHierarchy
-            && !Finder.finder.instructionPanel2.activeInHierarchy)
+        if (!Finder.finder.HasPopupOn())
         {
             Piano.SetAllKeyHighlightOff();
             Piano.SetAllKeyChordOff();
@@ -268,6 +283,11 @@ public class Manager : MonoBehaviour
         return measureNum;
     }
 
+    /// <summary>
+    /// 이전 마디의 화음을 보고 현재 마디의 화음을 추천합니다.
+    /// (코드가 아주 깁니다.)
+    /// </summary>
+    /// <param name="prevChord"></param>
     public void RecommendChords(Chord prevChord)
     {
         int midiBass = -1;
@@ -714,7 +734,7 @@ public class Manager : MonoBehaviour
         if (mn < 0) return;
         manager.SetCursor(manager.GetStaff(0).GetMeasure(mn), mn);
         List<int> rhythms = Generator.GenerateNotes();
-        // TODO 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
+        // 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
         manager.GetStaff(0).GetMeasure(mn).ClearMeasure();
         int sum = 0;
         foreach (int rhythm in rhythms)
@@ -769,6 +789,11 @@ public class Manager : MonoBehaviour
     public GameObject GetCanvas()
     {
         return canvas;
+    }
+
+    public bool GetIsPlaying()
+    {
+        return isPlaying;
     }
 
     /// <summary>
@@ -832,6 +857,7 @@ public class Manager : MonoBehaviour
     IEnumerator __PlayAll(List<KeyValuePair<float, int>> list)
     {
         float last = 0;
+        isPlaying = true;
         foreach (KeyValuePair<float, int> p in list)
         {
             if (last != p.Key)
@@ -842,6 +868,7 @@ public class Manager : MonoBehaviour
             if (p.Value > 0) PlayTone(p.Value & 65535, p.Value >> 16);
             else Stop(-p.Value & 65535, -p.Value >> 16);
         }
+        isPlaying = false;
     }
 
     public void PlayAll()
@@ -878,8 +905,8 @@ public class Manager : MonoBehaviour
         float last = 0;
         foreach (KeyValuePair<float, int> p in list)
         {
-            Debug.Log((int)(p.Key * 28 + .5) + " " + p.Value);
-            tr.Insert((int)(p.Key * 28 + .5), new ChannelMessage(p.Value > 0 ? ChannelCommand.NoteOn : ChannelCommand.NoteOff, p.Value < 0 ? -p.Value >> 16 : p.Value >> 16, p.Value < 0 ? -p.Value & 65535 : p.Value & 65535, 127));
+            Debug.Log((int)(p.Key * 25 + .5) + " " + p.Value);
+            tr.Insert((int)(p.Key * 25 + .5), new ChannelMessage(p.Value > 0 ? ChannelCommand.NoteOn : ChannelCommand.NoteOff, p.Value < 0 ? -p.Value >> 16 : p.Value >> 16, p.Value < 0 ? -p.Value & 65535 : p.Value & 65535, 127));
             last = p.Key;
         }
         seq.Add(tr);
@@ -913,6 +940,26 @@ public class Manager : MonoBehaviour
         Staff st = manager.GetStaff(staff);
         if (st == null) return;
         st.WriteNote(measure, pitch, rhythm, timing, color, isRecommended);
+    }
+
+    /// <summary>
+    /// startMeasureNum 마디부터 시작해 음소거되지 않은 부분에 음표가 하나라도 있으면 true를 반환합니다.
+    /// 만약 startMeasureNum이 0보다 작게 주어지면 false를 반환합니다.
+    /// </summary>
+    /// <param name="startMeasureNum"></param>
+    /// <returns></returns>
+    private bool IsThereAnyNote(int startMeasureNum = 0)
+    {
+        if (startMeasureNum < 0) startMeasureNum = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            if (!manager.GetStaff(j).GetHasPlay()) continue;
+            for (int i = startMeasureNum; i < manager.GetMaxMeasureNum(); i++)
+            {
+                if (manager.GetStaff(j).GetMeasure(i).GetNotes().Count > 0) return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>

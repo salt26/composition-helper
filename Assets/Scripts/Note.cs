@@ -12,6 +12,7 @@ public class Note : MonoBehaviour {
     int timing = 0; // 음표가 등장하는 x좌표 위치(0 <= timing < 16)
     bool isTreble = true;
     bool isRecommended = false;
+    bool hasHoveringSaveButton = false;
     static Color color = Color.black;
     static Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
     static Color selectedRecommendedColor = new Color(0.7647f, 0.2536f, 0f, 0.6980392f);
@@ -24,6 +25,7 @@ public class Note : MonoBehaviour {
 
     void FixedUpdate()
     {
+        hasHoveringSaveButton = GetComponentInParent<Measure>().GetHoveringSaveButton();
         if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
         {
             if (isRecommended) SetColor(selectedRecommendedColor);
@@ -70,12 +72,7 @@ public class Note : MonoBehaviour {
 
     public void Selected()
     {
-        if (Finder.finder.chordPanel.activeInHierarchy ||
-            Finder.finder.developingPanel.activeInHierarchy ||
-            Finder.finder.rhythmCaveatPanel.activeInHierarchy ||
-            Finder.finder.savePanel.activeInHierarchy ||
-            Finder.finder.instructionPanel.activeInHierarchy ||
-            Finder.finder.instructionPanel2.activeInHierarchy)
+        if (Finder.finder.HasPopupOn())
             return;
         
         Piano.SetAllKeyChordOff();
@@ -326,11 +323,12 @@ public class Note : MonoBehaviour {
     /// <param name="c"></param>
     public void SetColor(Color c)
     {
-        color = c;
+        if (hasHoveringSaveButton) color = new Color(c.r, c.g, c.b, c.a * 0.1f);
+        else color = c;
         noteObject.color = color;
         foreach (Transform child in transform)
         {
-            child.GetComponent<SpriteRenderer>().color = c;
+            child.GetComponent<SpriteRenderer>().color = color;
         }
     }
 

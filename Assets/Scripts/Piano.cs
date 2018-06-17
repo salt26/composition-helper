@@ -200,6 +200,8 @@ public class Piano : MonoBehaviour {
 
     private void OnMouseDown()
     {
+        if (Manager.manager == null || Manager.manager.GetIsPlaying()
+            || Finder.finder == null || Finder.finder.HasPopupOn()) return;
         float x = Input.mousePosition.x / Screen.width, y = Input.mousePosition.y / (Screen.height / 5f);
         if (y > 1) return;
         int key = (int)Mathf.Floor(x * 29);

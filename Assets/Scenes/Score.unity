@@ -5438,6 +5438,7 @@ GameObject:
   - component: {fileID: 1433466596}
   - component: {fileID: 1433466595}
   - component: {fileID: 1433466598}
+  - component: {fileID: 1433466599}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -5497,7 +5498,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1433466596}
   m_OnClick:
     m_PersistentCalls:
@@ -5574,6 +5575,17 @@ MonoBehaviour:
   text: "MIDI\uB85C \uC800\uC7A5"
   LD: {x: 0.82, y: 0.81}
   RU: {x: 0.94, y: 0.91}
+--- !u!114 &1433466599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1433466593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a5557064c0def4f98af16bb60d7d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1436939918
 GameObject:
   m_ObjectHideFlags: 0
@@ -5790,6 +5802,7 @@ GameObject:
   - component: {fileID: 1538290172}
   - component: {fileID: 1538290171}
   - component: {fileID: 1538290174}
+  - component: {fileID: 1538290175}
   m_Layer: 5
   m_Name: PlayButon
   m_TagString: Untagged
@@ -5856,7 +5869,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114794076944782192, guid: fc659bdfbc02cd94f97e9220e76bf96e,
           type: 2}
-        m_MethodName: PlayAll
+        m_MethodName: PlayFromCursor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5915,6 +5928,17 @@ MonoBehaviour:
   text: "\uC120\uD0DD\uD55C \uB9C8\uB514\uBD80\uD130 \uB4E4\uC5B4\uBCF4\uAE30"
   LD: {x: 0, y: 0.81}
   RU: {x: 0.15, y: 0.91}
+--- !u!114 &1538290175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1538290169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1937b8854283d0a49abdf049100b1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1593973046 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224096344758336758, guid: a2616cdba88cdf245a81cf87ffc4c8b7,

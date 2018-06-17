@@ -125,7 +125,7 @@ public class Staff : MonoBehaviour {
         {
             for (int i = 0; i < measures.Count; i++)
             {
-                foreach (KeyValuePair<float, int> p in measures[i].ToMidi())
+                foreach (KeyValuePair<float, int> p in measures[i].ToMidiAll())
                 {
                     res.Add(p);
                 }
@@ -137,6 +137,15 @@ public class Staff : MonoBehaviour {
     public void TogglePlay()
     {
         hasPlay = !hasPlay;
+    }
+
+    /// <summary>
+    /// 이 보표가 음소거 상태이면 false를, 켜진 상태이면 true를 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    public bool GetHasPlay()
+    {
+        return hasPlay;
     }
 
     public void InteractionAllOff()

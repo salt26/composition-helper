@@ -7,6 +7,7 @@ public class Measure : MonoBehaviour
     List<Note> notes = new List<Note>();
     bool isInteractive = true;
     bool isHighlighting = false;
+    bool hasHoveringSaveButton = false;
     Chord chord;
 
     void FixedUpdate()
@@ -17,7 +18,8 @@ public class Measure : MonoBehaviour
         }
         else if (Manager.manager != null && this.Equals(Manager.manager.GetCursor()))
         {
-            GetComponent<SpriteRenderer>().color = new Color(1f, 0.6899f, 0.2405f, 1f);
+            if (hasHoveringSaveButton) GetComponent<SpriteRenderer>().color = new Color(1f, 0.6899f, 0.2405f, 0.1f);
+            else GetComponent<SpriteRenderer>().color = new Color(1f, 0.6899f, 0.2405f, 1f);
 
             if (GetComponentInParent<Staff>().staffName.Equals("Chord"))
             {
@@ -41,7 +43,8 @@ public class Measure : MonoBehaviour
         }
         else if (isInteractive)
         {
-            GetComponent<SpriteRenderer>().color = Color.black;
+            if (hasHoveringSaveButton) GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0.1f);
+            else GetComponent<SpriteRenderer>().color = Color.black;
             if (GetComponentInParent<Staff>().staffName.Equals("Melody")
                 && notes.Count == 0
                 && Manager.manager.GetStaff(2).GetMeasure(GetComponentInParent<Staff>().GetMeasureNum(this)).GetNotes().Count != 0)
@@ -56,7 +59,8 @@ public class Measure : MonoBehaviour
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
+            if (hasHoveringSaveButton) GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.08f);
+            else GetComponent<SpriteRenderer>().color = new Color(0.8325f, 0.8325f, 0.8325f, 0.8f);
         }
     }
 
@@ -84,6 +88,18 @@ public class Measure : MonoBehaviour
         return res;
     }
 
+    public List<KeyValuePair<float, int>> ToMidiAll()
+    {
+        List<KeyValuePair<float, int>> res = new List<KeyValuePair<float, int>>();
+        int this_m = GetComponentInParent<Staff>().GetMeasureNum(this) * 4;
+        foreach (Note n in notes)
+        {
+            res.Add(new KeyValuePair<float, int>(this_m + n.GetTiming() / 4f, Note.NoteToMidi(n.GetPitch())));
+            res.Add(new KeyValuePair<float, int>(this_m + (n.GetTiming() + n.GetRhythm() * 6f / 7f) / 4f, -Note.NoteToMidi(n.GetPitch())));
+        }
+        return res;
+    }
+
     void OnMouseDown()
     {
         if (isInteractive)
@@ -95,12 +111,7 @@ public class Measure : MonoBehaviour
 
     public void Selected()
     {
-        if (Finder.finder.chordPanel.activeInHierarchy ||
-            Finder.finder.developingPanel.activeInHierarchy ||
-            Finder.finder.rhythmCaveatPanel.activeInHierarchy ||
-            Finder.finder.savePanel.activeInHierarchy ||
-            Finder.finder.instructionPanel.activeInHierarchy ||
-            Finder.finder.instructionPanel2.activeInHierarchy)
+        if (Finder.finder.HasPopupOn())
             return;
         Piano.SetAllKeyHighlightOff();
         Piano.SetAllKeyChordOff();
@@ -155,6 +166,21 @@ public class Measure : MonoBehaviour
         notes.Clear();
     }
 
+    /// <summary>
+    /// 저장 버튼에 마우스를 올릴 때 소리 재생이 꺼진 마디가 투명하게 보이도록 하는 함수입니다.
+    /// b가 true이면 해당 마디는 투명해집니다.
+    /// </summary>
+    /// <param name="b"></param>
+    public void SetHoveringSaveButton(bool b)
+    {
+        hasHoveringSaveButton = b;
+    }
+
+    public bool GetHoveringSaveButton()
+    {
+        return hasHoveringSaveButton;
+    }
+
     public void SetChord(Chord ch)
     {
         chord = ch;
@@ -205,17 +231,26 @@ public class Measure : MonoBehaviour
             int frame = 16;
             for (int i = 0; i < frame; i++)
             {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.5443f, 0.8962f, 0.1564f, 1f), new Color(0.8980f, 0.1568f, 0.4420f, 1f), i / (float)frame);
+                if (hasHoveringSaveButton)
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.5443f, 0.8962f, 0.1564f, 0.1f), new Color(0.8980f, 0.1568f, 0.4420f, 0.1f), i / (float)frame);
+                else
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.5443f, 0.8962f, 0.1564f, 1f), new Color(0.8980f, 0.1568f, 0.4420f, 1f), i / (float)frame);
                 yield return new WaitForFixedUpdate();
             }
             for (int i = 0; i < frame; i++)
             {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.8980f, 0.1568f, 0.4420f, 1f), new Color(0.1568f, 0.5407f, 0.8980f, 1f), i / (float)frame);
+                if (hasHoveringSaveButton)
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.8980f, 0.1568f, 0.4420f, 0.1f), new Color(0.1568f, 0.5407f, 0.8980f, 0.1f), i / (float)frame);
+                else
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.8980f, 0.1568f, 0.4420f, 1f), new Color(0.1568f, 0.5407f, 0.8980f, 1f), i / (float)frame);
                 yield return new WaitForFixedUpdate();
             }
             for (int i = 0; i < frame; i++)
             {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.1568f, 0.5407f, 0.8980f, 1f), new Color(0.5443f, 0.8962f, 0.1564f, 1f), i / (float)frame);
+                if (hasHoveringSaveButton)
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.1568f, 0.5407f, 0.8980f, 0.1f), new Color(0.5443f, 0.8962f, 0.1564f, 0.1f), i / (float)frame);
+                else
+                    GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(0.1568f, 0.5407f, 0.8980f, 1f), new Color(0.5443f, 0.8962f, 0.1564f, 1f), i / (float)frame);
                 yield return new WaitForFixedUpdate();
             }
         }
