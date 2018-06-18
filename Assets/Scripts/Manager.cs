@@ -29,6 +29,7 @@ public class Manager : MonoBehaviour
      */
     List<Staff> staffs = new List<Staff>();
     List<Chord> tempChords = new List<Chord>(); // TODO This variable is only for demo.
+    public GameObject clickHere;
     GameObject melodyPanel;
     GameObject mainCamera;
     GameObject canvas;
@@ -73,6 +74,10 @@ public class Manager : MonoBehaviour
             melodyPanel = GameObject.Find("MelodyPanel");
         }
 
+        if ((clickHere == null || !clickHere.name.Equals("MelodyStaff")) && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            clickHere = GameObject.Find("ClickHere");
+        }
         if ((staffs[0] == null || !staffs[0].name.Equals("MelodyStaff")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             staffs[0] = GameObject.Find("MelodyStaff").GetComponent<Staff>();
@@ -233,6 +238,23 @@ public class Manager : MonoBehaviour
     {
         cursor = thing;
         cursorMeasureNum = measureNum;
+        if (manager.clickHere != null)
+        {
+            if (thing is Measure)
+            {
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.2f, 0.8f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.42f, 0.91f);
+            }
+            else
+            {
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+            }
+            if (thing is Note)
+            {
+                manager.clickHere.SetActive(true);
+            }
+        }
     }
 
     /// <summary>
@@ -251,6 +273,8 @@ public class Manager : MonoBehaviour
             cursor = null;
             cursorMeasureNum = -1;
         }
+        manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
+        manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
     }
 
     public Camera GetMainCamera()
