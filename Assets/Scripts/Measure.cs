@@ -54,6 +54,12 @@ public class Measure : MonoBehaviour
             else GetComponent<SpriteRenderer>().color = Color.black;
             if (GetComponentInParent<Staff>().staffName.Equals("Melody")
                 && notes.Count == 0
+                && Manager.manager.GetStaff(1).GetMeasure(GetComponentInParent<Staff>().GetMeasureNum(this)).GetNotes().Count != 0)
+            {
+                HighlightOn();
+            }
+            if (GetComponentInParent<Staff>().staffName.Equals("Accompaniment")
+                && notes.Count > 4
                 && Manager.manager.GetStaff(2).GetMeasure(GetComponentInParent<Staff>().GetMeasureNum(this)).GetNotes().Count != 0)
             {
                 HighlightOn();
@@ -118,6 +124,7 @@ public class Measure : MonoBehaviour
 
     public void Selected()
     {
+        Debug.Log("HI");
         if (Finder.finder.HasPopupOn() || Manager.manager == null || Manager.manager.GetIsPlaying())
             return;
         Piano.SetAllKeyHighlightOff();

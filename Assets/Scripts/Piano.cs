@@ -136,7 +136,7 @@ public class Piano : MonoBehaviour {
             else if (n.GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
             {
                 // TODO 반주를 입력 가능하게 하면 mode = 1로 바꾸기!
-                mode = 0;
+                mode = 1;
             }
             else // 멜로디 보표
             {
@@ -153,7 +153,7 @@ public class Piano : MonoBehaviour {
             else if (m.GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
             {
                 // TODO 반주를 입력 가능하게 하면 mode = 1로 바꾸기!
-                mode = 0;
+                mode = 1;
             }
             else // 멜로디 보표
             {
@@ -183,11 +183,12 @@ public class Piano : MonoBehaviour {
             }
             else if (keyHighlight[tone]) // highlight
             {
+                Debug.Log("HI");
                 if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29) || !keyEnable[tone])
                     buttons[tone].GetComponent<Image>().color = grayHighlight;
                 else buttons[tone].GetComponent<Image>().color = highlighted;
             }
-            else if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29) || !keyEnable[tone]) // disable
+            else if (mode == 0 || (mode == 1 && (tone > 40 || !keyChord[tone])) || (mode == 2 && tone < 29) || !keyEnable[tone]) // disable
             {
                 if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = blackGray;
                 else buttons[tone].GetComponent<Image>().color = whiteGray;
@@ -246,7 +247,7 @@ public class Piano : MonoBehaviour {
             return;
         }
         if (tone == 69) tone = 68;      // prevent IndexOutOfRangeException
-        if (tone > 28)
+        if (mode == 2 && tone >= 29)
         {
             object cur = Manager.manager.GetCursor();
             if (cur != null && cur.GetType() == typeof(Note))
@@ -260,10 +261,10 @@ public class Piano : MonoBehaviour {
                     {
                         m.RemoveNote(n);
                         Manager.manager.WriteNote(0, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                        Note nextcur = null;//, newnote = null;
+                        Note nextcur = null, newnote = null;
                         foreach (Note note in m.GetNotes())
                         {
-                            //if (note.GetTiming() == n.GetTiming()) newnote = note;
+                            if (note.GetTiming() == n.GetTiming()) newnote = note;
                             if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
                         }
                         if (nextcur != null && nextcur.GetIsRecommended())
@@ -277,17 +278,10 @@ public class Piano : MonoBehaviour {
                         }
                         else
                         {
-                            // 커서 사라짐
-                            Manager.manager.SetCursorToNull();
+                            newnote.Selected();
                         }
                     }
                     Destroy(n);
-                }
-                if (isFirstTime)
-                {
-                    isFirstTime = false;
-                    Finder.finder.instructionPanel2.SetActive(true);
-                    Finder.finder.darkPanel.SetActive(true);
                 }
             }
             else if (cur != null) // Measure(마디) 선택 시
@@ -299,10 +293,10 @@ public class Piano : MonoBehaviour {
                     Note n = m.GetNotes()[0];
                     m.RemoveNote(n);
                     Manager.manager.WriteNote(0, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                    Note nextcur = null;//, newnote = null;
+                    Note nextcur = null, newnote = null;
                     foreach (Note note in m.GetNotes())
                     {
-                        //if (note.GetTiming() == n.GetTiming()) newnote = note;
+                        if (note.GetTiming() == n.GetTiming()) newnote = note;
                         if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
                     }
                     if (nextcur != null && nextcur.GetIsRecommended())
@@ -316,8 +310,97 @@ public class Piano : MonoBehaviour {
                     }
                     else
                     {
-                        // 커서 사라짐
-                        Manager.manager.SetCursorToNull();
+                        newnote.Selected();
+                    }
+                }
+            }
+        }
+        else if (mode == 1 && keyChord[tone])
+        {
+            object cur = Manager.manager.GetCursor();
+            if (cur != null && cur.GetType() == typeof(Note))
+            {
+                Note n = (Note)cur;
+                if (!n.GetIsTreble())
+                {
+                    Measure m = n.GetComponentInParent<Measure>();
+                    Staff s = m.GetComponentInParent<Staff>();
+                    if (s == Manager.manager.GetStaff(1))
+                    {
+                        foreach (Note tn in m.GetNotes())
+                        {
+                            if (tn.GetTiming() == n.GetTiming()) m.RemoveNote(tn);
+                        }
+                        Manager.manager.WriteNote(1, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                        Note nextcur = null, newnote = null;
+                        foreach (Note note in m.GetNotes())
+                        {
+                            if (note.GetTiming() == n.GetTiming()) newnote = note;
+                            if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                        }
+                        if (nextcur != null && nextcur.GetIsRecommended())
+                            nextcur.Selected();
+                        else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
+                            && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
+                            && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
+                        {
+                            // 다음 마디의 첫 음표를 확인해보자.
+                            Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
+                        }
+                        else
+                        {
+                            newnote.Selected();
+                        }
+                    }
+                    Destroy(n);
+                    if (m.GetNotes().Count == 4)
+                    {
+                        m.HighlightOff();
+                        Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
+                    }
+                }
+                if (isFirstTime)
+                {
+                    isFirstTime = false;
+                    Finder.finder.instructionPanel2.SetActive(true);
+                    Finder.finder.darkPanel.SetActive(true);
+                }
+            }
+            else if (cur != null) // Measure(마디) 선택 시
+            {
+                Measure m = (Measure)cur;
+                Staff s = m.GetComponentInParent<Staff>();
+                if (s == Manager.manager.GetStaff(1) && m.GetNotes().Count > 0 && m.GetNotes()[0].GetIsRecommended())
+                {
+                    Note n = m.GetNotes()[0];
+                    foreach (Note tn in m.GetNotes())
+                    {
+                        if (tn.GetTiming() == n.GetTiming()) m.RemoveNote(tn);
+                    }
+                    Manager.manager.WriteNote(1, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                    Note nextcur = null, newnote = null;
+                    foreach (Note note in m.GetNotes())
+                    {
+                        if (note.GetTiming() == n.GetTiming()) newnote = note;
+                        if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                    }
+                    if (nextcur != null && nextcur.GetIsRecommended())
+                        nextcur.Selected();
+                    else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
+                        && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
+                        && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
+                    {
+                        // 다음 마디의 첫 음표를 확인해보자.
+                        Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
+                    }
+                    else
+                    {
+                        newnote.Selected();
+                    }
+                    if (m.GetNotes().Count == 4)
+                    {
+                        m.HighlightOff();
+                        Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
                     }
                 }
                 if (isFirstTime)

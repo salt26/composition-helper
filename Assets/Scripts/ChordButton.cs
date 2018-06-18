@@ -35,16 +35,16 @@ public class ChordButton : MonoBehaviour {
         {
             if (c < 0 || c > 40) continue;
             Manager.manager.WriteNote(2, measureNum, c, "온음표", 0);
-            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 0, color);
-            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 4, color);
-            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 8, color);
-            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 12, color);
+            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 0, color, true);
+            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 4, color, true);
+            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 8, color, true);
+            Manager.manager.WriteNote(1, measureNum, c, "4분음표", 12, color, true);
         }
         Debug.Log("ChordButton WriteChord " + chord.GetBass());
         Manager.manager.GetStaff(2).GetMeasure(measureNum).SetChord(chord);
 
         Manager.manager.GetStaff(1).GetMeasure(measureNum).InteractionOn();
-        Manager.manager.GetStaff(0).GetMeasure(measureNum).InteractionOn();
+        // Manager.manager.GetStaff(0).GetMeasure(measureNum).InteractionOn();
         if (measureNum < Manager.manager.GetMaxMeasureNum() - 1)
         {
             Manager.manager.GetStaff(2).GetMeasure(measureNum + 1).InteractionOn();
