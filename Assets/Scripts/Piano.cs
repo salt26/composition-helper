@@ -449,13 +449,25 @@ public class Piano : MonoBehaviour {
         keyChord[tone] = on;
     }
 
-    public static void SetKeyPlaying(int tone, bool on)
+    /// <summary>
+    /// tone 음을 내는 건반을 현재 재생 중인 상태로 표시합니다.
+    /// on이 true이면 초록색으로 재생 중인 음이라고 표시됩니다.
+    /// countVariation은 한꺼번에 같은 건반을 몇 번 켜거나 끌지 결정하며, 기본값은 1입니다.
+    /// 같은 음을 여러 보표에서 동시에 연주할 수 있어서, 각 건반마다 켜진 개수로 관리합니다.
+    /// </summary>
+    /// <param name="tone"></param>
+    /// <param name="on"></param>
+    /// <param name="countVariation"></param>
+    public static void SetKeyPlaying(int tone, bool on, int countVariation = 1)
     {
         if (tone < 0 || tone > 68) return;
+        if (countVariation < 0) countVariation *= -1;
         if (on)
-            keyPlaying[tone]++;
+            keyPlaying[tone] += countVariation;
+        else if (keyPlaying[tone] >= countVariation)
+            keyPlaying[tone] -= countVariation;
         else
-            keyPlaying[tone]--;
+            keyPlaying[tone] = 0;
     }
 
     /// <summary>

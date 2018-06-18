@@ -918,6 +918,9 @@ public class Manager : MonoBehaviour
         int i, j;
         if (play != null) manager.StopCoroutine(play);
         for (i = 0; i < 128; i++) for (j = 0; j < 3; j++) Stop(i, j);
+        for (i = 0; i < manager.GetMaxMeasureNum(); i++) for (j = 0; j < 3; j++) SetNotesEndPlaying(i, 16f, j);
+        for (i = 0; i <= 68; i++) Piano.SetKeyPlaying(i, false, 100);
+        manager.isPlaying = false;
     }
 
     public void SaveAll()
