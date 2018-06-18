@@ -190,6 +190,11 @@ public class Piano : MonoBehaviour {
             {
                 buttons[tone].GetComponent<Image>().color = playing;
             }
+            else if (Manager.manager.GetIsPlaying() && keyPlaying[tone] == 0)
+            {
+                if (IsBlackKey(tone)) buttons[tone].GetComponent<Image>().color = Color.black;
+                else buttons[tone].GetComponent<Image>().color = Color.white;
+            }
             else if (keyHighlight[tone]) // highlight
             {
                 Debug.Log("HI");

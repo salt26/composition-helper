@@ -59,6 +59,7 @@ public class Finder : MonoBehaviour {
             finder.savePanel.activeInHierarchy ||
             finder.instructionPanel0.activeInHierarchy ||
             finder.instructionPanel.activeInHierarchy ||
-            finder.instructionPanel2.activeInHierarchy);
+            finder.instructionPanel2.activeInHierarchy ||
+            finder.instructionPanel3.activeInHierarchy);
     }
 }
