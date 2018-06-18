@@ -152,8 +152,17 @@ public class Piano : MonoBehaviour {
             }
             else if (m.GetComponentInParent<Staff>().staffName.Equals("Accompaniment"))
             {
-                // TODO 반주를 입력 가능하게 하면 mode = 1로 바꾸기!
-                mode = 1;
+                bool b = false;
+                foreach (Note n in m.GetNotes())
+                {
+                    if (n.GetIsRecommended())
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b) mode = 1;
+                else mode = 0;
             }
             else // 멜로디 보표
             {

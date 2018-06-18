@@ -11,6 +11,8 @@ public class Measure : MonoBehaviour
     Chord chord;
     List<int> rhythm = null;
 
+    static bool firstTime = true;
+
     void FixedUpdate()
     {
         if (isHighlighting)
@@ -124,7 +126,6 @@ public class Measure : MonoBehaviour
 
     public void Selected()
     {
-        Debug.Log("HI");
         if (Finder.finder.HasPopupOn() || Manager.manager == null || Manager.manager.GetIsPlaying())
             return;
         Piano.SetAllKeyHighlightOff();
@@ -151,6 +152,13 @@ public class Measure : MonoBehaviour
         Manager.manager.GetChordRecommendButton().GetComponent<Highlighter>().HighlightOff();
         Manager.manager.GetRhythmRecommendButton().GetComponent<Highlighter>().HighlightOff();
         Manager.manager.SetCursor(this, GetComponentInParent<Staff>().GetMeasureNum(this));
+
+        if (firstTime && mn > 0)
+        {
+            firstTime = false;
+            Finder.finder.darkPanel.SetActive(true);
+            Finder.finder.instructionPanel3.SetActive(true);
+        }
     }
 
     public void AddNote(Note note)
