@@ -18,6 +18,7 @@ public class Note : MonoBehaviour {
     static Color selectedColor = new Color(1f, 0.6899f, 0.2405f, 1f);
     static Color selectedRecommendedColor = new Color(0.7647f, 0.2536f, 0f, 0.6980392f);
     static Color playingColor = new Color(0f, 0.839f, 0.5312847f, 1f);
+    static Color highlightColor = new Color(0.1255f, 0.502f, 0.8745f);
 
     void Awake()
     {
