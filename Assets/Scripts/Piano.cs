@@ -242,7 +242,7 @@ public class Piano : MonoBehaviour {
             if (x < 0.4f && key != 0 && key != 3) tone--;
             if (x > 0.6f && key != 2 && key != 6) tone++;
         }
-        if (mode == 0 || (mode == 1 && tone > 40) || (mode == 2 && tone < 29))
+        if (mode == 0 || (mode == 1 && (tone > 40 || !keyChord[tone])) || (mode == 2 && tone < 29))
         {
             return;
         }
