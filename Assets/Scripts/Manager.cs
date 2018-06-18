@@ -769,6 +769,29 @@ public class Manager : MonoBehaviour
         }
     }
 
+    public void CaveatRhythm2()
+    {
+        bool b = false;
+        if (manager.GetCursorMeasureNum() < 0) return;
+        foreach (Note n in manager.GetStaff(0).GetMeasure(manager.GetCursorMeasureNum()).GetNotes())
+        {
+            if (!n.GetIsRecommended())
+            {
+                b = true;
+                break;
+            }
+        }
+        if (b)
+        {
+            Finder.finder.rhythmCaveatPanel2.SetActive(true);
+            Finder.finder.darkPanel.SetActive(true);
+        }
+        else
+        {
+            PasteRhythmButton();
+        }
+    }
+
     public void RecommendRhythm()
     {
         int mn = manager.GetCursorMeasureNum();
