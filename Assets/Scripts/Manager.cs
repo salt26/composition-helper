@@ -42,7 +42,6 @@ public class Manager : MonoBehaviour
     object cursor;
     int cursorMeasureNum;
     bool isScoreScene;
-    bool isChordDriven;
     bool isPlaying;
     int measureNum = 0;
     static bool isFirstTime = true;
@@ -228,7 +227,6 @@ public class Manager : MonoBehaviour
     /// <param name="isChord"></param>
     public void SetDriven(bool isChord)
     {
-        isChordDriven = isChord;
         melodyPanel.SetActive(false);
     } 
 	
@@ -259,8 +257,8 @@ public class Manager : MonoBehaviour
         {
             if (thing is Measure)
             {
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.2f, 0.8f);
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.42f, 0.91f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.29f, 0.8f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.51f, 0.91f);
             }
             else
             {
