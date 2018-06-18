@@ -43,6 +43,7 @@ public class Manager : MonoBehaviour
     int cursorMeasureNum;
     bool isScoreScene;
     bool isPlaying;
+    bool isThereFirstChord = false;
     int measureNum = 0;
     static bool isFirstTime = true;
 
@@ -162,7 +163,7 @@ public class Manager : MonoBehaviour
             //staffs[2].GetMeasure(0).HighlightOn();
         }
 
-        if (scrollbar != null && mainCamera != null)
+        if (scrollbar != null && mainCamera != null && manager.GetIsThereFirstChord())
         {
             //Debug.Log(Input.mouseScrollDelta); // (0, 0), (0, -1), (0, -2), (0, 1), (0, 2)
             scrollbar.value -= Input.mouseScrollDelta.y / (measureNum * 2 + 1);
@@ -782,6 +783,9 @@ public class Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 리듬 붙여넣기 시 마디가 초기화됨을 경고하는 메서드입니다.
+    /// </summary>
     public void CaveatRhythm2()
     {
         bool b = false;
@@ -874,6 +878,17 @@ public class Manager : MonoBehaviour
     public bool GetIsPlaying()
     {
         return isPlaying;
+    }
+
+    public void SetIsThereFirstChord()
+    {
+        isThereFirstChord = true;
+        manager.scrollbar.interactable = true;
+    }
+
+    public bool GetIsThereFirstChord()
+    {
+        return isThereFirstChord;
     }
 
     /// <summary>
