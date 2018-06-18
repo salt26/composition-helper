@@ -10,6 +10,7 @@ public class Finder : MonoBehaviour {
     public GameObject chordPanel;
     public GameObject developingPanel;
     public GameObject savePanel;
+    public GameObject instructionPanel0;
     public GameObject instructionPanel;
     public GameObject instructionPanel2;
     public GameObject playButton;
@@ -51,6 +52,7 @@ public class Finder : MonoBehaviour {
             finder.developingPanel.activeInHierarchy ||
             finder.rhythmCaveatPanel.activeInHierarchy ||
             finder.savePanel.activeInHierarchy ||
+            finder.instructionPanel0.activeInHierarchy ||
             finder.instructionPanel.activeInHierarchy ||
             finder.instructionPanel2.activeInHierarchy);
     }
