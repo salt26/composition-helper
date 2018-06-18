@@ -8,6 +8,8 @@ public class ChordButton : MonoBehaviour {
     public int buttonNum;
 
     Chord chord;
+
+    static bool firstTime = true;
     
 	void FixedUpdate () {
         if (buttonNum < 0 || buttonNum >= 6) return;
@@ -49,8 +51,12 @@ public class ChordButton : MonoBehaviour {
         {
             Manager.manager.GetStaff(2).GetMeasure(measureNum + 1).InteractionOn();
         }
-        Finder.finder.instructionPanel0.SetActive(true);
-        Finder.finder.darkPanel.SetActive(true);
+        if (firstTime)
+        {
+            firstTime = false;
+            Finder.finder.instructionPanel0.SetActive(true);
+            Finder.finder.darkPanel.SetActive(true);
+        }
     }
 
     public void PlayChord()
