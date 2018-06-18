@@ -148,6 +148,25 @@ public class Measure : MonoBehaviour
     public void AddNote(Note note)
     {
         notes.Add(note);
+        notes.Sort(delegate(Note u, Note v)
+        {
+            return u.GetTiming() - v.GetTiming();
+        });
+        int i, j;
+        for (i = 0; i < notes.Count; i++)
+        {
+            for (j = i - 1; j >= 0; j--) if (Note.NoteToScore(notes[i].GetPitch(), notes[i].GetIsTreble()) == Note.NoteToScore(notes[j].GetPitch(), notes[j].GetIsTreble())) break;
+            if (j == -1)
+            {
+                int acc = Note.NoteToAccidental(notes[i].GetPitch());
+                notes[i].ChangeAccidental(acc == 0 ? -1 : acc);
+            }
+            else
+            {
+                int acci = Note.NoteToAccidental(notes[i].GetPitch()), accj = Note.NoteToAccidental(notes[j].GetPitch());
+                notes[i].ChangeAccidental(acci == accj ? -1 : acci);
+            }
+        }
     }
 
     public void RemoveNote(Note note)

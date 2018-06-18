@@ -208,6 +208,36 @@ public class Note : MonoBehaviour {
         }
     }
 
+    public void ChangeAccidental(int acc)
+    {
+        foreach (Transform tr in transform)
+        {
+            if (tr.gameObject.GetType() == Manager.manager.accidentalObject.GetType())
+            {
+                Destroy(tr.gameObject);
+            }
+        }
+        GameObject temp1;
+        switch (acc)
+        {
+            case 1:
+                temp1 = Instantiate(Manager.manager.accidentalObject, noteTransform);
+                temp1.GetComponent<SpriteRenderer>().sprite =
+                    Resources.Load("sharp", typeof(Sprite)) as Sprite;
+                break;
+            case 2:
+                temp1 = Instantiate(Manager.manager.accidentalObject, noteTransform);
+                temp1.GetComponent<SpriteRenderer>().sprite =
+                    Resources.Load("flat", typeof(Sprite)) as Sprite;
+                break;
+            case 0:
+                temp1 = Instantiate(Manager.manager.accidentalObject, noteTransform);
+                temp1.GetComponent<SpriteRenderer>().sprite =
+                    Resources.Load("natural", typeof(Sprite)) as Sprite;
+                break;
+        }
+    }
+
     /// <summary>
     /// "온음표", "점2분음표", "2분음표", "점4분음표", "4분음표", "점8분음표", "8분음표", "16분음표"
     /// 중 하나를 입력받아 이 음표의 박자를 설정합니다.

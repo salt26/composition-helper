@@ -77,7 +77,7 @@ public class Manager : MonoBehaviour
         if ((clickHere == null || !clickHere.name.Equals("MelodyStaff")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             clickHere = GameObject.Find("ClickHere");
-            clickHere.GetComponent<Highlighter>().HighlightOn();
+            if (clickHere != null) clickHere.GetComponent<Highlighter>().HighlightOn();
         }
         if ((staffs[0] == null || !staffs[0].name.Equals("MelodyStaff")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
