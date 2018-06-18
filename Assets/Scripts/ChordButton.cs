@@ -49,6 +49,8 @@ public class ChordButton : MonoBehaviour {
         {
             Manager.manager.GetStaff(2).GetMeasure(measureNum + 1).InteractionOn();
         }
+        Finder.finder.instructionPanel0.SetActive(true);
+        Finder.finder.darkPanel.SetActive(true);
     }
 
     public void PlayChord()

@@ -830,7 +830,6 @@ public class Manager : MonoBehaviour
         if (isFirstTime)
         {
             isFirstTime = false;
-            Finder.finder.instructionPanel0.SetActive(true);
             Finder.finder.instructionPanel.SetActive(true);
             Finder.finder.darkPanel.SetActive(true);
         }
