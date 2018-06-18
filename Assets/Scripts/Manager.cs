@@ -349,13 +349,13 @@ public class Manager : MonoBehaviour
         {
             manager.tempChords.Clear();
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 2; i++)
             {
-                Chord ch = Generator.GenerateChord();
                 // 첫 화음으로는 Major, minor, Major7, minor7만 온다.
-                while (ch.GetChordName().Equals("suspension4")
-                    || ch.GetChordName().Equals("augmented") || ch.GetChordName().Equals("diminished"))
-                    ch = Generator.GenerateChord();
+                // 일단은 Major부터 2개.
+                List<string> l = new List<string>();
+                l.Add("Major");
+                Chord ch = Generator.GenerateChord(l);
                 bool b = false;
                 for (int j = 0; j < i; j++)
                 {
@@ -372,13 +372,90 @@ public class Manager : MonoBehaviour
                     i--;
                     continue;
                 }
-                Debug.Log("Manager RecommendChords " + ch.GetBass());
                 tempChords.Add(ch);
             }
+            for (int i = 0; i < 2; i++)
+            {
+                // minor 2개.
+                List<string> l = new List<string>();
+                l.Add("minor");
+                Chord ch = Generator.GenerateChord(l);
+                bool b = false;
+                for (int j = 0; j < 2 + i; j++)
+                {
+                    if (ch.GetNotes()[0] == tempChords[j].GetNotes()[0]
+                        && ch.GetNotes()[1] == tempChords[j].GetNotes()[1]
+                        && ch.GetNotes()[2] == tempChords[j].GetNotes()[2])
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b)
+                {
+                    i--;
+                    continue;
+                }
+                tempChords.Add(ch);
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                // Major7 1개.
+                List<string> l = new List<string>();
+                l.Add("Major7");
+                Chord ch = Generator.GenerateChord(l);
+                bool b = false;
+                for (int j = 0; j < 4 + i; j++)
+                {
+                    if (ch.GetNotes()[0] == tempChords[j].GetNotes()[0]
+                        && ch.GetNotes()[1] == tempChords[j].GetNotes()[1]
+                        && ch.GetNotes()[2] == tempChords[j].GetNotes()[2])
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b)
+                {
+                    i--;
+                    continue;
+                }
+                tempChords.Add(ch);
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                // minor7 1개.
+                List<string> l = new List<string>();
+                l.Add("minor7");
+                Chord ch = Generator.GenerateChord(l);
+                bool b = false;
+                for (int j = 0; j < 5 + i; j++)
+                {
+                    if (ch.GetNotes()[0] == tempChords[j].GetNotes()[0]
+                        && ch.GetNotes()[1] == tempChords[j].GetNotes()[1]
+                        && ch.GetNotes()[2] == tempChords[j].GetNotes()[2])
+                    {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b)
+                {
+                    i--;
+                    continue;
+                }
+                tempChords.Add(ch);
+            }
+
+            manager.tempChords[0].SetChordText(Note.NoteToName2(tempChords[0].GetBass()) + "\n밝음");
+            manager.tempChords[1].SetChordText(Note.NoteToName2(tempChords[1].GetBass()) + "\n밝음");
+            manager.tempChords[2].SetChordText(Note.NoteToName2(tempChords[2].GetBass()) + "m\n어두움");
+            manager.tempChords[3].SetChordText(Note.NoteToName2(tempChords[3].GetBass()) + "m\n어두움");
+            manager.tempChords[4].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "7\n밝음·긴장");
+            manager.tempChords[5].SetChordText(Note.NoteToName2(tempChords[4].GetBass()) + "m7\n어두움·긴장");
         }
         else if (prevChord.GetChordName().Equals("Major"))
         {
-            Debug.Log("Major Recommended");
             manager.tempChords.Clear();
             midiBass = Note.NoteToMidi(prevChord.GetBass());
             Debug.Log(midiBass);
@@ -447,7 +524,6 @@ public class Manager : MonoBehaviour
         }
         else if (prevChord.GetChordName().Equals("minor"))
         {
-            //Debug.Log("Major Recommended");
             manager.tempChords.Clear();
             midiBass = Note.NoteToMidi(prevChord.GetBass());
             Debug.Log(midiBass);
@@ -494,7 +570,6 @@ public class Manager : MonoBehaviour
         }
         else if (prevChord.GetChordName().Equals("diminished"))
         {
-            //Debug.Log("Major Recommended");
             manager.tempChords.Clear();
             midiBass = Note.NoteToMidi(prevChord.GetBass());
             Debug.Log(midiBass);
@@ -542,7 +617,6 @@ public class Manager : MonoBehaviour
         }
         else if (prevChord.GetChordName().Equals("augmented"))
         {
-            //Debug.Log("Major Recommended");
             manager.tempChords.Clear();
             midiBass = Note.NoteToMidi(prevChord.GetBass());
             Debug.Log(midiBass);
@@ -590,7 +664,6 @@ public class Manager : MonoBehaviour
         }
         else if (prevChord.GetChordName().Equals("suspension4"))
         {
-            //Debug.Log("Major Recommended");
             manager.tempChords.Clear();
             midiBass = Note.NoteToMidi(prevChord.GetBass());
             Debug.Log(midiBass);
@@ -639,7 +712,6 @@ public class Manager : MonoBehaviour
         }
         else if (prevChord.GetChordName().Equals("Major7"))
         {
-            //Debug.Log("Major Recommended");
             manager.tempChords.Clear();
             midiBass = Note.NoteToMidi(prevChord.GetBass());
             Debug.Log(midiBass);
@@ -686,7 +758,6 @@ public class Manager : MonoBehaviour
         }
         else if (prevChord.GetChordName().Equals("minor7"))
         {
-            //Debug.Log("Major Recommended");
             manager.tempChords.Clear();
             midiBass = Note.NoteToMidi(prevChord.GetBass());
             Debug.Log(midiBass);

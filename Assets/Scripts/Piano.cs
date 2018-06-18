@@ -16,7 +16,7 @@ public class Piano : MonoBehaviour {
     static Color highlighted = new Color(1f, 0.6899f, 0.2405f, 1f); // new Color(1f, 0.7607f, 0.5047f, 1f);
     static Color grayHighlight = new Color(0.755f, 0.5210f, 0.1806f, 1f); // new Color(0.56f, 0.3620f, 0.1512f, 1f);
     static Color whiteChord = new Color(0.9531f, 0.5058f, 1f, 1f);
-    static Color blackChord = new Color(0.5178f, 0.1496f, 0.5566f, 1f);
+    static Color blackChord = new Color(0.6526484f, 0.2107f, 0.7f, 1f);
     static Color clicked = new Color(0.8352f, 0.1686f, 0.1686f);
     static Color playing = new Color(0f, 0.839f, 0.5312847f, 1f);
 

@@ -154,6 +154,88 @@ public class Generator {
             return GenerateChord();
         }
         //Debug.Log("after " + chord.NotesName());
+        //Debug.Log("Generator " + chord.GetBass());
+        chord.SetChordText(Note.NoteToName2(a) + chordText + "\n<size=10>(" + chord.NotesName() + ")</size>");
+        return chord;
+    }
+
+    /// <summary>
+    /// chordNameBox에 chordName들을 넣어서 주면, 이 중에서 랜덤으로 하나 뽑아서 그 종류의 화음을 생성합니다.
+    /// chordNameBox에는 "Major", "minor", "diminished", "augmented", "suspension4", "Major7", "minor7"만 들어가야 합니다.
+    /// </summary>
+    /// <param name="chordNameBox"></param>
+    /// <returns></returns>
+    public static Chord GenerateChord(List<string> chordNameBox)
+    {
+        if (chordNameBox == null) return null;
+        Chord chord;
+        int a = baseNote[Random.Range(0, 12)], b, c, d = -1;
+        string chordText = "";
+        string chordName = "";
+        switch (chordNameBox[Random.Range(0, chordNameBox.Count)])
+        {
+            case "Major":
+                b = Note.NoteToMidi(a) + 4;
+                c = b + 3;
+                chordText = "";
+                chordName = "Major";
+                break;
+            case "diminished":
+                b = Note.NoteToMidi(a) + 3;
+                c = b + 3;
+                chordText = "dim";
+                chordName = "diminished";
+                break;
+            case "augmented":
+                b = Note.NoteToMidi(a) + 4;
+                c = b + 4;
+                chordText = "aug";
+                chordName = "augmented";
+                break;
+            case "minor7":
+                b = Note.NoteToMidi(a) + 3;
+                c = b + 4;
+                d = c + 3;
+                chordText = "m7";
+                chordName = "minor7";
+                break;
+            case "Major7":
+                b = Note.NoteToMidi(a) + 4;
+                c = b + 3;
+                d = c + 3;
+                chordText = "7";
+                chordName = "Major7";
+                break;
+            case "suspension4":
+                b = Note.NoteToMidi(a) + 5;
+                c = b + 2;
+                chordText = "sus4";
+                chordName = "suspension4";
+                break;
+            default:    // minor
+                b = Note.NoteToMidi(a) + 3;
+                c = b + 4;
+                chordText = "m";
+                chordName = "minor";
+                break;
+        }
+        b = Note.MidiToNote(b);
+        c = Note.MidiToNote(c);
+        if (d != -1)
+        {
+            d = Note.MidiToNote(d);
+            chord = new Chord(a, b, c, d);
+        }
+        else
+        {
+            chord = new Chord(a, b, c);
+        }
+        chord.SetChordName(chordName);
+        if ((chord = Chord.ReviseScoreNotation(chord, false)) == null)
+        {
+            Debug.Log("fail to revise chord");
+            return GenerateChord();
+        }
         Debug.Log("Generator " + chord.GetBass());
         chord.SetChordText(Note.NoteToName2(a) + chordText + "\n<size=10>(" + chord.NotesName() + ")</size>");
         return chord;
