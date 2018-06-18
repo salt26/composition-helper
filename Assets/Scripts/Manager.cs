@@ -30,6 +30,7 @@ public class Manager : MonoBehaviour
     List<Staff> staffs = new List<Staff>();
     List<Chord> tempChords = new List<Chord>();
     List<int> copyedRhythm = null;
+    public GameObject clickHere;
     GameObject melodyPanel;
     GameObject mainCamera;
     GameObject canvas;
@@ -74,6 +75,11 @@ public class Manager : MonoBehaviour
             melodyPanel = GameObject.Find("MelodyPanel");
         }
 
+        if ((clickHere == null || !clickHere.name.Equals("MelodyStaff")) && SceneManager.GetActiveScene().name.Equals("Score"))
+        {
+            clickHere = GameObject.Find("ClickHere");
+            clickHere.GetComponent<Highlighter>().HighlightOn();
+        }
         if ((staffs[0] == null || !staffs[0].name.Equals("MelodyStaff")) && SceneManager.GetActiveScene().name.Equals("Score"))
         {
             staffs[0] = GameObject.Find("MelodyStaff").GetComponent<Staff>();
@@ -249,6 +255,19 @@ public class Manager : MonoBehaviour
     {
         cursor = thing;
         cursorMeasureNum = measureNum;
+        if (manager.clickHere != null)
+        {
+            if (thing is Measure)
+            {
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.2f, 0.8f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.42f, 0.91f);
+            }
+            else
+            {
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+            }
+        }
     }
 
     /// <summary>
@@ -266,6 +285,11 @@ public class Manager : MonoBehaviour
             manager.GetRhythmRecommendButton().interactable = false;
             cursor = null;
             cursorMeasureNum = -1;
+            if (manager.clickHere != null)
+            {
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+            }
         }
     }
 
@@ -770,6 +794,7 @@ public class Manager : MonoBehaviour
         if (isFirstTime)
         {
             isFirstTime = false;
+            Finder.finder.instructionPanel0.SetActive(true);
             Finder.finder.instructionPanel.SetActive(true);
             Finder.finder.darkPanel.SetActive(true);
         }
