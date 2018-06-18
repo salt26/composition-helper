@@ -9,6 +9,7 @@ public class Measure : MonoBehaviour
     bool isHighlighting = false;
     bool hasHoveringSaveButton = false;
     Chord chord;
+    List<int> rhythm = null;
 
     void FixedUpdate()
     {
@@ -163,6 +164,7 @@ public class Measure : MonoBehaviour
 
     public void ClearMeasure()
     {
+        rhythm = null;
         foreach (Note n in notes)
         {
             Piano.SetKeyHighlight(n.GetPitch(), false);
@@ -201,6 +203,26 @@ public class Measure : MonoBehaviour
         ch.SetChordText(chord.GetChordText());
         Debug.LogWarning("GetChord " + ch.GetNotes().Count + " / chord " + chord.GetNotes().Count);
         return ch;
+    }
+
+    public void SetRhythm(List<int> rhythm)
+    {
+        this.rhythm = new List<int>();
+        for (int i = 0; i < rhythm.Count; i++)
+        {
+            this.rhythm.Add(rhythm[i]);
+        }
+    }
+
+    public List<int> GetRhythm()
+    {
+        if (rhythm == null) return null;
+        List<int> r = new List<int>();
+        for (int i = 0; i < rhythm.Count; i++)
+        {
+            r.Add(rhythm[i]);
+        }
+        return r;
     }
 
     public void InteractionOff()

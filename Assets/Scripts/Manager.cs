@@ -28,7 +28,8 @@ public class Manager : MonoBehaviour
      * staffs[2] : ChordStaff
      */
     List<Staff> staffs = new List<Staff>();
-    List<Chord> tempChords = new List<Chord>(); // TODO This variable is only for demo.
+    List<Chord> tempChords = new List<Chord>();
+    List<int> copyedRhythm = null;
     GameObject melodyPanel;
     GameObject mainCamera;
     GameObject canvas;
@@ -159,7 +160,7 @@ public class Manager : MonoBehaviour
         if (scrollbar != null && mainCamera != null)
         {
             //Debug.Log(Input.mouseScrollDelta); // (0, 0), (0, -1), (0, -2), (0, 1), (0, 2)
-            //scrollbar.value -= Input.mouseScrollDelta.y / (measureNum * 2 + 1);
+            scrollbar.value -= Input.mouseScrollDelta.y / (measureNum * 2 + 1);
             mainCamera.GetComponent<Transform>().SetPositionAndRotation(
                 new Vector3((scrollbar.value * ((measureNum - 1) * 11f - 5f)), 0f, -10f), Quaternion.identity);
             backgroundCollider.GetComponent<Transform>().SetPositionAndRotation(
@@ -196,6 +197,21 @@ public class Manager : MonoBehaviour
         {
             //Debug.LogWarning("saveButton active");
             saveButton.interactable = true;
+        }
+
+        if (isScoreScene && Finder.finder.copyButton.GetComponent<Button>().interactable
+            && (manager.GetCursor() == null || manager.GetCursor().GetType() != typeof(Measure)
+            || !((Measure)manager.GetCursor()).GetComponentInParent<Staff>().staffName.Equals("Melody")
+            || ((Measure)manager.GetCursor()).GetRhythm() == null))
+        {
+            Finder.finder.copyButton.GetComponent<Button>().interactable = false;
+        }
+        else if (isScoreScene && !Finder.finder.copyButton.GetComponent<Button>().interactable
+            && manager.GetCursor() != null && manager.GetCursor().GetType() == typeof(Measure)
+            && ((Measure)manager.GetCursor()).GetComponentInParent<Staff>().staffName.Equals("Melody")
+            && ((Measure)manager.GetCursor()).GetRhythm() != null)
+        {
+            Finder.finder.copyButton.GetComponent<Button>().interactable = true;
         }
     }
 
@@ -737,6 +753,7 @@ public class Manager : MonoBehaviour
         List<int> rhythms = Generator.GenerateNotes();
         // 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
         manager.GetStaff(0).GetMeasure(mn).ClearMeasure();
+        manager.GetStaff(0).GetMeasure(mn).SetRhythm(rhythms);
         int sum = 0;
         foreach (int rhythm in rhythms)
         {
@@ -796,6 +813,60 @@ public class Manager : MonoBehaviour
     public bool GetIsPlaying()
     {
         return isPlaying;
+    }
+
+    /// <summary>
+    /// 화면이 맨 처음 마디를 보도록 카메라를 이동시킵니다.
+    /// </summary>
+    public void FrontButton()
+    {
+        manager.scrollbar.value = 0f;
+    }
+
+    /// <summary>
+    /// 선택한 마디의 리듬을 복사합니다.
+    /// </summary>
+    public void CopyRhythmButton()
+    {
+        Debug.LogWarning("Copy");
+        if (manager.GetCursorMeasureNum() < 0 || manager.GetCursor().GetType() != typeof(Measure)
+            || !((Measure)manager.GetCursor()).GetComponentInParent<Staff>().staffName.Equals("Melody")
+            || ((Measure)manager.GetCursor()).GetRhythm() == null) return;
+        manager.copyedRhythm = ((Measure)manager.GetCursor()).GetRhythm();
+        foreach(int n in manager.copyedRhythm) Debug.LogWarning(n);
+    }
+
+    /// <summary>
+    /// 복사된 리듬을 선택한 마디에 붙여넣습니다.
+    /// </summary>
+    public void PasteRhythmButton()
+    {
+        int mn = manager.GetCursorMeasureNum();
+        if (mn < 0 || copyedRhythm == null) return;
+        manager.SetCursor(manager.GetStaff(0).GetMeasure(mn), mn);
+        List<int> rhythms = copyedRhythm;
+        // 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
+        manager.GetStaff(0).GetMeasure(mn).ClearMeasure();
+        manager.GetStaff(0).GetMeasure(mn).SetRhythm(rhythms);
+        int sum = 0;
+        foreach (int rhythm in rhythms)
+        {
+            manager.WriteNote(0, mn, 51,
+                rhythm == 1 ? "16분음표" :
+                rhythm == 2 ? "8분음표" :
+                rhythm == 3 ? "점8분음표" :
+                rhythm == 4 ? "4분음표" :
+                rhythm == 6 ? "점4분음표" :
+                rhythm == 8 ? "2분음표" :
+                rhythm == 12 ? "점2분음표" : "온음표", sum, recommendColor, true);
+            sum += rhythm;
+        }
+        if (isFirstTime)
+        {
+            isFirstTime = false;
+            Finder.finder.instructionPanel.SetActive(true);
+            Finder.finder.darkPanel.SetActive(true);
+        }
     }
 
     /// <summary>

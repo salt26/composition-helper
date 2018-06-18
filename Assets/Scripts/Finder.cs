@@ -14,6 +14,8 @@ public class Finder : MonoBehaviour {
     public GameObject instructionPanel2;
     public GameObject playButton;
     public GameObject playPrevChordButton;
+    public GameObject copyButton;
+    public GameObject pasteButton;
     
     private void Awake()
     {
