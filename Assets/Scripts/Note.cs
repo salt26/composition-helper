@@ -222,7 +222,7 @@ public class Note : MonoBehaviour {
     {
         foreach (Transform tr in transform)
         {
-            if (tr.gameObject.GetType() == Manager.manager.accidentalObject.GetType())
+            if (tr.gameObject.name.Contains("Accidental"))
             {
                 Destroy(tr.gameObject);
             }
