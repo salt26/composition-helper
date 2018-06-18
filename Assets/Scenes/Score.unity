@@ -917,7 +917,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114794076944782192, guid: fc659bdfbc02cd94f97e9220e76bf96e,
           type: 2}
-        m_MethodName: PasteRhythmButton
+        m_MethodName: CaveatRhythm2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5625,6 +5625,15 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 2142907041}
+    - target: {fileID: 1313092449533332, guid: 3309cedca61028d4b84187f2b895b48d, type: 2}
+      propertyPath: m_Name
+      value: RhythmResetButton2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114212701511304490, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PasteRhythmButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3309cedca61028d4b84187f2b895b48d, type: 2}
   m_IsPrefabParent: 0
