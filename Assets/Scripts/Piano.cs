@@ -261,25 +261,16 @@ public class Piano : MonoBehaviour {
                     {
                         m.RemoveNote(n);
                         Manager.manager.WriteNote(0, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                        Note nextcur = null, newnote = null;
+                        Note newnote = null;
                         foreach (Note note in m.GetNotes())
                         {
-                            if (note.GetTiming() == n.GetTiming()) newnote = note;
-                            if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                            if (note.GetTiming() == n.GetTiming())
+                            {
+                                newnote = note;
+                                break;
+                            }
                         }
-                        if (nextcur != null && nextcur.GetIsRecommended())
-                            nextcur.Selected();
-                        else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
-                            && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
-                            && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
-                        {
-                            // 다음 마디의 첫 음표를 확인해보자.
-                            Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
-                        }
-                        else
-                        {
-                            newnote.Selected();
-                        }
+                        newnote.Selected();
                     }
                     Destroy(n);
                 }
@@ -288,29 +279,21 @@ public class Piano : MonoBehaviour {
             {
                 Measure m = (Measure)cur;
                 Staff s = m.GetComponentInParent<Staff>();
-                if (s == Manager.manager.GetStaff(0) && m.GetNotes().Count > 0 && m.GetNotes()[0].GetIsRecommended())
+                if (s == Manager.manager.GetStaff(0) && m.GetNotes().Count > 0)
                 {
-                    Note n = m.GetNotes()[0];
-                    m.RemoveNote(n);
-                    Manager.manager.WriteNote(0, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                    Note nextcur = null, newnote = null;
-                    foreach (Note note in m.GetNotes())
+                    Note n = null;
+                    foreach (Note tn in m.GetNotes())
                     {
-                        if (note.GetTiming() == n.GetTiming()) newnote = note;
-                        if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                        if (tn.GetIsRecommended())
+                        {
+                            n = tn;
+                            break;
+                        }
                     }
-                    if (nextcur != null && nextcur.GetIsRecommended())
-                        nextcur.Selected();
-                    else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
-                        && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
-                        && Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
+                    if (n != null)
                     {
-                        // 다음 마디의 첫 음표를 확인해보자.
-                        Manager.manager.GetStaff(0).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
-                    }
-                    else
-                    {
-                        newnote.Selected();
+                        m.RemoveNote(n);
+                        Manager.manager.WriteNote(0, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
                     }
                 }
             }
@@ -332,25 +315,16 @@ public class Piano : MonoBehaviour {
                             if (tn.GetTiming() == n.GetTiming()) m.RemoveNote(tn);
                         }
                         Manager.manager.WriteNote(1, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                        Note nextcur = null, newnote = null;
+                        Note newnote = null;
                         foreach (Note note in m.GetNotes())
                         {
-                            if (note.GetTiming() == n.GetTiming()) newnote = note;
-                            if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
+                            if (note.GetTiming() == n.GetTiming())
+                            {
+                                newnote = note;
+                                break;
+                            }
                         }
-                        if (nextcur != null && nextcur.GetIsRecommended())
-                            nextcur.Selected();
-                        else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
-                            && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
-                            && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
-                        {
-                            // 다음 마디의 첫 음표를 확인해보자.
-                            Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
-                        }
-                        else
-                        {
-                            newnote.Selected();
-                        }
+                        newnote.Selected();
                     }
                     Destroy(n);
                     if (m.GetNotes().Count == 4)
@@ -370,37 +344,29 @@ public class Piano : MonoBehaviour {
             {
                 Measure m = (Measure)cur;
                 Staff s = m.GetComponentInParent<Staff>();
-                if (s == Manager.manager.GetStaff(1) && m.GetNotes().Count > 0 && m.GetNotes()[0].GetIsRecommended())
+                if (s == Manager.manager.GetStaff(1) && m.GetNotes().Count > 0)
                 {
-                    Note n = m.GetNotes()[0];
+                    Note n = null;
                     foreach (Note tn in m.GetNotes())
                     {
-                        if (tn.GetTiming() == n.GetTiming()) m.RemoveNote(tn);
+                        if (tn.GetIsRecommended())
+                        {
+                            n = tn;
+                            break;
+                        }
                     }
-                    Manager.manager.WriteNote(1, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                    Note nextcur = null, newnote = null;
-                    foreach (Note note in m.GetNotes())
+                    if (n != null)
                     {
-                        if (note.GetTiming() == n.GetTiming()) newnote = note;
-                        if (note.GetTiming() > n.GetTiming() && (nextcur == null || note.GetTiming() < nextcur.GetTiming())) nextcur = note;
-                    }
-                    if (nextcur != null && nextcur.GetIsRecommended())
-                        nextcur.Selected();
-                    else if (nextcur == null && s.GetMeasureNum(m) + 1 < Manager.manager.GetMaxMeasureNum()
-                        && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes().Count > 0
-                        && Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].GetIsRecommended())
-                    {
-                        // 다음 마디의 첫 음표를 확인해보자.
-                        Manager.manager.GetStaff(1).GetMeasure(s.GetMeasureNum(m) + 1).GetNotes()[0].Selected();
-                    }
-                    else
-                    {
-                        newnote.Selected();
-                    }
-                    if (m.GetNotes().Count == 4)
-                    {
-                        m.HighlightOff();
-                        Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
+                        foreach (Note tn in m.GetNotes())
+                        {
+                            if (tn.GetTiming() == n.GetTiming()) m.RemoveNote(tn);
+                        }
+                        Manager.manager.WriteNote(1, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
+                        if (m.GetNotes().Count == 4)
+                        {
+                            m.HighlightOff();
+                            Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
+                        }
                     }
                 }
                 if (isFirstTime)

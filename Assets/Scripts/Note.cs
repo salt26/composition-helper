@@ -69,7 +69,16 @@ public class Note : MonoBehaviour {
         }
         else if (Manager.manager != null && isRecommended)
         {
-            SetColor(Manager.manager.recommendColor);
+            int mintiming = 999;
+            if (GetComponentInParent<Measure>().Equals(Manager.manager.GetCursor())) foreach (Note n in GetComponentInParent<Measure>().GetNotes())
+            {
+                if (n.GetIsRecommended() && n.GetTiming() < mintiming)
+                {
+                    mintiming = n.GetTiming();
+                }
+            }
+            if (timing == mintiming) SetColor(highlightColor);
+            else SetColor(Manager.manager.recommendColor);
             noteTransform.localPosition = new Vector3(noteTransform.localPosition.x, noteTransform.localPosition.y, -0.5f);
         }
         else
