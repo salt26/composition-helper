@@ -160,6 +160,7 @@ public class Generator {
     }
 
     /// <summary>
+    /// 화음을 생성하되, 확률 분포를 인자로 직접 줄 수 있습니다.
     /// chordNameBox에 chordName들을 넣어서 주면, 이 중에서 랜덤으로 하나 뽑아서 그 종류의 화음을 생성합니다.
     /// chordNameBox에는 "Major", "minor", "diminished", "augmented", "suspension4", "Major7", "minor7"만 들어가야 합니다.
     /// </summary>
@@ -167,7 +168,7 @@ public class Generator {
     /// <returns></returns>
     public static Chord GenerateChord(List<string> chordNameBox)
     {
-        if (chordNameBox == null) return null;
+        if (chordNameBox == null || chordNameBox.Count <= 0) return null;
         Chord chord;
         int a = baseNote[Random.Range(0, 12)], b, c, d = -1;
         string chordText = "";
