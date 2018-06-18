@@ -218,6 +218,21 @@ public class Manager : MonoBehaviour
         {
             Finder.finder.copyButton.GetComponent<Button>().interactable = true;
         }
+
+        if (isScoreScene && Finder.finder.pasteButton.GetComponent<Button>().interactable
+            && (manager.GetCursor() == null || manager.GetCursor().GetType() != typeof(Measure)
+            || !((Measure)manager.GetCursor()).GetComponentInParent<Staff>().staffName.Equals("Melody")
+            || manager.copyedRhythm == null))
+        {
+            Finder.finder.pasteButton.GetComponent<Button>().interactable = false;
+        }
+        else if (isScoreScene && !Finder.finder.pasteButton.GetComponent<Button>().interactable
+            && manager.GetCursor() != null && manager.GetCursor().GetType() == typeof(Measure)
+            && ((Measure)manager.GetCursor()).GetComponentInParent<Staff>().staffName.Equals("Melody")
+            && manager.copyedRhythm != null)
+        {
+            Finder.finder.pasteButton.GetComponent<Button>().interactable = true;
+        }
     }
 
     /// <summary>
@@ -767,6 +782,29 @@ public class Manager : MonoBehaviour
         }
     }
 
+    public void CaveatRhythm2()
+    {
+        bool b = false;
+        if (manager.GetCursorMeasureNum() < 0) return;
+        foreach (Note n in manager.GetStaff(0).GetMeasure(manager.GetCursorMeasureNum()).GetNotes())
+        {
+            if (!n.GetIsRecommended())
+            {
+                b = true;
+                break;
+            }
+        }
+        if (b)
+        {
+            Finder.finder.rhythmCaveatPanel2.SetActive(true);
+            Finder.finder.darkPanel.SetActive(true);
+        }
+        else
+        {
+            PasteRhythmButton();
+        }
+    }
+
     public void RecommendRhythm()
     {
         int mn = manager.GetCursorMeasureNum();
@@ -864,10 +902,11 @@ public class Manager : MonoBehaviour
     /// </summary>
     public void PasteRhythmButton()
     {
+        Debug.LogWarning("Paste " + manager.copyedRhythm.Count);
         int mn = manager.GetCursorMeasureNum();
-        if (mn < 0 || copyedRhythm == null) return;
+        if (mn < 0 || manager.copyedRhythm == null) return;
         manager.SetCursor(manager.GetStaff(0).GetMeasure(mn), mn);
-        List<int> rhythms = copyedRhythm;
+        List<int> rhythms = manager.copyedRhythm;
         // 생성된 리듬에 따라 해당 마디에 박자 만들고 악보에 보여주기
         manager.GetStaff(0).GetMeasure(mn).ClearMeasure();
         manager.GetStaff(0).GetMeasure(mn).SetRhythm(rhythms);
@@ -883,12 +922,6 @@ public class Manager : MonoBehaviour
                 rhythm == 8 ? "2분음표" :
                 rhythm == 12 ? "점2분음표" : "온음표", sum, recommendColor, true);
             sum += rhythm;
-        }
-        if (isFirstTime)
-        {
-            isFirstTime = false;
-            Finder.finder.instructionPanel.SetActive(true);
-            Finder.finder.darkPanel.SetActive(true);
         }
     }
 

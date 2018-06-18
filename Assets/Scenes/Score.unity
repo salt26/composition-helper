@@ -917,7 +917,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114794076944782192, guid: fc659bdfbc02cd94f97e9220e76bf96e,
           type: 2}
-        m_MethodName: PasteRhythmButton
+        m_MethodName: CaveatRhythm2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3222,7 +3222,7 @@ Prefab:
     - target: {fileID: 224122142055944608, guid: 496aaba3255d92f4e99a87c78813c0f7,
         type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 224122142055944608, guid: 496aaba3255d92f4e99a87c78813c0f7,
         type: 2}
@@ -4543,7 +4543,7 @@ Prefab:
     - target: {fileID: 224800559826988006, guid: 6eef1eb4f931cf84ca9edaec138e4ab4,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 224800559826988006, guid: 6eef1eb4f931cf84ca9edaec138e4ab4,
         type: 2}
@@ -5518,6 +5518,135 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1275025317}
+--- !u!1001 &1292882636
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1374163717}
+    m_Modifications:
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00012207031
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.235
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0.995
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114936309559844992, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2142907041}
+    - target: {fileID: 114212701511304490, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 2142907041}
+    - target: {fileID: 1313092449533332, guid: 3309cedca61028d4b84187f2b895b48d, type: 2}
+      propertyPath: m_Name
+      value: RhythmResetButton2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114212701511304490, guid: 3309cedca61028d4b84187f2b895b48d,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PasteRhythmButton
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3309cedca61028d4b84187f2b895b48d, type: 2}
+  m_IsPrefabParent: 0
+--- !u!224 &1292882637 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224483425649152512, guid: 3309cedca61028d4b84187f2b895b48d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1292882636}
+--- !u!1 &1292882638 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1758609967636428, guid: 3309cedca61028d4b84187f2b895b48d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1292882636}
 --- !u!1 &1297679777
 GameObject:
   m_ObjectHideFlags: 0
@@ -5873,6 +6002,7 @@ RectTransform:
   - {fileID: 1275025316}
   - {fileID: 153306929}
   - {fileID: 1688610193}
+  - {fileID: 1292882637}
   - {fileID: 1030848403}
   - {fileID: 1817041923}
   - {fileID: 1773176028}
@@ -5898,6 +6028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   darkPanel: {fileID: 2142907041}
   rhythmCaveatPanel: {fileID: 1688610192}
+  rhythmCaveatPanel2: {fileID: 1292882638}
   chordPanel: {fileID: 153306928}
   developingPanel: {fileID: 1275025317}
   savePanel: {fileID: 1030848404}
@@ -7314,7 +7445,7 @@ Prefab:
     - target: {fileID: 224765360996557428, guid: 042f6972cfa423e458e347918089db69,
         type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 224765360996557428, guid: 042f6972cfa423e458e347918089db69,
         type: 2}
@@ -7573,7 +7704,7 @@ Prefab:
     - target: {fileID: 224470020246226340, guid: 1a4106117c6ecb74e85acd2ad136b173,
         type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 224470020246226340, guid: 1a4106117c6ecb74e85acd2ad136b173,
         type: 2}

@@ -7,6 +7,7 @@ public class Finder : MonoBehaviour {
     static public Finder finder;
     public GameObject darkPanel;
     public GameObject rhythmCaveatPanel;
+    public GameObject rhythmCaveatPanel2;
     public GameObject chordPanel;
     public GameObject developingPanel;
     public GameObject savePanel;
@@ -53,6 +54,7 @@ public class Finder : MonoBehaviour {
         return (finder.chordPanel.activeInHierarchy ||
             finder.developingPanel.activeInHierarchy ||
             finder.rhythmCaveatPanel.activeInHierarchy ||
+            finder.rhythmCaveatPanel2.activeInHierarchy ||
             finder.savePanel.activeInHierarchy ||
             finder.instructionPanel0.activeInHierarchy ||
             finder.instructionPanel.activeInHierarchy ||
