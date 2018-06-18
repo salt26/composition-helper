@@ -14,6 +14,7 @@ public class Finder : MonoBehaviour {
     public GameObject instructionPanel0;
     public GameObject instructionPanel;
     public GameObject instructionPanel2;
+    public GameObject instructionPanel3;
     public GameObject playButton;
     public GameObject playPrevChordButton;
     public GameObject copyButton;

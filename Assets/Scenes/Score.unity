@@ -3279,6 +3279,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2142907041}
+    - target: {fileID: 1999956127874572, guid: 496aaba3255d92f4e99a87c78813c0f7, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 496aaba3255d92f4e99a87c78813c0f7, type: 2}
   m_IsPrefabParent: 0
@@ -6036,6 +6040,7 @@ MonoBehaviour:
   instructionPanel0: {fileID: 1773176029}
   instructionPanel: {fileID: 1817041922}
   instructionPanel2: {fileID: 779284495}
+  instructionPanel3: {fileID: 1909306718}
   playButton: {fileID: 1538290169}
   playPrevChordButton: {fileID: 906995031}
   copyButton: {fileID: 1058970894}
@@ -7528,6 +7533,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1822320453252866, guid: 042f6972cfa423e458e347918089db69, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 042f6972cfa423e458e347918089db69, type: 2}
   m_IsPrefabParent: 0
@@ -8040,6 +8049,11 @@ Prefab:
 --- !u!224 &1909306717 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224114405923208468, guid: 99a3345f9cecb6342ab2b5ac80f220a6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1909306716}
+--- !u!1 &1909306718 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1040582764489594, guid: 99a3345f9cecb6342ab2b5ac80f220a6,
     type: 2}
   m_PrefabInternal: {fileID: 1909306716}
 --- !u!1 &1942260783
