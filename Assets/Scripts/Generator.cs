@@ -11,7 +11,7 @@ public class Generator {
         notes[0] = notes[16] = true;
         while (true)
         {
-            for (i = 1; i < 16; i++) notes[i] = true;
+            for (i = 1; i < 16; i++) notes[i] = false;
             for (i = 0; i < 7; i++)
             {
                 if (Random.Range(0, 2) == 1)

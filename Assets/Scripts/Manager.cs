@@ -268,8 +268,11 @@ public class Manager : MonoBehaviour
             manager.GetRhythmRecommendButton().interactable = false;
             cursor = null;
             cursorMeasureNum = -1;
-            manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
-            manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+            if (manager.clickHere != null)
+            {
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
+                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+            }
         }
     }
 

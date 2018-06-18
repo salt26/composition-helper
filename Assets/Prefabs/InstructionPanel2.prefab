@@ -62,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114072927970792592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,8 +95,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.4
-  m_Text: "\uC785\uB825\uB41C \uC74C\uC744 \uC120\uD0DD\uD574\uC11C \uC218\uC815\uD560
-    \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  m_Text: "\uC785\uB825\uB41C \uC74C\uD45C\uB97C \uC120\uD0DD\uD574\uC11C \uC74C\uC744
+    \uC218\uC815\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
 --- !u!114 &114271062800102534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,6 +191,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1999956127874572}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
