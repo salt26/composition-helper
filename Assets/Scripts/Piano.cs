@@ -341,10 +341,26 @@ public class Piano : MonoBehaviour {
                         newnote.Selected();
                     }
                     Destroy(n);
-                    if (m.GetNotes().Count == 4)
+                    bool b = true;
+                    foreach (Note note in m.GetNotes())
                     {
+                        Debug.LogWarning(note.GetIsRecommended());
+                        if (note.GetIsRecommended())
+                        {
+                            b = false;
+                            break;
+                        }
+                    }
+                    if (b)
+                    {
+                        Manager.manager.SetIsFirstAccompComplete();
                         m.HighlightOff();
-                        Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
+                        int mn = Manager.manager.GetCursorMeasureNum();
+                        Manager.manager.GetStaff(0).GetMeasure(mn).InteractionOn();
+                        if (mn < Manager.manager.GetMaxMeasureNum() - 1)
+                        {
+                            Manager.manager.GetStaff(2).GetMeasure(mn + 1).InteractionOn();
+                        }
                     }
                 }
                 if (isFirstTime)
@@ -376,10 +392,26 @@ public class Piano : MonoBehaviour {
                             if (tn.GetTiming() == n.GetTiming()) m.RemoveNote(tn);
                         }
                         Manager.manager.WriteNote(1, s.GetMeasureNum(m), tone, Note.RhythmToName(n.GetRhythm()), n.GetTiming());
-                        if (m.GetNotes().Count == 4)
+
+                        bool b = true;
+                        foreach (Note note in m.GetNotes())
                         {
+                            Debug.LogWarning(note.GetIsRecommended());
+                            if (note.GetIsRecommended())
+                            {
+                                b = false;
+                                break;
+                            }
+                        }
+                        if (b) { 
+                            Manager.manager.SetIsFirstAccompComplete();
                             m.HighlightOff();
-                            Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
+                            int mn = Manager.manager.GetCursorMeasureNum();
+                            Manager.manager.GetStaff(0).GetMeasure(mn).InteractionOn();
+                            if (mn < Manager.manager.GetMaxMeasureNum() - 1)
+                            {
+                                Manager.manager.GetStaff(2).GetMeasure(mn + 1).InteractionOn();
+                            }
                         }
                     }
                 }

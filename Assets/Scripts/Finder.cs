@@ -15,6 +15,7 @@ public class Finder : MonoBehaviour {
     public GameObject instructionPanel;
     public GameObject instructionPanel2;
     public GameObject instructionPanel3;
+    public GameObject instructionPanel4;
     public GameObject playButton;
     public GameObject playPrevChordButton;
     public GameObject copyButton;
@@ -60,6 +61,7 @@ public class Finder : MonoBehaviour {
             finder.instructionPanel0.activeInHierarchy ||
             finder.instructionPanel.activeInHierarchy ||
             finder.instructionPanel2.activeInHierarchy ||
-            finder.instructionPanel3.activeInHierarchy);
+            finder.instructionPanel3.activeInHierarchy ||
+            finder.instructionPanel4.activeInHierarchy);
     }
 }

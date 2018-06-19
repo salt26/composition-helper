@@ -42,7 +42,7 @@ public class ScoreBackground : MonoBehaviour//, IBeginDragHandler, IDragHandler,
 
     void OnMouseDrag()
     {
-        if (Manager.manager != null && Manager.manager.GetIsThereFirstChord())
+        if (Manager.manager != null && Manager.manager.GetIsFirstAccompComplete())
         {
             scrollbar.value = s - ((Input.mousePosition.x / 60f) - x) *
                 (1 / ((Manager.manager.GetMaxMeasureNum() - 1) * 11f - 5f));

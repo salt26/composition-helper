@@ -43,7 +43,7 @@ public class Manager : MonoBehaviour
     int cursorMeasureNum;
     bool isScoreScene;
     bool isPlaying;
-    bool isThereFirstChord = false;
+    bool isFirstAccompComplete = false;
     int measureNum = 0;
     static bool isFirstTime = true;
 
@@ -163,7 +163,7 @@ public class Manager : MonoBehaviour
             //staffs[2].GetMeasure(0).HighlightOn();
         }
 
-        if (scrollbar != null && mainCamera != null && manager.GetIsThereFirstChord())
+        if (scrollbar != null && mainCamera != null && manager.GetIsFirstAccompComplete())
         {
             //Debug.Log(Input.mouseScrollDelta); // (0, 0), (0, -1), (0, -2), (0, 1), (0, 2)
             scrollbar.value -= Input.mouseScrollDelta.y / (measureNum * 2 + 1);
@@ -1287,15 +1287,15 @@ public class Manager : MonoBehaviour
         return isPlaying;
     }
 
-    public void SetIsThereFirstChord()
+    public void SetIsFirstAccompComplete()
     {
-        isThereFirstChord = true;
+        isFirstAccompComplete = true;
         manager.scrollbar.interactable = true;
     }
 
-    public bool GetIsThereFirstChord()
+    public bool GetIsFirstAccompComplete()
     {
-        return isThereFirstChord;
+        return isFirstAccompComplete;
     }
 
     /// <summary>
