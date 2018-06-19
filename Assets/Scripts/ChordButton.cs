@@ -26,9 +26,8 @@ public class ChordButton : MonoBehaviour {
 
     public void WriteChord()
     {
-        if (Manager.manager.clickHere != null)
+        if (!Manager.manager.GetIsThereFirstChord())
         {
-            Manager.manager.clickHere.SetActive(false);
             Manager.manager.SetIsThereFirstChord();
         }
 

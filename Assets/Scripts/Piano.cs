@@ -345,6 +345,10 @@ public class Piano : MonoBehaviour {
                     {
                         m.HighlightOff();
                         Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
+                        if (Manager.manager.clickHere != null)
+                        {
+                            Manager.manager.clickHere.SetActive(false);
+                        }
                     }
                 }
                 if (isFirstTime)
@@ -380,6 +384,10 @@ public class Piano : MonoBehaviour {
                         {
                             m.HighlightOff();
                             Manager.manager.GetStaff(0).GetMeasure(Manager.manager.GetCursorMeasureNum()).InteractionOn();
+                            if (Manager.manager.clickHere != null)
+                            {
+                                Manager.manager.clickHere.SetActive(false);
+                            }
                         }
                     }
                 }

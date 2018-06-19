@@ -271,15 +271,31 @@ public class Manager : MonoBehaviour
         cursorMeasureNum = measureNum;
         if (manager.clickHere != null)
         {
-            if (thing is Measure)
+            if (isThereFirstChord)
             {
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.29f, 0.8f);
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.51f, 0.91f);
+                if (thing is Measure && ((Measure)thing).GetComponentInParent<Staff>() == staffs[1])
+                {
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0f, 0f);
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0f, 0f);
+                }
+                else
+                {
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.49f);
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.6f);
+                }
             }
             else
             {
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+                if (thing is Measure)
+                {
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.29f, 0.8f);
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.51f, 0.91f);
+                }
+                else
+                {
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+                }
             }
         }
     }
@@ -301,8 +317,16 @@ public class Manager : MonoBehaviour
             cursorMeasureNum = -1;
             if (manager.clickHere != null)
             {
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
-                manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+                if (isThereFirstChord)
+                {
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.49f);
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.6f);
+                }
+                else
+                {
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.29f);
+                    manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.4f);
+                }
             }
         }
     }
