@@ -43,6 +43,7 @@ public class Manager : MonoBehaviour
     int cursorMeasureNum;
     bool isScoreScene;
     bool isPlaying;
+    bool isThereFirstChord = false;
     bool isFirstAccompComplete = false;
     int measureNum = 0;
     static bool isFirstTime = true;
@@ -271,7 +272,7 @@ public class Manager : MonoBehaviour
         cursorMeasureNum = measureNum;
         if (manager.clickHere != null)
         {
-            if (manager.GetIsFirstAccompComplete())
+            if (manager.GetIsThereFirstChord())
             {
                 if (thing is Measure && ((Measure)thing).GetComponentInParent<Staff>() == staffs[1])
                 {
@@ -317,7 +318,7 @@ public class Manager : MonoBehaviour
             cursorMeasureNum = -1;
             if (manager.clickHere != null)
             {
-                if (manager.GetIsFirstAccompComplete())
+                if (manager.GetIsThereFirstChord())
                 {
                     manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.31f, 0.49f);
                     manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53f, 0.6f);
@@ -1320,6 +1321,16 @@ public class Manager : MonoBehaviour
     public bool GetIsFirstAccompComplete()
     {
         return isFirstAccompComplete;
+    }
+
+    public void SetIsThereFirstChord()
+    {
+        isThereFirstChord = true;
+    }
+
+    public bool GetIsThereFirstChord()
+    {
+        return isThereFirstChord;
     }
 
     /// <summary>
