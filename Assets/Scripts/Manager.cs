@@ -274,7 +274,7 @@ public class Manager : MonoBehaviour
         {
             if (manager.GetIsThereFirstChord())
             {
-                if (thing is Measure && ((Measure)thing).GetComponentInParent<Staff>() == staffs[1])
+                if (thing is Measure && ((Measure)thing).GetComponentInParent<Staff>() == staffs[1] || thing is Note && ((Note)thing).GetComponentInParent<Staff>() == staffs[1])
                 {
                     manager.clickHere.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0f, 0f);
                     manager.clickHere.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0f, 0f);
