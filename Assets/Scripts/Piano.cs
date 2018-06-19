@@ -361,6 +361,10 @@ public class Piano : MonoBehaviour {
                         {
                             Manager.manager.GetStaff(2).GetMeasure(mn + 1).InteractionOn();
                         }
+                        if (Manager.manager.clickHere != null)
+                        {
+                            Manager.manager.clickHere.SetActive(false);
+                        }
                     }
                 }
                 if (isFirstTime)
@@ -411,6 +415,10 @@ public class Piano : MonoBehaviour {
                             if (mn < Manager.manager.GetMaxMeasureNum() - 1)
                             {
                                 Manager.manager.GetStaff(2).GetMeasure(mn + 1).InteractionOn();
+                            }
+                            if (Manager.manager.clickHere != null)
+                            {
+                                Manager.manager.clickHere.SetActive(false);
                             }
                         }
                     }

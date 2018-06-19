@@ -26,10 +26,6 @@ public class ChordButton : MonoBehaviour {
 
     public void WriteChord()
     {
-        if (Manager.manager.clickHere != null)
-        {
-            Manager.manager.clickHere.SetActive(false);
-        }
 
         int measureNum = Manager.manager.GetCursorMeasureNum();
         Manager.manager.SetCursor(Manager.manager.GetStaff(2).GetMeasure(measureNum), measureNum);
